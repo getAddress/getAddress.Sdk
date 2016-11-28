@@ -2,7 +2,7 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class GetDomainWhitelistResponse: DomainWhitelistResponse
+    public abstract class GetDomainWhitelistResponse: AdminResponse
     {
 
         protected GetDomainWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)

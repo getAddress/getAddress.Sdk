@@ -4,14 +4,14 @@
 
 namespace getAddress.Sdk.Api.Requests
 {
-    public class RemoveDomainWhitelistRequest
+    public class RemoveIpAddressWhitelistRequest
     {
         [JsonProperty("id")]
         public string Id
         {
             get;
         }
-        public RemoveDomainWhitelistRequest(string id)
+        public RemoveIpAddressWhitelistRequest(string id)
         {
             Id = id;
         }

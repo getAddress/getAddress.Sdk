@@ -13,6 +13,13 @@ namespace getAddress.Sdk
 
         private readonly HttpClient _client;
 
+        public GetAddesssApi(ApiKey apiKey, HttpClient httpClient = null) : this(apiKey, null, httpClient)
+        {
+        }
+
+        public GetAddesssApi(AdminKey adminKey, HttpClient httpClient = null):this(null,adminKey,httpClient)
+        {
+        }
 
         public GetAddesssApi(ApiKey apiKey, AdminKey adminKey, HttpClient httpClient = null)
         {
@@ -25,6 +32,8 @@ namespace getAddress.Sdk
             ApiKey = apiKey;
 
             DomainWhitelist = new DomainWhitelistApi(AdminKey, this);
+
+            IpAddressWhitelist = new IpAddressWhitelistApi(AdminKey, this);
         }
 
         public ApiKey ApiKey
@@ -42,7 +51,11 @@ namespace getAddress.Sdk
             get;
         }
 
-       
+        public IpAddressWhitelistApi IpAddressWhitelist
+        {
+            get;
+        }
+
         internal  void SetAuthorizationKey(Key key)
         {
             SetAuthorizationKey(_client, key);
@@ -64,7 +77,7 @@ namespace getAddress.Sdk
 
         internal static async Task<HttpResponseMessage> Post(HttpClient client, string path, object entity = null)
         {
-            if (client == null) throw new ArgumentNullException(nameof(client)); 
+            if (client == null) throw new ArgumentNullException(nameof(client));
             if (path == null) throw new ArgumentNullException(nameof(path));
 
             entity = entity ?? string.Empty;

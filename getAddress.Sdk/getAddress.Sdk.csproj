@@ -46,13 +46,20 @@
   <ItemGroup>
     <Compile Include="ApiKey.cs" />
     <Compile Include="Api\ApiBase.cs" />
+    <Compile Include="Api\IpAddressWhitelistApi.cs" />
     <Compile Include="Api\DomainWhitelistApi.cs" />
+    <Compile Include="Api\Requests\AddIpAddressWhitelistRequest.cs" />
+    <Compile Include="Api\Requests\RemoveIpAddressWhitelistRequest.cs" />
     <Compile Include="Api\Requests\RemoveDomainWhitelistRequest.cs" />
     <Compile Include="Api\Requests\AddDomainWhitelistRequest.cs" />
+    <Compile Include="Api\Responses\AddIpAddressWhitelistResponse.cs" />
+    <Compile Include="Api\Responses\AdminResponse.cs" />
+    <Compile Include="Api\Responses\GetIpAddressWhitelistResponse.cs" />
     <Compile Include="Api\Responses\GetDomainWhitelistResponse.cs" />
+    <Compile Include="Api\Responses\ListIpAddressWhitelistResponse.cs" />
     <Compile Include="Api\Responses\ListDomainWhitelistResponse.cs" />
+    <Compile Include="Api\Responses\RemoveIpAddressWhitelistResponse.cs" />
     <Compile Include="Api\Responses\RemoveDomainWhitelistResponse.cs" />
-    <Compile Include="Api\Responses\DomainWhitelistResponse.cs" />
     <Compile Include="Api\Responses\AddDomainWhitelistResponse.cs" />
     <Compile Include="GetAddesssApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

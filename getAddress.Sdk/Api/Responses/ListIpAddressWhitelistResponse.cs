@@ -2,23 +2,21 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class ListDomainWhitelistResponse: AdminResponse
+    public abstract class ListIpAddressWhitelistResponse: AdminResponse
     {
 
-        protected ListDomainWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)
+        protected ListIpAddressWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)
         {
-        
         }
 
-        public class Success: ListDomainWhitelistResponse
+        public class Success: ListIpAddressWhitelistResponse
         {
             internal Success(int statusCode, string reasonPhase, string raw):base(statusCode, reasonPhase, raw,true)
             {
-              
             }
         }
 
-        public class Failed : ListDomainWhitelistResponse
+        public class Failed : ListIpAddressWhitelistResponse
         {
             internal Failed(int statusCode, string reasonPhase, string raw) :base(statusCode, reasonPhase, raw, false)
             {

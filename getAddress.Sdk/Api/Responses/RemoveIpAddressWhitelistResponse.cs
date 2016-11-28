@@ -2,16 +2,16 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class RemoveDomainWhitelistResponse : AdminResponse
+    public abstract class RemoveIpAddressWhitelistResponse : AdminResponse
     {
 
-        protected RemoveDomainWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        protected RemoveIpAddressWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
         {
 
         }
 
 
-        public class Success : RemoveDomainWhitelistResponse
+        public class Success : RemoveIpAddressWhitelistResponse
         {
             internal Success(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, true)
             {
@@ -19,7 +19,7 @@ namespace getAddress.Sdk.Api.Responses
             }
         }
 
-        public class Failed : RemoveDomainWhitelistResponse
+        public class Failed : RemoveIpAddressWhitelistResponse
         {
             internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
             {

@@ -1,9 +1,9 @@
 ﻿namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class DomainWhitelistResponse
+    public abstract class AdminResponse
     {
 
-        protected DomainWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess)
+        protected AdminResponse(int statusCode, string reasonPhase, string raw, bool isSuccess)
         {
             StatusCode = statusCode;
             ReasonPhase = reasonPhase;
@@ -11,9 +11,9 @@
             IsSuccess = isSuccess;
         }
 
-        public bool IsSuccess {get;}
+        public bool IsSuccess { get; }
         public int StatusCode { get; }
-        public string ReasonPhase{ get; }
+        public string ReasonPhase { get; }
 
         public string Raw { get; }
 

@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-    public class DomainWhitelistApi : AdminApiBase
+    public class IpAddressWhitelistApi : AdminApiBase
     {
 
-        public const string Path = "security/domain-whitelist/";
+        public const string Path = "security/ip-address-whitelist/";
 
-        internal DomainWhitelistApi(AdminKey adminKey, GetAddesssApi api) : base(adminKey,api)
+        internal IpAddressWhitelistApi(AdminKey adminKey, GetAddesssApi api) : base(adminKey,api)
         {
 
         }
 
-        public async Task<AddDomainWhitelistResponse> Add(AddDomainWhitelistRequest request)
+        public async Task<AddIpAddressWhitelistResponse> Add(AddIpAddressWhitelistRequest request)
         {
             return await Add(Api, request, Path,AdminKey);
         }
 
-        public async static Task<AddDomainWhitelistResponse> Add(GetAddesssApi api, AddDomainWhitelistRequest request, string path, AdminKey adminKey)
+        public async static Task<AddIpAddressWhitelistResponse> Add(GetAddesssApi api, AddIpAddressWhitelistRequest request, string path, AdminKey adminKey)
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
             if (request == null) throw new ArgumentNullException(nameof(request));
@@ -37,10 +37,10 @@ namespace getAddress.Sdk.Api
             {
                 var messageAndId = GetMessageAndId(body);
 
-                return new AddDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, messageAndId.Id);
+                return new AddIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, messageAndId.Id);
             }
 
-            return new AddDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase,body);
+            return new AddIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase,body);
         }
 
         private class MessageAndId
@@ -49,22 +49,22 @@ namespace getAddress.Sdk.Api
             public string Message { get; set; }
         }
 
-        private class NameAndId
+        private class ValueAndId
         {
             public string Id { get; set; }
-            public string Name { get; set; }
+            public string Value { get; set; }
         }
 
-        private static NameAndId GetNameAndId(string body)
+        private static ValueAndId GetValueAndId(string body)
         {
-            if (string.IsNullOrWhiteSpace(body)) return new NameAndId();
+            if (string.IsNullOrWhiteSpace(body)) return new ValueAndId();
 
             var json = JsonConvert.DeserializeObject<dynamic>(body);
 
-            return new NameAndId
+            return new ValueAndId
             {
                 Id = json.id,
-                Name = json.name
+                Value = json.value
             };
         }
 
@@ -80,12 +80,12 @@ namespace getAddress.Sdk.Api
             };
         }
 
-        public async  Task<RemoveDomainWhitelistResponse> Remove(RemoveDomainWhitelistRequest request)
+        public async  Task<RemoveIpAddressWhitelistResponse> Remove(RemoveIpAddressWhitelistRequest request)
         {
             return await Remove(Api, request, Path, AdminKey);
         }
 
-        public async static Task<RemoveDomainWhitelistResponse> Remove(GetAddesssApi api, RemoveDomainWhitelistRequest request, string path, AdminKey adminKey)
+        public async static Task<RemoveIpAddressWhitelistResponse> Remove(GetAddesssApi api, RemoveIpAddressWhitelistRequest request, string path, AdminKey adminKey)
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
             if (request == null) throw new ArgumentNullException(nameof(request));
@@ -102,18 +102,18 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                return new RemoveDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
+                return new RemoveIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
             }
 
-            return new RemoveDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            return new RemoveIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
-        public async  Task<ListDomainWhitelistResponse> List()
+        public async  Task<ListIpAddressWhitelistResponse> List()
         {
             return await List(Api, Path, AdminKey);
         }
 
-        public async static Task<ListDomainWhitelistResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
+        public async static Task<ListIpAddressWhitelistResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
             if (path == null) throw new ArgumentNullException(nameof(path));
@@ -126,20 +126,20 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                return new ListDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
+                return new ListIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
             }
 
-            return new ListDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            return new ListIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
 
 
-        public async Task<GetDomainWhitelistResponse> Get(string id)
+        public async Task<GetIpAddressWhitelistResponse> Get(string id)
         {
             return await Get(Api, Path, AdminKey, id);
         }
 
-        public async static Task<GetDomainWhitelistResponse> Get(GetAddesssApi api, string path, AdminKey adminKey, string id)
+        public async static Task<GetIpAddressWhitelistResponse> Get(GetAddesssApi api, string path, AdminKey adminKey, string id)
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
             if (path == null) throw new ArgumentNullException(nameof(path));
@@ -156,12 +156,12 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                var nameAndId = GetNameAndId(body);
+                var valueAndId = GetValueAndId(body);
 
-                return new GetDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, nameAndId.Id, nameAndId.Name);
+                return new GetIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, valueAndId.Id, valueAndId.Value);
             }
 
-            return new GetDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            return new GetIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
     }
 }

@@ -13,8 +13,6 @@ namespace getAddress.Sdk.Api.Requests
         }
         public AddDomainWhitelistRequest(string name)
         {
-            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
-
             Name = name;
         }
     }
