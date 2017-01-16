@@ -43,43 +43,6 @@ namespace getAddress.Sdk.Api
             return new AddDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase,body);
         }
 
-        private class MessageAndId
-        {
-            public string Id { get; set; }
-            public string Message { get; set; }
-        }
-
-        private class NameAndId
-        {
-            public string Id { get; set; }
-            public string Name { get; set; }
-        }
-
-        private static NameAndId GetNameAndId(string body)
-        {
-            if (string.IsNullOrWhiteSpace(body)) return new NameAndId();
-
-            var json = JsonConvert.DeserializeObject<dynamic>(body);
-
-            return new NameAndId
-            {
-                Id = json.id,
-                Name = json.name
-            };
-        }
-
-        private static MessageAndId GetMessageAndId(string body)
-        {
-            if (string.IsNullOrWhiteSpace(body)) return new MessageAndId();
-
-            var json = JsonConvert.DeserializeObject<dynamic>(body);
-
-            return new MessageAndId {
-                 Id= json.id,
-                 Message = json.message
-            };
-        }
-
         public async  Task<RemoveDomainWhitelistResponse> Remove(RemoveDomainWhitelistRequest request)
         {
             return await Remove(Api, request, Path, AdminKey);

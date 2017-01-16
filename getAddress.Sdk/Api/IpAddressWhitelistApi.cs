@@ -43,43 +43,6 @@ namespace getAddress.Sdk.Api
             return new AddIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase,body);
         }
 
-        private class MessageAndId
-        {
-            public string Id { get; set; }
-            public string Message { get; set; }
-        }
-
-        private class ValueAndId
-        {
-            public string Id { get; set; }
-            public string Value { get; set; }
-        }
-
-        private static ValueAndId GetValueAndId(string body)
-        {
-            if (string.IsNullOrWhiteSpace(body)) return new ValueAndId();
-
-            var json = JsonConvert.DeserializeObject<dynamic>(body);
-
-            return new ValueAndId
-            {
-                Id = json.id,
-                Value = json.value
-            };
-        }
-
-        private static MessageAndId GetMessageAndId(string body)
-        {
-            if (string.IsNullOrWhiteSpace(body)) return new MessageAndId();
-
-            var json = JsonConvert.DeserializeObject<dynamic>(body);
-
-            return new MessageAndId {
-                 Id= json.id,
-                 Message = json.message
-            };
-        }
-
         public async  Task<RemoveIpAddressWhitelistResponse> Remove(RemoveIpAddressWhitelistRequest request)
         {
             return await Remove(Api, request, Path, AdminKey);

@@ -34,6 +34,10 @@ namespace getAddress.Sdk
             DomainWhitelist = new DomainWhitelistApi(AdminKey, this);
 
             IpAddressWhitelist = new IpAddressWhitelistApi(AdminKey, this);
+
+            PrivateAddress = new PrivateAddressApi(AdminKey, this);
+
+            Usage = new UsageApi(AdminKey, this);
         }
 
         public ApiKey ApiKey
@@ -46,12 +50,22 @@ namespace getAddress.Sdk
             get;
         }
 
+        public PrivateAddressApi PrivateAddress
+        {
+            get;
+        }
+
         public DomainWhitelistApi DomainWhitelist
         {
             get;
         }
 
         public IpAddressWhitelistApi IpAddressWhitelist
+        {
+            get;
+        }
+
+        public UsageApi Usage
         {
             get;
         }
