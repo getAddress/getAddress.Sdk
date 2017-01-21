@@ -38,6 +38,8 @@ namespace getAddress.Sdk
             PrivateAddress = new PrivateAddressApi(AdminKey, this);
 
             Usage = new UsageApi(AdminKey, this);
+
+            BillingAddress = new BillingAddressApi(AdminKey, this);
         }
 
         public ApiKey ApiKey
@@ -46,6 +48,11 @@ namespace getAddress.Sdk
         }
 
         public AdminKey AdminKey
+        {
+            get;
+        }
+
+        public BillingAddressApi BillingAddress
         {
             get;
         }
@@ -94,13 +101,35 @@ namespace getAddress.Sdk
             if (client == null) throw new ArgumentNullException(nameof(client));
             if (path == null) throw new ArgumentNullException(nameof(path));
 
+            HttpContent httpContent = GetHttpContent(client, entity);
+
+            return await client.PostAsync(path, httpContent);
+        }
+
+        internal async Task<HttpResponseMessage> Put(string path, object entity = null)
+        {
+            return await Put(_client, path, entity);
+        }
+
+        internal static async Task<HttpResponseMessage> Put(HttpClient client, string path, object entity = null)
+        {
+            if (client == null) throw new ArgumentNullException(nameof(client));
+            if (path == null) throw new ArgumentNullException(nameof(path));
+            
+            HttpContent httpContent = GetHttpContent(client, entity);
+
+            return await client.PutAsync(path, httpContent);
+        }
+
+        private static  HttpContent GetHttpContent(HttpClient client, object entity = null)
+        {
             entity = entity ?? string.Empty;
 
-            var jsonString = await Task.Factory.StartNew(() => JsonConvert.SerializeObject(entity));
+            var jsonString = JsonConvert.SerializeObject(entity);
             HttpContent httpContent = new StringContent(jsonString);
             httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            return await client.PostAsync(path, httpContent);
+            return httpContent;
         }
 
         internal  async Task<HttpResponseMessage> Delete(string path)

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api.Responses
 {
+
     public abstract class GetUsageResponse : AdminResponse
     {
 

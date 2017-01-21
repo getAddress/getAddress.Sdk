@@ -46,11 +46,13 @@
   <ItemGroup>
     <Compile Include="ApiKey.cs" />
     <Compile Include="Api\ApiBase.cs" />
+    <Compile Include="Api\BillingAddressApi.cs" />
     <Compile Include="Api\IpAddressWhitelistApi.cs" />
     <Compile Include="Api\DomainWhitelistApi.cs" />
     <Compile Include="Api\PrivateAddressApi.cs" />
     <Compile Include="Api\Requests\AddPrivateAddressRequest.cs" />
     <Compile Include="Api\Requests\AddIpAddressWhitelistRequest.cs" />
+    <Compile Include="Api\Requests\BillingAddressRequest.cs" />
     <Compile Include="Api\Requests\GetPrivateAddressRequest.cs" />
     <Compile Include="Api\Requests\ListPrivateAddressRequest.cs" />
     <Compile Include="Api\Requests\RemoveIpAddressWhitelistRequest.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="Api\Responses\AddPrivateAddressResponse.cs" />
     <Compile Include="Api\Responses\Address.cs" />
     <Compile Include="Api\Responses\AdminResponse.cs" />
+    <Compile Include="Api\Responses\BillingAddressResponse.cs" />
     <Compile Include="Api\Responses\GetIpAddressWhitelistResponse.cs" />
     <Compile Include="Api\Responses\GetDomainWhitelistResponse.cs" />
     <Compile Include="Api\Responses\GetPrivateAddressResponse.cs" />

@@ -24,7 +24,7 @@ namespace getAddress.Sdk.Api
         {
             var fullPath = $"{path}{day}/{month}/{year}";
 
-            return await Get(api, fullPath, adminKey, day, month, year);
+            return await Get(api, fullPath, adminKey);
         }
         public async Task<GetUsageResponse> Get()
         {
