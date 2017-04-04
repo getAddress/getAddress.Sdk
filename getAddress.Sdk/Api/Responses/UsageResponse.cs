@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace getAddress.Sdk.Api.Responses
+﻿namespace getAddress.Sdk.Api.Responses
 {
+    public class Usage
+    {
+        public int Count { get; set; }
+
+        public int Limit1 { get; set; }
+
+        public int Limit2 { get; set; }
+    }
 
     public abstract class GetUsageResponse : AdminResponse
     {
@@ -17,17 +19,15 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Success : GetUsageResponse
         {
-            public int DailyRequestCount { get; set; }
-
-            public int DailyRequestLimit1 { get; set; }
-
-            public int DailyRequestLimit2 { get; set; }
+            public Usage Usage { get; set; }
 
             internal Success(int statusCode, string reasonPhase, string raw, int counter, int limit1, int limit2) : base(statusCode, reasonPhase, raw, true)
             {
-                DailyRequestCount = counter;
-                DailyRequestLimit1 = limit1;
-                DailyRequestLimit2 = limit2;
+                Usage = new Usage {
+                    Count = counter,
+                    Limit1 = limit1,
+                    Limit2 = limit2
+                };
             }
         }
 

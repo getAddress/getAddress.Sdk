@@ -8,7 +8,7 @@ namespace getAddress.Sdk.Api
     public class UsageApi: AdminApiBase
     {
 
-        public const string Path = "usage/";
+        public const string Path = "v2/usage/";
 
         internal UsageApi(AdminKey adminKey, GetAddesssApi api) : base(adminKey,api)
         {
@@ -48,7 +48,8 @@ namespace getAddress.Sdk.Api
             {
                 var usage = GetUsage(body);
 
-                return new GetUsageResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, usage.Counter,usage.Limit1, usage.Limit2);
+                return new GetUsageResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, usage.Count,
+                    usage.Limit1, usage.Limit2);
             }
 
             return new GetUsageResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
@@ -63,17 +64,12 @@ namespace getAddress.Sdk.Api
 
             return new Usage
             {
-                Counter = json.DailyRequestCount,
-                Limit1 = json.DailyRequestLimit1,
-                Limit2 = json.DailyRequestLimit2
+                 Count = json.count,
+                 Limit1 = json.limit1,
+                 Limit2 = json.limit2
             };
         }
 
-        private class Usage 
-        {
-            public int Counter { get; set; }
-            public int Limit1 { get; set; }
-            public int Limit2 { get; set; }
-        }
+     
     }
 }

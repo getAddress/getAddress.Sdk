@@ -1,7 +1,9 @@
 ﻿using getAddress.Sdk.Api.Requests;
 using getAddress.Sdk.Api.Responses;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
@@ -89,12 +91,36 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                return new ListIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
+                var list = GetLists(body);
+
+                return new ListIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,list);
             }
 
             return new ListIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
+
+        private static IEnumerable<IpAddressWhitelist> GetLists(string body)
+        {
+            if (string.IsNullOrWhiteSpace(body)) return new List<IpAddressWhitelist>();
+
+            var json = JsonConvert.DeserializeObject<JArray>(body);
+
+            var list = new List<IpAddressWhitelist>();
+
+            foreach (dynamic jsonObj in json)
+            {
+                var obj = new IpAddressWhitelist
+                {
+                    Id = jsonObj.id,
+                    Value = jsonObj.value
+                };
+
+                list.Add(obj);
+            }
+
+            return list;
+        }
 
 
         public async Task<GetIpAddressWhitelistResponse> Get(string id)
@@ -119,12 +145,25 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                var valueAndId = GetValueAndId(body);
+                var valueAndId = GetIpAddressWhitelist(body);
 
                 return new GetIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, valueAndId.Id, valueAndId.Value);
             }
 
             return new GetIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+        }
+
+        protected static IpAddressWhitelist GetIpAddressWhitelist(string body)
+        {
+            if (string.IsNullOrWhiteSpace(body)) return new IpAddressWhitelist();
+
+            var json = JsonConvert.DeserializeObject<dynamic>(body);
+
+            return new IpAddressWhitelist
+            {
+                Id = json.id,
+                Value = json.value
+            };
         }
     }
 }

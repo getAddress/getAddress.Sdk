@@ -1,5 +1,7 @@
 ﻿
 
+using System.Collections.Generic;
+
 namespace getAddress.Sdk.Api.Responses
 {
     public class ListPrivateAddressResponse: AdminResponse
@@ -11,10 +13,10 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Success : ListPrivateAddressResponse
         {
-            public AddressAndId[] Addresses { get; }
-            internal Success(int statusCode, string reasonPhase, string raw, AddressAndId[] addresses) : base(statusCode, reasonPhase, raw, true)
+            public IEnumerable<PrivateAddress> PrivateAddresses { get; }
+            internal Success(int statusCode, string reasonPhase, string raw, IEnumerable<PrivateAddress> privateAddresses) : base(statusCode, reasonPhase, raw, true)
             {
-                Addresses = addresses;
+                PrivateAddresses = privateAddresses;
             }
         }
 

@@ -1,6 +1,18 @@
 ﻿
 namespace getAddress.Sdk.Api.Responses
 {
+    public class PrivateAddress
+    {
+        public string Id { get; set; }
+        public string Line1 { get; set; }
+        public string Line2 { get; set; }
+        public string Line3 { get; set; }
+        public string Line4 { get; set; }
+        public string Locality { get; set; }
+        public string TownOrCity { get; set; }
+        public string County { get; set; }
+    }
+
     public class GetPrivateAddressResponse : AdminResponse
     {
 
@@ -10,27 +22,23 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Success : GetPrivateAddressResponse
         {
-            public string Id { get; }
-            public string Line1 { get; }
-            public string Line2 { get; }
-            public string Line3 { get; }
-            public string Line4 { get; }
-            public string Locality { get; }
-            public string TownOrCity { get; }
-            public string County { get; }
+            public PrivateAddress PrivateAddress { get; }
 
 
             internal Success(int statusCode, string reasonPhase, string raw, string id,
-                string line1,string line2, string line3, string line4,string locality, string townOrCity, string county) : base(statusCode, reasonPhase, raw, true)
+                string line1, string line2, string line3, string line4, string locality, string townOrCity, string county) : base(statusCode, reasonPhase, raw, true)
             {
-                Id = id;
-                Line1 = line1;
-                Line2 = line2;
-                Line3 = line3;
-                Line4 = line4;
-                Locality = locality;
-                TownOrCity = townOrCity;
-                County = county;
+                PrivateAddress = new PrivateAddress
+                {
+                    Id = id,
+                    Line1 = line1,
+                    Line2 = line2,
+                    Line3 = line3,
+                    Line4 = line4,
+                    Locality = locality,
+                    TownOrCity = townOrCity,
+                    County = county
+                };
             }
         }
 

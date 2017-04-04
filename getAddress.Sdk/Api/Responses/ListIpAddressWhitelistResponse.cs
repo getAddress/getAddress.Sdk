@@ -1,5 +1,7 @@
 ﻿
 
+using System.Collections.Generic;
+
 namespace getAddress.Sdk.Api.Responses
 {
     public abstract class ListIpAddressWhitelistResponse: AdminResponse
@@ -11,8 +13,12 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Success: ListIpAddressWhitelistResponse
         {
-            internal Success(int statusCode, string reasonPhase, string raw):base(statusCode, reasonPhase, raw,true)
+            public IEnumerable<IpAddressWhitelist> IpAddressWhitelists { get; }
+
+            internal Success(int statusCode, string reasonPhase, string raw, IEnumerable<IpAddressWhitelist> ipAddressWhitelists) :base(statusCode, reasonPhase, raw,true)
             {
+                
+                    IpAddressWhitelists = ipAddressWhitelists;
             }
         }
 

@@ -2,6 +2,11 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
+    public class IpAddressWhitelist {
+        public string Id { get; set; }
+        public string Value { get; set; }
+        }
+
     public abstract class GetIpAddressWhitelistResponse: AdminResponse
     {
 
@@ -12,14 +17,12 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Success: GetIpAddressWhitelistResponse
         {
-            public string Id { get; set; }
-
-            public string Value { get; set; }
+            public IpAddressWhitelist IpAddressWhitelist { get; set; }
 
             internal Success(int statusCode, string reasonPhase, string raw,string id, string value):base(statusCode, reasonPhase, raw,true)
             {
-                Id = id;
-                Value = value;
+                IpAddressWhitelist.Id = id;
+                IpAddressWhitelist.Value = value;
             }
         }
 

@@ -2,6 +2,13 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
+    public class DomainWhitelist
+    {
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+    }
+
     public abstract class GetDomainWhitelistResponse: AdminResponse
     {
 
@@ -12,14 +19,14 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Success: GetDomainWhitelistResponse
         {
-            public string Id { get; set; }
+            public DomainWhitelist DomainWhitelist { get; }
 
-            public string Name { get; set; }
-
-            internal Success(int statusCode, string reasonPhase, string raw,string id, string name):base(statusCode, reasonPhase, raw,true)
+            internal Success(int statusCode, string reasonPhase, string raw, string id, string name) : base(statusCode, reasonPhase, raw, true)
             {
-                Id = id;
-                Name = name;
+                DomainWhitelist = new DomainWhitelist {
+                    Id = id,
+                    Name = name
+                };
             }
         }
 
@@ -30,5 +37,7 @@ namespace getAddress.Sdk.Api.Responses
 
             }
         }
+
+       
     }
 }

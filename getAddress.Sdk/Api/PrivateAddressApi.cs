@@ -1,6 +1,8 @@
 ﻿using getAddress.Sdk.Api.Requests;
 using getAddress.Sdk.Api.Responses;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
@@ -95,7 +97,7 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                var addresses = GetAddressAndIds(body);
+                var addresses = GetPrivateAddresses(body);
 
                 return new ListPrivateAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,addresses);
             }
@@ -125,12 +127,62 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                var addressAndId = GetAddressAndId(body);
+                var addressAndId = GetPrivateAddress(body);
                 return new GetPrivateAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, addressAndId.Id,
                     addressAndId.Line1, addressAndId.Line2, addressAndId.Line3, addressAndId.Line4, addressAndId.Locality, addressAndId.TownOrCity, addressAndId.County);
             }
 
             return new GetPrivateAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
+
+
+
+        private static PrivateAddress GetPrivateAddress(string body)
+        {
+            if (string.IsNullOrWhiteSpace(body)) return new PrivateAddress();
+
+            var json = JsonConvert.DeserializeObject<dynamic>(body);
+
+            return new PrivateAddress
+            {
+                Id = json.id,
+                Line1 = json.line1,
+                Line2 = json.line2,
+                Line3 = json.line3,
+                Line4 = json.line4,
+                Locality = json.locality,
+                TownOrCity = json.townOrcity,
+                County = json.county
+
+            };
+        }
+
+        private static IEnumerable<PrivateAddress> GetPrivateAddresses(string body)
+        {
+            if (string.IsNullOrWhiteSpace(body)) return new List<PrivateAddress>();
+
+            var jsons = JsonConvert.DeserializeObject<dynamic[]>(body);
+
+            var addressList = new List<PrivateAddress>();
+            foreach (var json in jsons)
+            {
+                var addressAndId = new PrivateAddress
+                {
+                    Id = json.id,
+                    Line1 = json.line1,
+                    Line2 = json.line2,
+                    Line3 = json.line3,
+                    Line4 = json.line4,
+                    Locality = json.locality,
+                    TownOrCity = json.townOrcity,
+                    County = json.county
+
+                };
+                addressList.Add(addressAndId);
+            }
+
+            return addressList.ToArray();
+        }
+
     }
 }

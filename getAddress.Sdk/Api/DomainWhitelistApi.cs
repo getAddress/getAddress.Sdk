@@ -1,7 +1,9 @@
 ﻿using getAddress.Sdk.Api.Requests;
 using getAddress.Sdk.Api.Responses;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
@@ -89,12 +91,36 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                return new ListDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
+                var list = GetDomainWhitelists(body);
+
+                return new ListDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,list);
             }
 
             return new ListDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
+
+        private static IEnumerable<DomainWhitelist> GetDomainWhitelists(string body)
+        {
+            if (string.IsNullOrWhiteSpace(body)) return new List<DomainWhitelist>();
+
+            var json = JsonConvert.DeserializeObject<JArray>(body);
+
+            var list = new List<DomainWhitelist>();
+
+            foreach (dynamic jsonDomain in json)
+            {
+                var domain =  new DomainWhitelist
+                {
+                    Id = jsonDomain.id,
+                    Name = jsonDomain.name
+                };
+
+                list.Add(domain);
+            }
+
+            return list;
+        }
 
 
         public async Task<GetDomainWhitelistResponse> Get(string id)
@@ -119,12 +145,25 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                var nameAndId = GetNameAndId(body);
+                var nameAndId = GetDomainWhitelist(body);
 
                 return new GetDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, nameAndId.Id, nameAndId.Name);
             }
 
             return new GetDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+        }
+
+        protected static DomainWhitelist GetDomainWhitelist(string body)
+        {
+            if (string.IsNullOrWhiteSpace(body)) return new DomainWhitelist();
+
+            var json = JsonConvert.DeserializeObject<dynamic>(body);
+
+            return new DomainWhitelist
+            {
+                Id = json.id,
+                Name = json.name
+            };
         }
     }
 }

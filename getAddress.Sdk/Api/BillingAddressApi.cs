@@ -15,6 +15,11 @@ namespace getAddress.Sdk.Api
 
         }
 
+        public async Task<BillingAddressResponse> Get()
+        {
+            return await Get(Api, Path, AdminKey);
+        }
+
         public async static Task<BillingAddressResponse> Get(GetAddesssApi api, string path, AdminKey adminKey)
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
