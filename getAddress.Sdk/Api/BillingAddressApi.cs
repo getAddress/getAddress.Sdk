@@ -44,6 +44,11 @@ namespace getAddress.Sdk.Api
             return new BillingAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
+        public async Task<BillingAddressResponse> Update(BillingAddressRequest request)
+        {
+            return await Update(Api, request, Path, AdminKey);
+        }
+
         public async static Task<BillingAddressResponse> Update(GetAddesssApi api, BillingAddressRequest request, string path, AdminKey adminKey)
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
