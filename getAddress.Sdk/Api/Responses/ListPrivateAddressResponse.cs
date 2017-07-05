@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public class ListPrivateAddressResponse: AdminResponse
+    public class ListPrivateAddressResponse: ResponseBase
     {
 
         protected ListPrivateAddressResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)

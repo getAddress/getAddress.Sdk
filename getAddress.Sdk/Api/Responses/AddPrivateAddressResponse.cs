@@ -2,7 +2,7 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public class AddPrivateAddressResponse: AdminResponse
+    public class AddPrivateAddressResponse: ResponseBase
     {
         protected AddPrivateAddressResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)
         {

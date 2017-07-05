@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>getAddress.Sdk</RootNamespace>
     <AssemblyName>getAddress.Sdk</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\DeveloperServices\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -45,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiKey.cs" />
+    <Compile Include="Api\AddressApi.cs" />
     <Compile Include="Api\ApiBase.cs" />
     <Compile Include="Api\BillingAddressApi.cs" />
     <Compile Include="Api\IpAddressWhitelistApi.cs" />
@@ -53,6 +55,7 @@
     <Compile Include="Api\Requests\AddPrivateAddressRequest.cs" />
     <Compile Include="Api\Requests\AddIpAddressWhitelistRequest.cs" />
     <Compile Include="Api\Requests\BillingAddressRequest.cs" />
+    <Compile Include="Api\Requests\GetAddressRequest.cs" />
     <Compile Include="Api\Requests\GetPrivateAddressRequest.cs" />
     <Compile Include="Api\Requests\ListPrivateAddressRequest.cs" />
     <Compile Include="Api\Requests\RemoveIpAddressWhitelistRequest.cs" />
@@ -61,7 +64,9 @@
     <Compile Include="Api\Requests\RemovePrivateAddressRequest.cs" />
     <Compile Include="Api\Responses\AddIpAddressWhitelistResponse.cs" />
     <Compile Include="Api\Responses\AddPrivateAddressResponse.cs" />
-    <Compile Include="Api\Responses\AdminResponse.cs" />
+    <Compile Include="Api\Responses\Address.cs" />
+    <Compile Include="Api\Responses\GetAddressResponse.cs" />
+    <Compile Include="Api\Responses\ResponseBase.cs" />
     <Compile Include="Api\Responses\BillingAddressResponse.cs" />
     <Compile Include="Api\Responses\GetIpAddressWhitelistResponse.cs" />
     <Compile Include="Api\Responses\GetDomainWhitelistResponse.cs" />

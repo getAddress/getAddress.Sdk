@@ -2,7 +2,7 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class AddIpAddressWhitelistResponse: AdminResponse
+    public abstract class AddIpAddressWhitelistResponse: ResponseBase
     {
 
         protected AddIpAddressWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)

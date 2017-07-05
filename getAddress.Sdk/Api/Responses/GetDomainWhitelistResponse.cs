@@ -9,7 +9,7 @@ namespace getAddress.Sdk.Api.Responses
         public string Name { get; set; }
     }
 
-    public abstract class GetDomainWhitelistResponse: AdminResponse
+    public abstract class GetDomainWhitelistResponse: ResponseBase
     {
 
         protected GetDomainWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)

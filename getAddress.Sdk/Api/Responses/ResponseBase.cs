@@ -1,9 +1,9 @@
 ﻿namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class AdminResponse
+    public abstract class ResponseBase
     {
 
-        protected AdminResponse(int statusCode, string reasonPhase, string raw, bool isSuccess)
+        protected ResponseBase(int statusCode, string reasonPhase, string raw, bool isSuccess)
         {
             StatusCode = statusCode;
             ReasonPhase = reasonPhase;

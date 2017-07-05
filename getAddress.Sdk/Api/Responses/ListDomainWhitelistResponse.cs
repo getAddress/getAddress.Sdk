@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class ListDomainWhitelistResponse: AdminResponse
+    public abstract class ListDomainWhitelistResponse: ResponseBase
     {
 
         protected ListDomainWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)

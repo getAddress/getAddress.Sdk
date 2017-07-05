@@ -9,7 +9,7 @@
         public int Limit2 { get; set; }
     }
 
-    public abstract class GetUsageResponse : AdminResponse
+    public abstract class GetUsageResponse : ResponseBase
     {
 
         protected GetUsageResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)

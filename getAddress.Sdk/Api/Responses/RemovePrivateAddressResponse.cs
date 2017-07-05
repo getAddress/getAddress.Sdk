@@ -2,7 +2,7 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public class RemovePrivateAddressResponse: AdminResponse
+    public class RemovePrivateAddressResponse: ResponseBase
     {
 
         protected RemovePrivateAddressResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)

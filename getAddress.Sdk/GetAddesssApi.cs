@@ -13,11 +13,11 @@ namespace getAddress.Sdk
 
         private readonly HttpClient _client;
 
-        public GetAddesssApi(ApiKey apiKey, HttpClient httpClient = null) : this(apiKey, null, httpClient)
+        public GetAddesssApi(ApiKey apiKey, HttpClient httpClient = null) : this(apiKey, new AdminKey(string.Empty), httpClient)
         {
         }
 
-        public GetAddesssApi(AdminKey adminKey, HttpClient httpClient = null):this(null,adminKey,httpClient)
+        public GetAddesssApi(AdminKey adminKey, HttpClient httpClient = null):this(new ApiKey(string.Empty),adminKey,httpClient)
         {
         }
 
@@ -40,6 +40,8 @@ namespace getAddress.Sdk
             Usage = new UsageApi(AdminKey, this);
 
             BillingAddress = new BillingAddressApi(AdminKey, this);
+
+            Address = new AddressApi(ApiKey, this);
         }
 
         public ApiKey ApiKey
@@ -73,6 +75,11 @@ namespace getAddress.Sdk
         }
 
         public UsageApi Usage
+        {
+            get;
+        }
+
+        public AddressApi Address
         {
             get;
         }

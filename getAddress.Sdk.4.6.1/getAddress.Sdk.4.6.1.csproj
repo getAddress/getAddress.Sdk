@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FA2861F0-713A-422F-A3F5-7314A7FA700A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>getAddress.Sdk._4._6._1</RootNamespace>
+    <AssemblyName>getAddress.Sdk.4.6.1</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\getAddress.Sdk\ApiKey.cs">
+      <Link>ApiKey.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\AddressApi.cs">
+      <Link>Api\AddressApi.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\ApiBase.cs">
+      <Link>Api\ApiBase.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\BillingAddressApi.cs">
+      <Link>Api\BillingAddressApi.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\DomainWhitelistApi.cs">
+      <Link>Api\DomainWhitelistApi.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\IpAddressWhitelistApi.cs">
+      <Link>Api\IpAddressWhitelistApi.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\PrivateAddressApi.cs">
+      <Link>Api\PrivateAddressApi.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Requests\AddDomainWhitelistRequest.cs">
+      <Link>Api\Requests\AddDomainWhitelistRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Requests\AddIpAddressWhitelistRequest.cs">
+      <Link>Api\Requests\AddIpAddressWhitelistRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Requests\AddPrivateAddressRequest.cs">
+      <Link>Api\Requests\AddPrivateAddressRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Requests\BillingAddressRequest.cs">
+      <Link>Api\Requests\BillingAddressRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Requests\GetAddressRequest.cs">
+      <Link>Api\Requests\GetAddressRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Requests\GetPrivateAddressRequest.cs">
+      <Link>Api\Requests\GetPrivateAddressRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Requests\ListPrivateAddressRequest.cs">
+      <Link>Api\Requests\ListPrivateAddressRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Requests\RemoveDomainWhitelistRequest.cs">
+      <Link>Api\Requests\RemoveDomainWhitelistRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Requests\RemoveIpAddressWhitelistRequest.cs">
+      <Link>Api\Requests\RemoveIpAddressWhitelistRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Requests\RemovePrivateAddressRequest.cs">
+      <Link>Api\Requests\RemovePrivateAddressRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\AddDomainWhitelistResponse.cs">
+      <Link>Api\Responses\AddDomainWhitelistResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\AddIpAddressWhitelistResponse.cs">
+      <Link>Api\Responses\AddIpAddressWhitelistResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\AddPrivateAddressResponse.cs">
+      <Link>Api\Responses\AddPrivateAddressResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\Address.cs">
+      <Link>Api\Responses\Address.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\BillingAddressResponse.cs">
+      <Link>Api\Responses\BillingAddressResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\GetAddressResponse.cs">
+      <Link>Api\Responses\GetAddressResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\GetDomainWhitelistResponse.cs">
+      <Link>Api\Responses\GetDomainWhitelistResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\GetIpAddressWhitelistResponse.cs">
+      <Link>Api\Responses\GetIpAddressWhitelistResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\GetPrivateAddressResponse.cs">
+      <Link>Api\Responses\GetPrivateAddressResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\ListDomainWhitelistResponse.cs">
+      <Link>Api\Responses\ListDomainWhitelistResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\ListIpAddressWhitelistResponse.cs">
+      <Link>Api\Responses\ListIpAddressWhitelistResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\ListPrivateAddressResponse.cs">
+      <Link>Api\Responses\ListPrivateAddressResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\RemoveDomainWhitelistResponse.cs">
+      <Link>Api\Responses\RemoveDomainWhitelistResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\RemoveIpAddressWhitelistResponse.cs">
+      <Link>Api\Responses\RemoveIpAddressWhitelistResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\RemovePrivateAddressResponse.cs">
+      <Link>Api\Responses\RemovePrivateAddressResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\ResponseBase.cs">
+      <Link>Api\Responses\ResponseBase.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\UsageResponse.cs">
+      <Link>Api\Responses\UsageResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\UsageApi.cs">
+      <Link>Api\UsageApi.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\GetAddesssApi.cs">
+      <Link>GetAddesssApi.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

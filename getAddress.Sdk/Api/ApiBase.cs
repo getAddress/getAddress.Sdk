@@ -5,8 +5,22 @@ using System.Collections.Generic;
 
 namespace getAddress.Sdk.Api
 {
+    public abstract class ApiKeyBase : ApiBase
+    {
+        public ApiKey ApiKey
+        {
+            get;
+        }
 
-    public abstract class AdminApiBase:ApiBase
+        protected ApiKeyBase(ApiKey apiKey, GetAddesssApi api) : base(api)
+        {
+            if (apiKey == null) throw new ArgumentNullException(nameof(apiKey));
+
+            ApiKey = apiKey;
+        }
+    }
+
+        public abstract class AdminApiBase:ApiBase
     {
         public AdminKey AdminKey
         {
@@ -58,7 +72,5 @@ namespace getAddress.Sdk.Api
 
             Api = api;
         }
-
-
     }
 }
