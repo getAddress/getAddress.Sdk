@@ -58,10 +58,11 @@
     <Compile Include="KeyHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AddressTests.cs" />
+    <Compile Include="IpAddressTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\getAddress.Sdk\getAddress.Sdk.csproj">
-      <Project>{231d8663-c341-4ae3-8701-4254f81fac64}</Project>
+      <Project>{231D8663-C341-4AE3-8701-4254F81FAC64}</Project>
       <Name>getAddress.Sdk</Name>
     </ProjectReference>
   </ItemGroup>

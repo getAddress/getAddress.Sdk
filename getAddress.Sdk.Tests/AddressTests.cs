@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
+using getAddress.Sdk;
 using getAddress.Sdk.Api.Requests;
 
 namespace getAddress.Sdk.Tests

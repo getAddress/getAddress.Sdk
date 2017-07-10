@@ -21,8 +21,12 @@ namespace getAddress.Sdk.Api.Responses
 
             internal Success(int statusCode, string reasonPhase, string raw,string id, string value):base(statusCode, reasonPhase, raw,true)
             {
-                IpAddressWhitelist.Id = id;
-                IpAddressWhitelist.Value = value;
+                IpAddressWhitelist = new IpAddressWhitelist
+                {
+                    Id = id,
+                    Value = value
+                };
+
             }
         }
 
