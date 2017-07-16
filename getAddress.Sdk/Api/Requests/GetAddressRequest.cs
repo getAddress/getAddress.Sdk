@@ -17,11 +17,18 @@ namespace getAddress.Sdk.Api.Requests
             get;
         }
 
+        [JsonProperty("sort")]
+        public bool Sort
+        {
+            get;
+        }
 
-        public GetAddressRequest(string postcode,string house = null)
+
+        public GetAddressRequest(string postcode,string house = null, bool sort = false)
         {
             Postcode = postcode;
             House = house;
+            Sort = sort;
         }
 
     }
