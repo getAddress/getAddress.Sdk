@@ -67,7 +67,9 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                return new RemoveIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
+                var message = GetMessage(body);
+
+                return new RemoveIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,message);
             }
 
             return new RemoveIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);

@@ -60,6 +60,15 @@ namespace getAddress.Sdk.Api
                 Message = json.message
             };
         }
+
+        protected static string GetMessage(string body)
+        {
+            if (string.IsNullOrWhiteSpace(body)) return string.Empty;
+
+            var json = JsonConvert.DeserializeObject<dynamic>(body);
+
+            return json.message;
+        }
     }
 
      public abstract class ApiBase

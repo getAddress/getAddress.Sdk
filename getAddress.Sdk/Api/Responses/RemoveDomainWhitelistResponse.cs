@@ -13,9 +13,11 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Success : RemoveDomainWhitelistResponse
         {
-            internal Success(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, true)
-            {
+            public string Message { get; set; }
 
+            internal Success(int statusCode, string reasonPhase, string raw, string message) : base(statusCode, reasonPhase, raw, true)
+            {
+                Message = message;
             }
         }
 
