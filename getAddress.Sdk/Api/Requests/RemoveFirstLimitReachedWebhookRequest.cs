@@ -7,11 +7,11 @@ namespace getAddress.Sdk.Api.Requests
     public class RemoveFirstLimitReachedWebhookRequest
     {
         [JsonProperty("id")]
-        public string Id
+        public int Id
         {
             get;
         }
-        public RemoveFirstLimitReachedWebhookRequest(string id)
+        public RemoveFirstLimitReachedWebhookRequest(int id)
         {
             Id = id;
         }

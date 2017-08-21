@@ -42,6 +42,8 @@ namespace getAddress.Sdk
             BillingAddress = new BillingAddressApi(AdminKey, this);
 
             Address = new AddressApi(ApiKey, this);
+
+            FirstLimitReachedWebhook = new FirstLimitReachedWebhookApi(AdminKey, this);
         }
 
         public ApiKey ApiKey
@@ -50,6 +52,11 @@ namespace getAddress.Sdk
         }
 
         public AdminKey AdminKey
+        {
+            get;
+        }
+
+        public FirstLimitReachedWebhookApi FirstLimitReachedWebhook
         {
             get;
         }

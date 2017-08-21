@@ -58,6 +58,7 @@
     <Compile Include="Api\Requests\AddIpAddressWhitelistRequest.cs" />
     <Compile Include="Api\Requests\BillingAddressRequest.cs" />
     <Compile Include="Api\Requests\GetAddressRequest.cs" />
+    <Compile Include="Api\Requests\GetFirstLimitReachedRequest.cs" />
     <Compile Include="Api\Requests\GetPrivateAddressRequest.cs" />
     <Compile Include="Api\Requests\ListPrivateAddressRequest.cs" />
     <Compile Include="Api\Requests\RemoveFirstLimitReachedWebhookRequest.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Api\Requests\RemoveDomainWhitelistRequest.cs" />
     <Compile Include="Api\Requests\AddDomainWhitelistRequest.cs" />
     <Compile Include="Api\Requests\RemovePrivateAddressRequest.cs" />
+    <Compile Include="Api\Responses\ListFirstLimitReachedWebhookResponse.cs" />
     <Compile Include="Api\Responses\RemoveFirstLimitReachedWebhookResponse.cs" />
     <Compile Include="Api\Responses\AddIpAddressWhitelistResponse.cs" />
     <Compile Include="Api\Responses\AddPrivateAddressResponse.cs" />

@@ -59,6 +59,9 @@
     <Compile Include="..\getAddress.Sdk\Api\DomainWhitelistApi.cs">
       <Link>Api\DomainWhitelistApi.cs</Link>
     </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\FirstLimitReachedWebhookApi.cs">
+      <Link>Api\FirstLimitReachedWebhookApi.cs</Link>
+    </Compile>
     <Compile Include="..\getAddress.Sdk\Api\IpAddressWhitelistApi.cs">
       <Link>Api\IpAddressWhitelistApi.cs</Link>
     </Compile>
@@ -67,6 +70,9 @@
     </Compile>
     <Compile Include="..\getAddress.Sdk\Api\Requests\AddDomainWhitelistRequest.cs">
       <Link>Api\Requests\AddDomainWhitelistRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Requests\AddFirstLimitReachedWebhookRequest.cs">
+      <Link>Api\Requests\AddFirstLimitReachedWebhookRequest.cs</Link>
     </Compile>
     <Compile Include="..\getAddress.Sdk\Api\Requests\AddIpAddressWhitelistRequest.cs">
       <Link>Api\Requests\AddIpAddressWhitelistRequest.cs</Link>
@@ -80,6 +86,9 @@
     <Compile Include="..\getAddress.Sdk\Api\Requests\GetAddressRequest.cs">
       <Link>Api\Requests\GetAddressRequest.cs</Link>
     </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Requests\GetFirstLimitReachedRequest.cs">
+      <Link>Api\Requests\GetFirstLimitReachedRequest.cs</Link>
+    </Compile>
     <Compile Include="..\getAddress.Sdk\Api\Requests\GetPrivateAddressRequest.cs">
       <Link>Api\Requests\GetPrivateAddressRequest.cs</Link>
     </Compile>
@@ -89,6 +98,9 @@
     <Compile Include="..\getAddress.Sdk\Api\Requests\RemoveDomainWhitelistRequest.cs">
       <Link>Api\Requests\RemoveDomainWhitelistRequest.cs</Link>
     </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Requests\RemoveFirstLimitReachedWebhookRequest.cs">
+      <Link>Api\Requests\RemoveFirstLimitReachedWebhookRequest.cs</Link>
+    </Compile>
     <Compile Include="..\getAddress.Sdk\Api\Requests\RemoveIpAddressWhitelistRequest.cs">
       <Link>Api\Requests\RemoveIpAddressWhitelistRequest.cs</Link>
     </Compile>
@@ -97,6 +109,9 @@
     </Compile>
     <Compile Include="..\getAddress.Sdk\Api\Responses\AddDomainWhitelistResponse.cs">
       <Link>Api\Responses\AddDomainWhitelistResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\AddFirstLimitReachedWebhookResponse.cs">
+      <Link>Api\Responses\AddFirstLimitReachedWebhookResponse.cs</Link>
     </Compile>
     <Compile Include="..\getAddress.Sdk\Api\Responses\AddIpAddressWhitelistResponse.cs">
       <Link>Api\Responses\AddIpAddressWhitelistResponse.cs</Link>
@@ -116,6 +131,9 @@
     <Compile Include="..\getAddress.Sdk\Api\Responses\GetDomainWhitelistResponse.cs">
       <Link>Api\Responses\GetDomainWhitelistResponse.cs</Link>
     </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\GetFirstLimitReachedWebhookResponse.cs">
+      <Link>Api\Responses\GetFirstLimitReachedWebhookResponse.cs</Link>
+    </Compile>
     <Compile Include="..\getAddress.Sdk\Api\Responses\GetIpAddressWhitelistResponse.cs">
       <Link>Api\Responses\GetIpAddressWhitelistResponse.cs</Link>
     </Compile>
@@ -125,6 +143,9 @@
     <Compile Include="..\getAddress.Sdk\Api\Responses\ListDomainWhitelistResponse.cs">
       <Link>Api\Responses\ListDomainWhitelistResponse.cs</Link>
     </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\ListFirstLimitReachedWebhookResponse.cs">
+      <Link>Api\Responses\ListFirstLimitReachedWebhookResponse.cs</Link>
+    </Compile>
     <Compile Include="..\getAddress.Sdk\Api\Responses\ListIpAddressWhitelistResponse.cs">
       <Link>Api\Responses\ListIpAddressWhitelistResponse.cs</Link>
     </Compile>
@@ -133,6 +154,9 @@
     </Compile>
     <Compile Include="..\getAddress.Sdk\Api\Responses\RemoveDomainWhitelistResponse.cs">
       <Link>Api\Responses\RemoveDomainWhitelistResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\RemoveFirstLimitReachedWebhookResponse.cs">
+      <Link>Api\Responses\RemoveFirstLimitReachedWebhookResponse.cs</Link>
     </Compile>
     <Compile Include="..\getAddress.Sdk\Api\Responses\RemoveIpAddressWhitelistResponse.cs">
       <Link>Api\Responses\RemoveIpAddressWhitelistResponse.cs</Link>

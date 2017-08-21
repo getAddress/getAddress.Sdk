@@ -1,7 +1,9 @@
 ﻿using getAddress.Sdk.Api.Requests;
 using getAddress.Sdk.Api.Responses;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
@@ -46,22 +48,26 @@ namespace getAddress.Sdk.Api
             return new RemoveFirstLimitReachedWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
-
-        public async Task<GetFirstLimitReachedWebhookResponse> Get()
+        public async Task<GetFirstLimitReachedWebhookResponse> Get(GetFirstLimitReachedRequest request)
         {
-            return await Get(Api, Path, AdminKey);
+            return await Get(Api, Path, AdminKey,request);
         }
 
-        public async static Task<GetFirstLimitReachedWebhookResponse> Get(GetAddesssApi api, string path, AdminKey adminKey)
+       
+
+        public async static Task<GetFirstLimitReachedWebhookResponse> Get(GetAddesssApi api, string path, AdminKey adminKey, GetFirstLimitReachedRequest request)
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
             if (path == null) throw new ArgumentNullException(nameof(path));
             if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
+            if (request == null) throw new ArgumentNullException(nameof(request));
 
+
+            var fullPath = path + request.Id;
 
             api.SetAuthorizationKey(adminKey);
 
-            var response = await api.Get(path);
+            var response = await api.Get(fullPath);
 
             var body = await response.Content.ReadAsStringAsync();
 
@@ -73,6 +79,34 @@ namespace getAddress.Sdk.Api
             }
 
             return new GetFirstLimitReachedWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+        }
+
+        public async Task<ListFirstLimitReachedWebhookResponse> List()
+        {
+            return await List(Api, Path, AdminKey);
+        }
+
+         public async static Task<ListFirstLimitReachedWebhookResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+            if (path == null) throw new ArgumentNullException(nameof(path));
+            if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
+
+
+            api.SetAuthorizationKey(adminKey);
+
+            var response = await api.Get(Path);
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var webhooks = ListFirstLimitReachedWebhooks(body);
+
+                return new ListFirstLimitReachedWebhookResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,webhooks);
+            }
+
+            return new ListFirstLimitReachedWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
 
@@ -103,19 +137,33 @@ namespace getAddress.Sdk.Api
             return new AddFirstLimitReachedWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase,body);
         }
 
-        private static FirstLimitWebhook GetFirstLimitWebhook(string body)
+        private static FirstLimitReachedWebhook GetFirstLimitWebhook(string body)
         {
-            if (string.IsNullOrWhiteSpace(body)) return new FirstLimitWebhook();
+            if (string.IsNullOrWhiteSpace(body)) return new FirstLimitReachedWebhook();
 
-            return JsonConvert.DeserializeObject<FirstLimitWebhook>(body);
+            return JsonConvert.DeserializeObject<FirstLimitReachedWebhook>(body);
         }
 
-        private class FirstLimitWebhook
+      private static IEnumerable<FirstLimitReachedWebhook> ListFirstLimitReachedWebhooks(string body)
         {
-            public int Id { get; set; }
-            public string Url { get; set; }
+            if (string.IsNullOrWhiteSpace(body)) return new List<FirstLimitReachedWebhook>();
 
-           
+            var json = JsonConvert.DeserializeObject<JArray>(body);
+
+            var list = new List<FirstLimitReachedWebhook>();
+
+            foreach (dynamic jsonWebhook in json)
+            {
+                var webhook =  new FirstLimitReachedWebhook
+                {
+                    Id = jsonWebhook.id,
+                    Url = jsonWebhook.url
+                };
+
+                list.Add(webhook);
+            }
+
+            return list;
         }
 
 

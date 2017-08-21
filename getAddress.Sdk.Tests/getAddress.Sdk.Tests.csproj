@@ -54,6 +54,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="FirstLimitReachedWebhookTests.cs" />
     <Compile Include="ListTests.cs" />
     <Compile Include="KeyHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

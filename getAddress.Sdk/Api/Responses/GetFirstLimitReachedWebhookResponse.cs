@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 namespace getAddress.Sdk.Api.Responses
 {
 
+    public class FirstLimitReachedWebhook
+    {
+        public int Id { get; set; }
+
+        public string Url { get; set; }
+    }
+
+
     public abstract class GetFirstLimitReachedWebhookResponse : ResponseBase
     {
 
@@ -17,15 +25,15 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Success : GetFirstLimitReachedWebhookResponse
         {
-            public int Id { get; set; }
-
-            public string Url { get; set; }
-
+            public FirstLimitReachedWebhook FirstLimitReachedWebhook { get; }
 
             internal Success(int statusCode, string reasonPhase, string raw, int id, string url) : base(statusCode, reasonPhase, raw, true)
             {
-                Id = id;
-                Url = url;
+                FirstLimitReachedWebhook = new FirstLimitReachedWebhook {
+                     Id= id,
+                     Url = url
+                };
+                
             }
         }
 
