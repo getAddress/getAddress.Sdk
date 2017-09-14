@@ -167,8 +167,14 @@
     <Compile Include="..\getAddress.Sdk\Api\Responses\ResponseBase.cs">
       <Link>Api\Responses\ResponseBase.cs</Link>
     </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\UnsubscribeResponse.cs">
+      <Link>Api\Responses\UnsubscribeResponse.cs</Link>
+    </Compile>
     <Compile Include="..\getAddress.Sdk\Api\Responses\UsageResponse.cs">
       <Link>Api\Responses\UsageResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\SubscriptionApi.cs">
+      <Link>Api\SubscriptionApi.cs</Link>
     </Compile>
     <Compile Include="..\getAddress.Sdk\Api\UsageApi.cs">
       <Link>Api\UsageApi.cs</Link>

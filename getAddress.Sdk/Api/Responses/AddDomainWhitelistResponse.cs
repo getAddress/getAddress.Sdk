@@ -18,6 +18,8 @@ namespace getAddress.Sdk.Api.Responses
 
             internal Success(int statusCode, string reasonPhase, string raw, string message, string id):base(statusCode, reasonPhase, raw,true)
             {
+                Message = message;
+                Id = id;
             }
         }
 

@@ -86,7 +86,9 @@
     <Compile Include="Api\Responses\RemoveDomainWhitelistResponse.cs" />
     <Compile Include="Api\Responses\AddDomainWhitelistResponse.cs" />
     <Compile Include="Api\Responses\RemovePrivateAddressResponse.cs" />
+    <Compile Include="Api\Responses\UnsubscribeResponse.cs" />
     <Compile Include="Api\Responses\UsageResponse.cs" />
+    <Compile Include="Api\SubscriptionApi.cs" />
     <Compile Include="Api\UsageApi.cs" />
     <Compile Include="GetAddesssApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

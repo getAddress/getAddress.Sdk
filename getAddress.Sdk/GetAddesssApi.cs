@@ -44,7 +44,12 @@ namespace getAddress.Sdk
             Address = new AddressApi(ApiKey, this);
 
             FirstLimitReachedWebhook = new FirstLimitReachedWebhookApi(AdminKey, this);
+
+            Subscription = new SubscriptionApi(adminKey, this);
         }
+
+        public SubscriptionApi Subscription
+        { get; }
 
         public ApiKey ApiKey
         {
