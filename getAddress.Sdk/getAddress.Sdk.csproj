@@ -48,6 +48,7 @@
     <Compile Include="ApiKey.cs" />
     <Compile Include="Api\AddressApi.cs" />
     <Compile Include="Api\ApiBase.cs" />
+    <Compile Include="Api\ApiKeyApi.cs" />
     <Compile Include="Api\BillingAddressApi.cs" />
     <Compile Include="Api\FirstLimitReachedWebhookApi.cs" />
     <Compile Include="Api\IpAddressWhitelistApi.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Api\Requests\RemoveDomainWhitelistRequest.cs" />
     <Compile Include="Api\Requests\AddDomainWhitelistRequest.cs" />
     <Compile Include="Api\Requests\RemovePrivateAddressRequest.cs" />
+    <Compile Include="Api\Responses\ApiKeyResponse.cs" />
     <Compile Include="Api\Responses\ListFirstLimitReachedWebhookResponse.cs" />
     <Compile Include="Api\Responses\RemoveFirstLimitReachedWebhookResponse.cs" />
     <Compile Include="Api\Responses\AddIpAddressWhitelistResponse.cs" />

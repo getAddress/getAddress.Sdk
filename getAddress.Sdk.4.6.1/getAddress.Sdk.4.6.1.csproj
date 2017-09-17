@@ -53,6 +53,9 @@
     <Compile Include="..\getAddress.Sdk\Api\ApiBase.cs">
       <Link>Api\ApiBase.cs</Link>
     </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\ApiKeyApi.cs">
+      <Link>Api\ApiKeyApi.cs</Link>
+    </Compile>
     <Compile Include="..\getAddress.Sdk\Api\BillingAddressApi.cs">
       <Link>Api\BillingAddressApi.cs</Link>
     </Compile>
@@ -121,6 +124,9 @@
     </Compile>
     <Compile Include="..\getAddress.Sdk\Api\Responses\Address.cs">
       <Link>Api\Responses\Address.cs</Link>
+    </Compile>
+    <Compile Include="..\getAddress.Sdk\Api\Responses\ApiKeyResponse.cs">
+      <Link>Api\Responses\ApiKeyResponse.cs</Link>
     </Compile>
     <Compile Include="..\getAddress.Sdk\Api\Responses\BillingAddressResponse.cs">
       <Link>Api\Responses\BillingAddressResponse.cs</Link>
