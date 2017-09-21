@@ -10,6 +10,10 @@ namespace getAddress.Sdk.Tests
     [TestClass]
     public class AddressTests
     {
+
+     
+
+
         [TestMethod]
         public async Task GetAddress()
         {
