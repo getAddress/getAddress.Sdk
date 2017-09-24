@@ -48,13 +48,15 @@ namespace getAddress.Sdk
             Subscription = new SubscriptionApi(adminKey, this);
 
             ApiKeyApi = new ApiKeyApi(adminKey, this);
+
+            EmailAddress = new EmailAddressApi(adminKey, this);
         }
 
         public ApiKeyApi ApiKeyApi
         { get; }
 
 
-
+        public EmailAddressApi EmailAddress { get; }
 
         public SubscriptionApi Subscription
         { get; }

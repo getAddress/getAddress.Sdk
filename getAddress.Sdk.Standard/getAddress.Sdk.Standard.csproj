@@ -4,6 +4,9 @@
     <TargetFramework>netstandard1.1</TargetFramework>
     <AssemblyName>getAddress.Sdk.Standard.1.1</AssemblyName>
     <RootNamespace>getAddress.Sdk.Standard._1._1</RootNamespace>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>getAddress.Sdk</PackageId>
+    <Authors>getAddress.Sdk</Authors>
   </PropertyGroup>
 
   <ItemGroup>

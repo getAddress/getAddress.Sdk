@@ -32,8 +32,6 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                
-
                 return new UnsubscribeResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
             }
 
