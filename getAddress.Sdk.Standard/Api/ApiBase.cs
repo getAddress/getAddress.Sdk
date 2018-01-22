@@ -40,6 +40,8 @@ namespace getAddress.Sdk.Api
             
         }
 
+       
+
         protected class MessageAndId: IdBase
         {
            
@@ -67,7 +69,7 @@ namespace getAddress.Sdk.Api
 
             var json = JsonConvert.DeserializeObject<dynamic>(body);
 
-            return json.message;
+            return json.message ?? json.Message;
         }
     }
 

@@ -63,6 +63,11 @@ namespace getAddress.Sdk.Api
                 return new EmailAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,request.NewEmailAddress);
             }
 
+            if(response.StatusCode == System.Net.HttpStatusCode.BadRequest){
+                var message = GetMessage(body);
+                return new EmailAddressResponse.FailedInvalidEmailAddress((int)response.StatusCode, response.ReasonPhrase, body,message);
+            }
+
             return new EmailAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
@@ -73,6 +78,8 @@ namespace getAddress.Sdk.Api
 
             return JsonConvert.DeserializeObject<EmailAddressModel>(body);
         }
+
+       
 
 
         private class EmailAddressModel

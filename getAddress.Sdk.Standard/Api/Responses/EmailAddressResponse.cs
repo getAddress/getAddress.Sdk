@@ -19,6 +19,15 @@ namespace getAddress.Sdk.Api.Responses
             }
         }
 
+         public class FailedInvalidEmailAddress : EmailAddressResponse
+        {
+            public string Message { get; set; }
+
+            internal FailedInvalidEmailAddress(int statusCode, string reasonPhase, string raw,string message) : base(statusCode, reasonPhase, raw, false)
+            {
+                Message = message;
+            }
+        }
 
         public class Failed : EmailAddressResponse
         {

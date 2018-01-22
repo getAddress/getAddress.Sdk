@@ -23,7 +23,9 @@ namespace getAddress.Sdk
 
         public GetAddesssApi(ApiKey apiKey, AdminKey adminKey, HttpClient httpClient = null)
         {
-            _client = httpClient ?? new HttpClient { BaseAddress = _baseAddress };
+            _client = httpClient ?? new HttpClient();
+
+            _client.BaseAddress = _baseAddress;
 
             _client.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
 
