@@ -9,7 +9,7 @@ namespace getAddress.Sdk.Api.Responses
         public string Name { get; set; }
     }
 
-    public abstract class GetDomainWhitelistResponse: ResponseBase
+    public abstract class GetDomainWhitelistResponse: ResponseBase<GetDomainWhitelistResponse.Success,GetDomainWhitelistResponse.Failed>
     {
 
         protected GetDomainWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)
@@ -27,6 +27,7 @@ namespace getAddress.Sdk.Api.Responses
                     Id = id,
                     Name = name
                 };
+                SuccessfulResult = this;
             }
         }
 
@@ -34,7 +35,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             internal Failed(int statusCode, string reasonPhase, string raw) :base(statusCode, reasonPhase, raw, false)
             {
-
+                   FailedResult = this;
             }
         }
 

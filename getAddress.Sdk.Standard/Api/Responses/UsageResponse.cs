@@ -9,7 +9,7 @@
         public int Limit2 { get; set; }
     }
 
-    public abstract class GetUsageResponse : ResponseBase
+    public abstract class GetUsageResponse : ResponseBase<GetUsageResponse.Success,GetUsageResponse.Failed>
     {
 
         protected GetUsageResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
@@ -28,6 +28,7 @@
                     Limit1 = limit1,
                     Limit2 = limit2
                 };
+                SuccessfulResult = this;
             }
         }
 
@@ -35,7 +36,7 @@
         {
             internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
             {
-
+                   FailedResult = this;
             }
         }
     }

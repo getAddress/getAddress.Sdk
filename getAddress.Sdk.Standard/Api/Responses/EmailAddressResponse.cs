@@ -2,7 +2,7 @@
 namespace getAddress.Sdk.Api.Responses
 {
 
-    public abstract class EmailAddressResponse : ResponseBase
+    public abstract class EmailAddressResponse : ResponseBase<EmailAddressResponse.Success,EmailAddressResponse.Failed>
     {
         internal EmailAddressResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
         {
@@ -16,6 +16,7 @@ namespace getAddress.Sdk.Api.Responses
             internal Success(int statusCode, string reasonPhase, string raw, string emailAddress) : base(statusCode, reasonPhase, raw, true)
             {
                 EmailAddress = emailAddress;
+                SuccessfulResult = this;
             }
         }
 
@@ -33,7 +34,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
             {
-
+                   FailedResult = this;
             }
         }
     }

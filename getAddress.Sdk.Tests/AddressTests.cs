@@ -24,6 +24,7 @@ namespace getAddress.Sdk.Tests
                 var result = await api.Address.Get(new GetAddressRequest("NN13ER"));
 
                 Assert.IsTrue(result.IsSuccess);
+
             }
         }
 

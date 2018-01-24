@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class ListIpAddressWhitelistResponse: ResponseBase
+    public abstract class ListIpAddressWhitelistResponse: ResponseBase<ListIpAddressWhitelistResponse.Success,ListIpAddressWhitelistResponse.Failed>
     {
 
         protected ListIpAddressWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)
@@ -19,6 +19,7 @@ namespace getAddress.Sdk.Api.Responses
             {
                 
                     IpAddressWhitelists = ipAddressWhitelists;
+                    SuccessfulResult = this;
             }
         }
 
@@ -26,7 +27,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             internal Failed(int statusCode, string reasonPhase, string raw) :base(statusCode, reasonPhase, raw, false)
             {
-
+                   FailedResult = this;
             }
         }
     }

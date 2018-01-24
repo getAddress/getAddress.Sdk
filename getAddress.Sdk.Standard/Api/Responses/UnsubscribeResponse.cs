@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace getAddress.Sdk.Api.Responses
+﻿namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class UnsubscribeResponse: ResponseBase
+    public abstract class UnsubscribeResponse: ResponseBase<UnsubscribeResponse.Success,UnsubscribeResponse.Failed>
     {
         protected UnsubscribeResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)
         {
@@ -19,6 +13,7 @@ namespace getAddress.Sdk.Api.Responses
 
             internal Success(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, true)
             {
+                SuccessfulResult = this;
             }
         }
 
@@ -26,7 +21,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
             {
-
+                   FailedResult = this;
             }
         }
     }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace getAddress.Sdk.Api.Responses
+﻿namespace getAddress.Sdk.Api.Responses
 {
 
     public class FirstLimitReachedWebhook
@@ -15,7 +9,7 @@ namespace getAddress.Sdk.Api.Responses
     }
 
 
-    public abstract class GetFirstLimitReachedWebhookResponse : ResponseBase
+    public abstract class GetFirstLimitReachedWebhookResponse : ResponseBase<GetFirstLimitReachedWebhookResponse.Success,GetFirstLimitReachedWebhookResponse.Failed>
     {
 
         protected GetFirstLimitReachedWebhookResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
@@ -33,7 +27,7 @@ namespace getAddress.Sdk.Api.Responses
                      Id= id,
                      Url = url
                 };
-                
+                SuccessfulResult = this;
             }
         }
 
@@ -42,7 +36,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
             {
-
+                   FailedResult = this;
             }
         }
     }

@@ -2,7 +2,7 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class ListFirstLimitReachedWebhookResponse: ResponseBase
+    public abstract class ListFirstLimitReachedWebhookResponse: ResponseBase<ListFirstLimitReachedWebhookResponse.Success,ListFirstLimitReachedWebhookResponse.Failed>
     {
 
         protected ListFirstLimitReachedWebhookResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)
@@ -17,6 +17,7 @@ namespace getAddress.Sdk.Api.Responses
             internal Success(int statusCode, string reasonPhase, string raw, IEnumerable<FirstLimitReachedWebhook> webhooks) :base(statusCode, reasonPhase, raw,true)
             {
                 Webhooks = webhooks;
+                SuccessfulResult = this;
             }
         }
 
@@ -24,7 +25,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             internal Failed(int statusCode, string reasonPhase, string raw) :base(statusCode, reasonPhase, raw, false)
             {
-
+                   FailedResult = this;
             }
         }
     }

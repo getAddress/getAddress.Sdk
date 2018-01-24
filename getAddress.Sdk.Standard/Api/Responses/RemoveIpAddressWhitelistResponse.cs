@@ -2,7 +2,7 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class RemoveIpAddressWhitelistResponse : ResponseBase
+    public abstract class RemoveIpAddressWhitelistResponse : ResponseBase<RemoveIpAddressWhitelistResponse.Success,RemoveIpAddressWhitelistResponse.Failed>
     {
 
         protected RemoveIpAddressWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
@@ -18,6 +18,7 @@ namespace getAddress.Sdk.Api.Responses
             internal Success(int statusCode, string reasonPhase, string raw, string message) : base(statusCode, reasonPhase, raw, true)
             {
                 Message = message;
+                SuccessfulResult = this;
             }
         }
 
@@ -25,7 +26,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
             {
-
+                   FailedResult = this;
             }
         }
     }

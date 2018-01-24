@@ -2,7 +2,7 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class AddIpAddressWhitelistResponse: ResponseBase
+    public abstract class AddIpAddressWhitelistResponse: ResponseBase<AddIpAddressWhitelistResponse.Success,AddIpAddressWhitelistResponse.Failed>
     {
 
         protected AddIpAddressWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)
@@ -20,6 +20,7 @@ namespace getAddress.Sdk.Api.Responses
             {
                 Message = message;
                 Id = id;
+                SuccessfulResult = this;
             }
         }
 
@@ -27,7 +28,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             internal Failed(int statusCode, string reasonPhase, string raw) :base(statusCode, reasonPhase, raw, false)
             {
-
+                   FailedResult = this;
             }
         }
     }

@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace getAddress.Sdk.Api.Responses
 {
- 
-    public class GetAddressResponse : ResponseBase
+
+    public class GetAddressResponse : ResponseBase<GetAddressResponse.Success,GetAddressResponse.Failed>
     {
 
         protected GetAddressResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
         {
+
+            
         }
+
 
         public class Success : GetAddressResponse
         {
@@ -24,7 +23,8 @@ namespace getAddress.Sdk.Api.Responses
             {
                 Latitude = latitude;
                 Longitude = longitude;
-                Addresses = addresses;   
+                Addresses = addresses;
+                this.SuccessfulResult = this;
             }
         }
 
@@ -32,7 +32,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
             {
-
+                this.FailedResult = this;
             }
         }
     }

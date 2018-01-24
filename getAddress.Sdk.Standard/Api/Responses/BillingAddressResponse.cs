@@ -2,7 +2,7 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class BillingAddressResponse : ResponseBase
+    public abstract class BillingAddressResponse : ResponseBase<BillingAddressResponse.Success,BillingAddressResponse.Failed>
     {
         protected BillingAddressResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
         {
@@ -33,6 +33,7 @@ namespace getAddress.Sdk.Api.Responses
                 TownOrCity = townOrCity;
                 County = county;
                 Postcode = postcode;
+                SuccessfulResult = this;
             }
         }
 
@@ -40,7 +41,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
             {
-
+                   FailedResult = this;
             }
         }
     }

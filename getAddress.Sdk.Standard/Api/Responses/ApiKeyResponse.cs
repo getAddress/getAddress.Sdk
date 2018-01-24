@@ -3,7 +3,7 @@ namespace getAddress.Sdk.Api.Responses
 {
 
 
-    public abstract class ApiKeyResponse : ResponseBase
+    public abstract class ApiKeyResponse : ResponseBase<ApiKeyResponse.Success,ApiKeyResponse.Failed>
     {
         internal ApiKeyResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
         {
@@ -17,6 +17,7 @@ namespace getAddress.Sdk.Api.Responses
             internal Success(int statusCode, string reasonPhase, string raw, string apiKey) : base(statusCode, reasonPhase, raw, true)
             {
                 ApiKey = apiKey;
+                SuccessfulResult = this;
             }
         }
 
@@ -25,7 +26,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
             {
-
+                   FailedResult = this;
             }
         }
     }
