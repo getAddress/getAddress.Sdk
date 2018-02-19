@@ -20,7 +20,7 @@ namespace getAddress.Sdk.Api
         }
     }
 
-        public abstract class AdminApiBase:ApiBase
+     public abstract class AdminApiBase:ApiBase
     {
         public AdminKey AdminKey
         {
