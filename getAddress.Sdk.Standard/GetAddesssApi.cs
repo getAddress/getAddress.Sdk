@@ -52,9 +52,14 @@ namespace getAddress.Sdk
             ApiKeyApi = new ApiKeyApi(adminKey, this);
 
             EmailAddress = new EmailAddressApi(adminKey, this);
+
+            Invoices = new InvoiceApi(adminKey, this);
         }
 
         public ApiKeyApi ApiKeyApi
+        { get; }
+
+         public InvoiceApi Invoices
         { get; }
 
 

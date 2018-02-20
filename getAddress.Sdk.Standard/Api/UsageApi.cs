@@ -26,6 +26,7 @@ namespace getAddress.Sdk.Api
 
             return await Get(api, fullPath, adminKey);
         }
+
         public async Task<GetUsageResponse> Get()
         {
             return await Get(Api, Path, AdminKey);
