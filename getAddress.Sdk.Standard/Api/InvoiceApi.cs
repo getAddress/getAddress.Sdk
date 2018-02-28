@@ -103,7 +103,7 @@ namespace getAddress.Sdk.Api
 
         private static Invoice GetInvoice(string body, string number)
         {
-            if (string.IsNullOrWhiteSpace(body)) return  Invoice.Blank(number);
+            if (string.IsNullOrWhiteSpace(body) || string.IsNullOrWhiteSpace(number)) return  Invoice.Blank(number);
 
             var json = JsonConvert.DeserializeObject<dynamic>(body);
 
@@ -113,7 +113,8 @@ namespace getAddress.Sdk.Api
 
         private static Invoice GetInvoice(dynamic json)
         {
-     
+            if (json is JArray) return null;
+
 
             var address = new InvoiceAddress((string)json.address_1, (string)json.address_2, 
                 (string)json.address_3, (string)json.address_4, (string)json.address_5, (string)json.address_6);
@@ -128,6 +129,9 @@ namespace getAddress.Sdk.Api
             }
 
             return invoice;
+            
+
+            
 
         }
 
