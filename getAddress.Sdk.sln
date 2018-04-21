@@ -17,8 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "standard 2.0", "standard 2.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "getAddress.Sdk.Standard", "getAddress.Sdk.Standard\getAddress.Sdk.Standard.csproj", "{17B89B89-D6A1-408D-9F11-55EC2C13C4D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "getAddress.Sdk.Tests.Core", "getAddress.Sdk.Tests.Core\getAddress.Sdk.Tests.Core.csproj", "{F6ED272F-F56E-48D5-A4BB-D927ED8AB04E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,10 +39,6 @@ Global
 		{17B89B89-D6A1-408D-9F11-55EC2C13C4D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17B89B89-D6A1-408D-9F11-55EC2C13C4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17B89B89-D6A1-408D-9F11-55EC2C13C4D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F6ED272F-F56E-48D5-A4BB-D927ED8AB04E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6ED272F-F56E-48D5-A4BB-D927ED8AB04E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6ED272F-F56E-48D5-A4BB-D927ED8AB04E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6ED272F-F56E-48D5-A4BB-D927ED8AB04E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

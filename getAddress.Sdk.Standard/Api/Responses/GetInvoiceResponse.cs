@@ -33,5 +33,6 @@ namespace getAddress.Sdk.Api.Responses
             }
         }
     }
+
 }
 

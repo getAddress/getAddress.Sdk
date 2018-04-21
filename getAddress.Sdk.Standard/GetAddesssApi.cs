@@ -54,6 +54,8 @@ namespace getAddress.Sdk
             EmailAddress = new EmailAddressApi(adminKey, this);
 
             Invoices = new InvoiceApi(adminKey, this);
+
+            InvoiceCC = new InvoiceCCApi(adminKey, this);
         }
 
         public ApiKeyApi ApiKeyApi
@@ -62,6 +64,8 @@ namespace getAddress.Sdk
          public InvoiceApi Invoices
         { get; }
 
+        public InvoiceCCApi InvoiceCC
+        { get; }
 
         public EmailAddressApi EmailAddress { get; }
 

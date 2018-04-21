@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace getAddress.Sdk.Api.Responses
 {
@@ -79,6 +78,25 @@ namespace getAddress.Sdk.Api.Responses
             Line5 = line5 ?? string.Empty;
             Line6 = line6 ?? string.Empty;
         }
+    }
+
+    public class InvoiceCC
+    {
+        internal static InvoiceCC Blank(long id)
+        {
+            var invoiceCC = new InvoiceCC(id, string.Empty);
+            return invoiceCC;
+        }
+
+        internal InvoiceCC(long id, string emailAddress)
+        {
+
+            Id = id;
+            EmailAddress = emailAddress;
+        }
+
+        public long Id { get; }
+        public string EmailAddress { get; }
     }
 }
 

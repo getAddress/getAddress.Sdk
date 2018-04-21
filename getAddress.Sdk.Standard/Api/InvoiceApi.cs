@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
@@ -18,9 +17,13 @@ namespace getAddress.Sdk.Api
 
         }
 
-
         public async Task<GetInvoiceResponse> Get(string number)
         {
+            if (string.IsNullOrWhiteSpace(number))
+            {
+                throw new ArgumentException("message", nameof(number));
+            }
+
             return await Get(Api, Path, AdminKey,number);
         }
 
@@ -32,10 +35,11 @@ namespace getAddress.Sdk.Api
             return await GetInternal(api, fullPath, adminKey,number);
         }
 
-           public async  Task<ListInvoicesResponse> List()
+        public async  Task<ListInvoicesResponse> List()
         {
             return await List(Api, Path, AdminKey);
         }
+
 
         public async static Task<ListInvoicesResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
         {
@@ -81,8 +85,7 @@ namespace getAddress.Sdk.Api
             return new GetInvoiceResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
-
-          private static IEnumerable<Invoice> GetInvoiceList(string body)
+        private static IEnumerable<Invoice> GetInvoiceList(string body)
         {
             if (string.IsNullOrWhiteSpace(body)) return new List<Invoice>();
 
@@ -100,7 +103,6 @@ namespace getAddress.Sdk.Api
             return list;
         }
 
-
         private static Invoice GetInvoice(string body, string number)
         {
             if (string.IsNullOrWhiteSpace(body) || string.IsNullOrWhiteSpace(number)) return  Invoice.Blank(number);
@@ -108,7 +110,6 @@ namespace getAddress.Sdk.Api
             var json = JsonConvert.DeserializeObject<dynamic>(body);
 
             return GetInvoice(json);
-
         }
 
         private static Invoice GetInvoice(dynamic json)
@@ -134,7 +135,6 @@ namespace getAddress.Sdk.Api
             
 
         }
-
 
     }
 }
