@@ -1,14 +1,9 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api.Requests
 {
- 
-     public class GetFirstLimitReachedRequest
+
+    public class GetFirstLimitReachedRequest
     {
        
         [JsonProperty("id")]
@@ -21,6 +16,11 @@ namespace getAddress.Sdk.Api.Requests
         {
             Id = id;
         }
-        
+
+        public static implicit operator GetFirstLimitReachedRequest(int id)
+        {
+            return new GetFirstLimitReachedRequest(id);
+        }
+
     }
 }

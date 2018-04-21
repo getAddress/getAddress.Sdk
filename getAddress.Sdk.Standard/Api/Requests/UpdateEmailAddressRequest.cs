@@ -13,5 +13,10 @@ namespace getAddress.Sdk.Api.Requests
         {
             NewEmailAddress = newEmailAddress;
         }
+
+        public static implicit operator UpdateEmailAddressRequest(string newEmailAddress)
+        {
+            return new UpdateEmailAddressRequest(newEmailAddress);
+        }
     }
 }

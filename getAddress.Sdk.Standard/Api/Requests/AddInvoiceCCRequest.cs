@@ -14,5 +14,10 @@ namespace getAddress.Sdk.Api.Requests
         {
             EmailAddress = emailAddress;
         }
+
+        public static implicit operator AddInvoiceCCRequest(string emailAddress)
+        {
+            return new AddInvoiceCCRequest(emailAddress);
+        }
     }
 }

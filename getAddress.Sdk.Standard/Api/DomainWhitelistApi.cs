@@ -125,19 +125,19 @@ namespace getAddress.Sdk.Api
         }
 
 
-        public async Task<GetDomainWhitelistResponse> Get(string id)
+        public async Task<GetDomainWhitelistResponse> Get(GetDomainWhitelistRequest request)
         {
-            return await Get(Api, Path, AdminKey, id);
+            return await Get(Api, Path, AdminKey, request);
         }
 
-        public async static Task<GetDomainWhitelistResponse> Get(GetAddesssApi api, string path, AdminKey adminKey, string id)
+        public async static Task<GetDomainWhitelistResponse> Get(GetAddesssApi api, string path, AdminKey adminKey, GetDomainWhitelistRequest request)
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
             if (path == null) throw new ArgumentNullException(nameof(path));
             if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
-            if (id == null) throw new ArgumentNullException(nameof(id));
+            if (request == null) throw new ArgumentNullException(nameof(request));
 
-            var fullPath = path + id;
+            var fullPath = path + request.Id;
 
             api.SetAuthorizationKey(adminKey);
 

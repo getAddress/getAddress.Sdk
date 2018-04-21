@@ -15,5 +15,10 @@ namespace getAddress.Sdk.Api.Requests
         {
             Url = url;
         }
+
+        public static implicit operator AddFirstLimitReachedWebhookRequest(string url)
+        {
+            return new AddFirstLimitReachedWebhookRequest(url);
+        }
     }
 }

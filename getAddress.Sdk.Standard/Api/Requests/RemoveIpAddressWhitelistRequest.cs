@@ -15,5 +15,10 @@ namespace getAddress.Sdk.Api.Requests
         {
             Id = id;
         }
+
+        public static implicit operator RemoveIpAddressWhitelistRequest(string id)
+        {
+            return new RemoveIpAddressWhitelistRequest(id);
+        }
     }
 }

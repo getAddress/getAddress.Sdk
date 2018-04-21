@@ -17,16 +17,21 @@ namespace getAddress.Sdk.Api
 
         }
 
-        public async Task<GetInvoiceCCResponse> Get(long id)
+        public async Task<GetInvoiceCCResponse> Get(GetInvoiceCCRequest request)
         {
-            return await Get(Api, Path, AdminKey, id);
+            return await Get(Api, Path, AdminKey, request);
         }
         public async static Task<GetInvoiceCCResponse> Get(GetAddesssApi api, string path,
-           AdminKey adminKey, long id)
+           AdminKey adminKey, GetInvoiceCCRequest request)
         {
-            var fullPath = $"{path}{id}";
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
 
-            return await GetCCInternal(api, fullPath, adminKey, id);
+            var fullPath = $"{path}{request.Id}";
+
+            return await GetCCInternal(api, fullPath, adminKey, request.Id);
         }
 
         public async Task<AddInvoiceCCResponse> Add(AddInvoiceCCRequest request)

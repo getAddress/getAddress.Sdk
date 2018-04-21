@@ -13,5 +13,10 @@ namespace getAddress.Sdk.Api.Requests
         {
             Value = value;
         }
+
+        public static implicit operator AddIpAddressWhitelistRequest(string value)
+        {
+            return new AddIpAddressWhitelistRequest(value);
+        }
     }
 }

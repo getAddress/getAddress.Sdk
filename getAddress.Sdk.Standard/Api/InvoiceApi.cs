@@ -1,4 +1,5 @@
-﻿using getAddress.Sdk.Api.Responses;
+﻿using getAddress.Sdk.Api.Requests;
+using getAddress.Sdk.Api.Responses;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -17,22 +18,24 @@ namespace getAddress.Sdk.Api
 
         }
 
-        public async Task<GetInvoiceResponse> Get(string number)
+        public async Task<GetInvoiceResponse> Get(GetInvoiceRequest request)
         {
-            if (string.IsNullOrWhiteSpace(number))
-            {
-                throw new ArgumentException("message", nameof(number));
-            }
+           
 
-            return await Get(Api, Path, AdminKey,number);
+            return await Get(Api, Path, AdminKey,request);
         }
 
         public async static Task<GetInvoiceResponse> Get(GetAddesssApi api, string path, 
-            AdminKey adminKey,string number)
+            AdminKey adminKey, GetInvoiceRequest request)
         {
-            var fullPath = $"{path}{number}";
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
 
-            return await GetInternal(api, fullPath, adminKey,number);
+            var fullPath = $"{path}{request.Number}";
+
+            return await GetInternal(api, fullPath, adminKey,request.Number);
         }
 
         public async  Task<ListInvoicesResponse> List()

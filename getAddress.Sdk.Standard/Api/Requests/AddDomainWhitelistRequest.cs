@@ -15,5 +15,10 @@ namespace getAddress.Sdk.Api.Requests
         {
             Name = name;
         }
+
+        public static implicit operator AddDomainWhitelistRequest(string name)
+        {
+            return new AddDomainWhitelistRequest(name);
+        }
     }
 }

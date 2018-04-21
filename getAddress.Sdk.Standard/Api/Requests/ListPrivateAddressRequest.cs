@@ -11,5 +11,10 @@ namespace getAddress.Sdk.Api.Requests
         {
             Postcode = postcode;
         }
+
+        public static implicit operator ListPrivateAddressRequest(string postcode)
+        {
+            return new ListPrivateAddressRequest(postcode);
+        }
     }
 }
