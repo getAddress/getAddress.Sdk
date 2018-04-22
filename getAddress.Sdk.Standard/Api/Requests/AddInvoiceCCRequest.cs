@@ -5,7 +5,7 @@ namespace getAddress.Sdk.Api.Requests
 {
     public class AddInvoiceCCRequest
     {
-        [JsonProperty("email_address")]
+        [JsonProperty("email-address")]
         public string EmailAddress
         {
             get;

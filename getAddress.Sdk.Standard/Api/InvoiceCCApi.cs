@@ -134,7 +134,7 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                var invoiceCC = GetCCInvoice(body, id);
+                var invoiceCC = GetCCInvoice(body);
 
                 return new GetInvoiceCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, invoiceCC);
             }
@@ -150,34 +150,24 @@ namespace getAddress.Sdk.Api
 
             var list = new List<InvoiceCC>();
 
-            foreach (dynamic i in json)
+            foreach (var token in json)
             {
-                var invoice = GetCCInvoice(i);
+                var invoice = token.ToObject<InvoiceCC>(); 
 
-                list.Add(invoice);
+                if (invoice.Id != 0) list.Add(invoice);
             }
 
             return list;
         }
 
-        private static InvoiceCC GetCCInvoice(string body, long id)
+        private static InvoiceCC GetCCInvoice(string body)
         {
-            if (string.IsNullOrWhiteSpace(body)) return InvoiceCC.Blank(id);
+            if (string.IsNullOrWhiteSpace(body)) return InvoiceCC.Blank(0);
 
-            var json = JsonConvert.DeserializeObject<dynamic>(body);
-
-            return GetCCInvoice(json);
-
+            return JsonConvert.DeserializeObject<InvoiceCC>(body);
         }
 
-        private static InvoiceCC GetCCInvoice(dynamic json)
-        {
-            if (json is JArray) return null;
-
-            var invoiceCC = new InvoiceCC((long)json.id, (string)json.email_address);
-
-            return invoiceCC;
-        }
+        
 
 
     }

@@ -79,25 +79,6 @@ namespace getAddress.Sdk.Api.Responses
             Line6 = line6 ?? string.Empty;
         }
     }
-
-    public class InvoiceCC
-    {
-        internal static InvoiceCC Blank(long id)
-        {
-            var invoiceCC = new InvoiceCC(id, string.Empty);
-            return invoiceCC;
-        }
-
-        internal InvoiceCC(long id, string emailAddress)
-        {
-
-            Id = id;
-            EmailAddress = emailAddress;
-        }
-
-        public long Id { get; }
-        public string EmailAddress { get; }
-    }
 }
 
 
