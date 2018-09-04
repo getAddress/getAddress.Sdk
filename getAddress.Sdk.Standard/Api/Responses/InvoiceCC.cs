@@ -27,7 +27,6 @@ namespace getAddress.Sdk.Api.Responses
         public string EmailAddress { get; set; }
     }
 
-    
 }
 
 

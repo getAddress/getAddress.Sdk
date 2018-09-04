@@ -7,13 +7,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>getAddress.Sdk</PackageId>
     <Authors>Lee Smith</Authors>
-    <AssemblyVersion>1.3.0.0</AssemblyVersion>
-    <FileVersion>1.3.0.0</FileVersion>
+    <AssemblyVersion>1.3.2.0</AssemblyVersion>
+    <FileVersion>1.3.2.0</FileVersion>
     <Company>Codeberry Ltd</Company>
-    <Version>1.3.0</Version>
+    <Version>1.3.2</Version>
     <PackageProjectUrl>https://github.com/getAddress/getAddress.Sdk</PackageProjectUrl>
     <Description>SDK for https://getAddress.io</Description>
-    <PackageReleaseNotes>InvoiceCC API</PackageReleaseNotes>
+    <PackageReleaseNotes>InvoiceCC API correction</PackageReleaseNotes>
     <Copyright>Codeberry Ltd</Copyright>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <PackageTags>getAddress SDK https://getaddress.io getaddress.io postcode address UK</PackageTags>

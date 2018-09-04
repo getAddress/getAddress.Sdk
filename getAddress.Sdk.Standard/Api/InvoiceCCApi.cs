@@ -93,12 +93,12 @@ namespace getAddress.Sdk.Api
         }
 
 
-        public async Task<ListInvoiceCCResponse> ListCCs()
+        public async Task<ListInvoiceCCResponse> List()
         {
-            return await ListCCs(Api, Path, AdminKey);
+            return await List(Api, Path, AdminKey);
         }
 
-        public async static Task<ListInvoiceCCResponse> ListCCs(GetAddesssApi api, string path, AdminKey adminKey)
+        public async static Task<ListInvoiceCCResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
             if (path == null) throw new ArgumentNullException(nameof(path));

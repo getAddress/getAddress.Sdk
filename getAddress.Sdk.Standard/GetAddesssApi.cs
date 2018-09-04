@@ -56,6 +56,8 @@ namespace getAddress.Sdk
             Invoices = new InvoiceApi(adminKey, this);
 
             InvoiceCC = new InvoiceCCApi(adminKey, this);
+
+            Distance = new DistanceApi(apiKey, this);
         }
 
         public ApiKeyApi ApiKeyApi
@@ -63,6 +65,10 @@ namespace getAddress.Sdk
 
          public InvoiceApi Invoices
         { get; }
+
+        public DistanceApi Distance
+        { get; }
+
 
         public InvoiceCCApi InvoiceCC
         { get; }

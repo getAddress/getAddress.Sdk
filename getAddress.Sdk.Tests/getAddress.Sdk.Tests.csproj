@@ -74,6 +74,7 @@
     <Compile Include="AddressTests.cs" />
     <Compile Include="IpAddressTests.cs" />
     <Compile Include="InvoiceCCTests.cs" />
+    <Compile Include="DistanceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

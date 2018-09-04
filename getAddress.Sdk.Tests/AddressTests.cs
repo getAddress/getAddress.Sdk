@@ -11,9 +11,6 @@ namespace getAddress.Sdk.Tests
     public class AddressTests
     {
 
-     
-
-
         [TestMethod]
         public async Task GetAddress()
         {

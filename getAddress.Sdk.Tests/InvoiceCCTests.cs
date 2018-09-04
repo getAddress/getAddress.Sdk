@@ -19,7 +19,7 @@ namespace getAddress.Sdk.Tests
 
                 Assert.IsTrue(getResult.IsSuccess);
 
-                var listResult = await api.InvoiceCC.ListCCs();
+                var listResult = await api.InvoiceCC.List();
 
                 Assert.IsTrue(listResult.IsSuccess);
 

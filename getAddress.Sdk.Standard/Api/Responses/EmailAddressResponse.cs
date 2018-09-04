@@ -1,7 +1,6 @@
 ﻿
 namespace getAddress.Sdk.Api.Responses
 {
-
     public abstract class EmailAddressResponse : ResponseBase<EmailAddressResponse.Success,EmailAddressResponse.Failed>
     {
         internal EmailAddressResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
@@ -38,4 +37,6 @@ namespace getAddress.Sdk.Api.Responses
             }
         }
     }
+
+
 }
