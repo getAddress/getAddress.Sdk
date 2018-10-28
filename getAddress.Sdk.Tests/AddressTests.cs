@@ -25,6 +25,21 @@ namespace getAddress.Sdk.Tests
             }
         }
 
+
+        [TestMethod]
+        public async Task GetExpandedAddress()
+        {
+            var apiKey = KeyHelper.GetApiKey();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey)))
+            {
+                var result = await api.Address.GetExpanded(new GetAddressRequest("NN13ER"));
+
+                Assert.IsTrue(result.IsSuccess);
+
+            }
+        }
+
         [TestMethod]
         public async Task GetAddress_Sort()
         {

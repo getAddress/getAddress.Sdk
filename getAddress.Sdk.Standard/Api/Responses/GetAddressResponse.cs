@@ -2,7 +2,6 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-
     public class GetAddressResponse : ResponseBase<GetAddressResponse.Success,GetAddressResponse.Failed>
     {
 
