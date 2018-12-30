@@ -9,8 +9,6 @@ namespace getAddress.Sdk
 {
     public class GetAddesssApi:IDisposable
     {
-        private Uri _baseAddress = new Uri("https://api.getaddress.io");
-
         private readonly HttpClient _client;
 
         public GetAddesssApi(ApiKey apiKey, HttpClient httpClient = null) : this(apiKey, new AdminKey(string.Empty), httpClient)
@@ -21,11 +19,13 @@ namespace getAddress.Sdk
         {
         }
 
+        public Uri BaseAddress { get; set; } = new Uri("https://api.getaddress.io");
+
         public GetAddesssApi(ApiKey apiKey, AdminKey adminKey, HttpClient httpClient = null)
         {
             _client = httpClient ?? new HttpClient();
 
-            _client.BaseAddress = _baseAddress;
+            _client.BaseAddress = BaseAddress;
 
             _client.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
 
