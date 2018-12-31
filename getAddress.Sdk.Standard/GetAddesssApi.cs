@@ -63,6 +63,8 @@ namespace getAddress.Sdk
 
             FirstLimitReachedWebhook = new FirstLimitReachedWebhookApi(AdminKey, this);
 
+            SecondLimitReachedWebhook = new SecondLimitReachedWebhookApi(AdminKey, this);
+
             Subscription = new SubscriptionApi(adminKey, this);
 
             ApiKeyApi = new ApiKeyApi(adminKey, this);
@@ -100,6 +102,11 @@ namespace getAddress.Sdk
         }
 
         public AdminKey AdminKey
+        {
+            get;
+        }
+
+        public SecondLimitReachedWebhookApi SecondLimitReachedWebhook
         {
             get;
         }

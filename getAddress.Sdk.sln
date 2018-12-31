@@ -3,15 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "getAddress.Sdk", "getAddress.Sdk\getAddress.Sdk.csproj", "{231D8663-C341-4AE3-8701-4254F81FAC64}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "getAddress.Sdk.Tests", "getAddress.Sdk.Tests\getAddress.Sdk.Tests.csproj", "{02AF85C9-2716-4ECD-B387-73C7F9C19823}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".net 4.5.1", ".net 4.5.1", "{3A5C181E-55F0-4441-813A-23151CE72D3C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".net 4.6.1", ".net 4.6.1", "{EA8CE4F9-83C1-4732-B76F-7177E4ADE292}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "getAddress.Sdk.4.6.1", "getAddress.Sdk.4.6.1\getAddress.Sdk.4.6.1.csproj", "{FA2861F0-713A-422F-A3F5-7314A7FA700A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "standard 2.0", "standard 2.0", "{F5EA4F54-2898-4BF4-9296-0DC07C9E929A}"
 EndProject
@@ -23,18 +19,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{231D8663-C341-4AE3-8701-4254F81FAC64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{231D8663-C341-4AE3-8701-4254F81FAC64}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{231D8663-C341-4AE3-8701-4254F81FAC64}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{231D8663-C341-4AE3-8701-4254F81FAC64}.Release|Any CPU.Build.0 = Release|Any CPU
 		{02AF85C9-2716-4ECD-B387-73C7F9C19823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{02AF85C9-2716-4ECD-B387-73C7F9C19823}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02AF85C9-2716-4ECD-B387-73C7F9C19823}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02AF85C9-2716-4ECD-B387-73C7F9C19823}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FA2861F0-713A-422F-A3F5-7314A7FA700A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA2861F0-713A-422F-A3F5-7314A7FA700A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA2861F0-713A-422F-A3F5-7314A7FA700A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FA2861F0-713A-422F-A3F5-7314A7FA700A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{17B89B89-D6A1-408D-9F11-55EC2C13C4D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{17B89B89-D6A1-408D-9F11-55EC2C13C4D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17B89B89-D6A1-408D-9F11-55EC2C13C4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -44,8 +32,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{231D8663-C341-4AE3-8701-4254F81FAC64} = {3A5C181E-55F0-4441-813A-23151CE72D3C}
-		{FA2861F0-713A-422F-A3F5-7314A7FA700A} = {EA8CE4F9-83C1-4732-B76F-7177E4ADE292}
 		{17B89B89-D6A1-408D-9F11-55EC2C13C4D6} = {F5EA4F54-2898-4BF4-9296-0DC07C9E929A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

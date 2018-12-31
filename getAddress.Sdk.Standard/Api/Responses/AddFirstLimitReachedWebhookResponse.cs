@@ -1,6 +1,5 @@
 ﻿namespace getAddress.Sdk.Api.Responses
 {
-
     public abstract class AddFirstLimitReachedWebhookResponse : ResponseBase<AddFirstLimitReachedWebhookResponse.Success,AddFirstLimitReachedWebhookResponse.Failed>
     {
 
@@ -15,7 +14,6 @@
 
             public string Message { get; set; }
 
-
             internal Success(int statusCode, string reasonPhase, string raw,  string message,string id) : base(statusCode, reasonPhase, raw, true)
             {
                 Id = ToInt(id);
@@ -23,7 +21,6 @@
                 Message = message;
             }
         }
-
 
         public class Failed : AddFirstLimitReachedWebhookResponse
         {

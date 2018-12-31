@@ -16,9 +16,8 @@ namespace getAddress.Sdk.Api
         {
 
         }
-        
 
-         public async  Task<RemoveFirstLimitReachedWebhookResponse> Remove(RemoveFirstLimitReachedWebhookRequest request)
+        public async  Task<RemoveFirstLimitReachedWebhookResponse> Remove(RemoveFirstLimitReachedWebhookRequest request)
         {
             return await Remove(Api, request, Path, AdminKey);
         }
@@ -28,7 +27,6 @@ namespace getAddress.Sdk.Api
             if (api == null) throw new ArgumentNullException(nameof(api));
             if (request == null) throw new ArgumentNullException(nameof(request));
             if (path == null) throw new ArgumentNullException(nameof(path));
-
 
             var fullPath = path + request.Id;
 
@@ -62,7 +60,6 @@ namespace getAddress.Sdk.Api
             if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
             if (request == null) throw new ArgumentNullException(nameof(request));
 
-
             var fullPath = path + request.Id;
 
             api.SetAuthorizationKey(adminKey);
@@ -86,12 +83,11 @@ namespace getAddress.Sdk.Api
             return await List(Api, Path, AdminKey);
         }
 
-         public async static Task<ListFirstLimitReachedWebhookResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
+        public async static Task<ListFirstLimitReachedWebhookResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
             if (path == null) throw new ArgumentNullException(nameof(path));
             if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
-
 
             api.SetAuthorizationKey(adminKey);
 
@@ -126,7 +122,6 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-
             if (response.IsSuccessStatusCode)
             {
                 var messageAndId = GetMessageAndId(body);
@@ -145,7 +140,7 @@ namespace getAddress.Sdk.Api
         }
 
       private static IEnumerable<FirstLimitReachedWebhook> ListFirstLimitReachedWebhooks(string body)
-        {
+      {
             if (string.IsNullOrWhiteSpace(body)) return new List<FirstLimitReachedWebhook>();
 
             var json = JsonConvert.DeserializeObject<JArray>(body);
@@ -165,8 +160,5 @@ namespace getAddress.Sdk.Api
 
             return list;
         }
-
-
-          
     }
 }

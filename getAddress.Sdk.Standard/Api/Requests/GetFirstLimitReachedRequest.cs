@@ -2,7 +2,6 @@
 
 namespace getAddress.Sdk.Api.Requests
 {
-
     public class GetFirstLimitReachedRequest
     {
        
@@ -21,6 +20,5 @@ namespace getAddress.Sdk.Api.Requests
         {
             return new GetFirstLimitReachedRequest(id);
         }
-
     }
 }
