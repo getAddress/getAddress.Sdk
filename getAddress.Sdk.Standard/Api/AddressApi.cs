@@ -140,6 +140,8 @@ namespace getAddress.Sdk.Api
                 string locality = address.locality;
                 string townOrCity = address.town_or_city;
                 string county = address.county;
+                string district = address.district;
+                string country = address.country;
 
                 JArray jformattedAddress = address.formatted_address;
 
@@ -166,7 +168,9 @@ namespace getAddress.Sdk.Api
                     Line4 = line4,
                     County = county,
                     Locality = locality,
-                    TownOrCity = townOrCity
+                    TownOrCity = townOrCity,
+                    District = district,
+                    Country = country
                 };
 
                 addressList.Add(expandedAddress);

@@ -10,6 +10,8 @@ namespace getAddress.Sdk.Api.Responses
         public string SubuildingName { get; set; }
         public string SubuildingNumber { get; set; }
         public string BuildingNumber { get; set; }
+        public string District { get; set; }
+        public string Country { get; set; }
     }
 
 }
