@@ -24,6 +24,18 @@ namespace getAddress.Sdk.Tests
             }
         }
 
+        [TestMethod]
+        public async Task TestFirstReachedWebhook()
+        {
+            var apiKey = KeyHelper.GetAdminKey();
+
+            using (var api = new GetAddesssApi(new AdminKey(apiKey)))
+            {
+                var result = await api.FirstLimitReachedWebhook.Test();
+
+                Assert.IsTrue(result.IsSuccess);
+            }
+        }
 
         [TestMethod]
         public async Task DeleteFirstReachedWebhook() {

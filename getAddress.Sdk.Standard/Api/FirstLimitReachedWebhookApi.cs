@@ -132,6 +132,31 @@ namespace getAddress.Sdk.Api
             return new AddFirstLimitReachedWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase,body);
         }
 
+        public async Task<TestFirstLimitReachedWebhookResponse> Test()
+        {
+            return await Test(Api, $"{Path}test", AdminKey);
+        }
+
+        public async static Task<TestFirstLimitReachedWebhookResponse> Test(GetAddesssApi api, string path, AdminKey adminKey)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+
+            api.SetAuthorizationKey(adminKey);
+
+            var response = await api.Post(path);
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var message = GetMessage(body);
+
+                return new TestFirstLimitReachedWebhookResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, message, message);
+            }
+
+            return new TestFirstLimitReachedWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+        }
+
         private static FirstLimitReachedWebhook GetFirstLimitWebhook(string body)
         {
             if (string.IsNullOrWhiteSpace(body)) return new FirstLimitReachedWebhook();
