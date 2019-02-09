@@ -46,6 +46,32 @@ namespace getAddress.Sdk.Api
             return new RemoveSecondLimitReachedWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
+
+        public async Task<TestSecondLimitReachedWebhookResponse> Test()
+        {
+            return await Test(Api, $"{Path}test", AdminKey);
+        }
+
+        public async static Task<TestSecondLimitReachedWebhookResponse> Test(GetAddesssApi api, string path, AdminKey adminKey)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+
+            api.SetAuthorizationKey(adminKey);
+
+            var response = await api.Post(path);
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var message = GetMessage(body);
+
+                return new TestSecondLimitReachedWebhookResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, message, message);
+            }
+
+            return new TestSecondLimitReachedWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+        }
+
         public async Task<GetSecondLimitReachedWebhookResponse> Get(GetSecondLimitReachedRequest request)
         {
             return await Get(Api, Path, AdminKey,request);
