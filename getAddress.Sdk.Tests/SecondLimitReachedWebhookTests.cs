@@ -15,7 +15,7 @@ namespace getAddress.Sdk.Tests
 
             using (var api = new GetAddesssApi(new AdminKey(apiKey)))
             {
-                var result = await api.SecondLimitReachedWebhook.Get(new GetSecondLimitReachedRequest(1));
+                var result = await api.SecondLimitReachedWebhook.Get(new GetSecondLimitReachedRequest(3));
 
                 Assert.IsTrue(result.IsSuccess);
             }

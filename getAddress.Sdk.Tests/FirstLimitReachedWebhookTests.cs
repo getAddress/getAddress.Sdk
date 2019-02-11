@@ -43,7 +43,7 @@ namespace getAddress.Sdk.Tests
 
             using (var api = new GetAddesssApi(new AdminKey(apiKey)))
             {
-                var result = await api.FirstLimitReachedWebhook.Remove(new RemoveFirstLimitReachedWebhookRequest(13));
+                var result = await api.FirstLimitReachedWebhook.Remove(13);
 
                 Assert.IsTrue(result.IsSuccess);
             }

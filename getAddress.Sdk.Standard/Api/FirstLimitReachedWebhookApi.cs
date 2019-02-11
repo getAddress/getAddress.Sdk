@@ -17,33 +17,36 @@ namespace getAddress.Sdk.Api
 
         }
 
+        public async Task<RemoveFirstLimitReachedWebhookResponse> Remove(int requestId)
+        {
+            return await Remove(Api, new RemoveFirstLimitReachedWebhookRequest(requestId), Path, AdminKey);
+        }
+
         public async  Task<RemoveFirstLimitReachedWebhookResponse> Remove(RemoveFirstLimitReachedWebhookRequest request)
+        {
+            return await Remove(Api, request, Path, AdminKey);
+        }
+
+        public async Task<RemoveWebhookResponse> Remove(RemoveWebhookRequest request)
         {
             return await Remove(Api, request, Path, AdminKey);
         }
 
         public async static Task<RemoveFirstLimitReachedWebhookResponse> Remove(GetAddesssApi api, RemoveFirstLimitReachedWebhookRequest request, string path, AdminKey adminKey)
         {
-            if (api == null) throw new ArgumentNullException(nameof(api));
-            if (request == null) throw new ArgumentNullException(nameof(request));
-            if (path == null) throw new ArgumentNullException(nameof(path));
+            var result = await Remove(api, new RemoveWebhookRequest(request.Id), path, adminKey);
 
-            var fullPath = path + request.Id;
+            return result.FormerResult();
+        }
 
-            api.SetAuthorizationKey(adminKey);
+        public async static Task<RemoveWebhookResponse> Remove(GetAddesssApi api, RemoveWebhookRequest request, string path, AdminKey adminKey)
+        {
+            return await WebhookCommands.Remove(api, request, path, adminKey);
+        }
 
-            var response = await api.Delete(fullPath);
-
-            var body = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                var message = GetMessage(body);
-
-                return new RemoveFirstLimitReachedWebhookResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,message);
-            }
-
-            return new RemoveFirstLimitReachedWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+        public async Task<GetFirstLimitReachedWebhookResponse> Get(int requestId)
+        {
+            return await Get(Api, Path, AdminKey, new GetFirstLimitReachedRequest(requestId));
         }
 
         public async Task<GetFirstLimitReachedWebhookResponse> Get(GetFirstLimitReachedRequest request)
@@ -51,110 +54,70 @@ namespace getAddress.Sdk.Api
             return await Get(Api, Path, AdminKey,request);
         }
 
-       
+        public async Task<GetWebhookResponse> Get(GetWebhookRequest request)
+        {
+            return await Get(Api, Path, AdminKey, request);
+        }
+
 
         public async static Task<GetFirstLimitReachedWebhookResponse> Get(GetAddesssApi api, string path, AdminKey adminKey, GetFirstLimitReachedRequest request)
         {
-            if (api == null) throw new ArgumentNullException(nameof(api));
-            if (path == null) throw new ArgumentNullException(nameof(path));
-            if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
-            if (request == null) throw new ArgumentNullException(nameof(request));
+            var result = await Get(api, path, adminKey, new GetWebhookRequest(request.Id));
 
-            var fullPath = path + request.Id;
-
-            api.SetAuthorizationKey(adminKey);
-
-            var response = await api.Get(fullPath);
-
-            var body = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                var webhook = GetFirstLimitWebhook(body);
-
-                return new GetFirstLimitReachedWebhookResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, webhook.Id, webhook.Url);
-            }
-
-            return new GetFirstLimitReachedWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            return result.FormerResult();
         }
 
-        public async Task<ListFirstLimitReachedWebhookResponse> List()
+        public async static Task<GetWebhookResponse> Get(GetAddesssApi api, string path, AdminKey adminKey, GetWebhookRequest request)
+        {
+            return await WebhookCommands.Get(api, path, adminKey, request);
+        }
+
+        public async Task<ListWebhookResponse> List()
         {
             return await List(Api, Path, AdminKey);
         }
 
-        public async static Task<ListFirstLimitReachedWebhookResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
+        public async static Task<ListWebhookResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
         {
-            if (api == null) throw new ArgumentNullException(nameof(api));
-            if (path == null) throw new ArgumentNullException(nameof(path));
-            if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
-
-            api.SetAuthorizationKey(adminKey);
-
-            var response = await api.Get(Path);
-
-            var body = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                var webhooks = ListFirstLimitReachedWebhooks(body);
-
-                return new ListFirstLimitReachedWebhookResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,webhooks);
-            }
-
-            return new ListFirstLimitReachedWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            return await WebhookCommands.List(api, path, adminKey);
         }
 
+
+        public async Task<AddFirstLimitReachedWebhookResponse> Add(string url)
+        {
+            return await Add(Api, new AddFirstLimitReachedWebhookRequest(url), Path, AdminKey);
+        }
 
         public async Task<AddFirstLimitReachedWebhookResponse> Add(AddFirstLimitReachedWebhookRequest request)
         {
             return await Add(Api, request, Path,AdminKey);
         }
 
-        public async static Task<AddFirstLimitReachedWebhookResponse> Add(GetAddesssApi api, AddFirstLimitReachedWebhookRequest request, string path, AdminKey adminKey)
+        public async Task<AddWebhookResponse> Add(AddWebhookRequest request)
         {
-            if (api == null) throw new ArgumentNullException(nameof(api));
-            if (request == null) throw new ArgumentNullException(nameof(request));
-
-            api.SetAuthorizationKey(adminKey);
-
-            var response = await api.Post(path, request);
-
-            var body = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                var messageAndId = GetMessageAndId(body);
-
-                return new AddFirstLimitReachedWebhookResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, messageAndId.Id);
-            }
-
-            return new AddFirstLimitReachedWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase,body);
+            return await Add(Api, request, Path, AdminKey);
         }
 
-        public async Task<TestFirstLimitReachedWebhookResponse> Test()
+        public async static Task<AddFirstLimitReachedWebhookResponse> Add(GetAddesssApi api, AddFirstLimitReachedWebhookRequest request, string path, AdminKey adminKey)
+        {
+            var result = await Add(api, new AddWebhookRequest(request.Url), path, adminKey);
+
+            return result.FormerResult();
+        }
+
+        public async static Task<AddWebhookResponse> Add(GetAddesssApi api, AddWebhookRequest request, string path, AdminKey adminKey)
+        {
+            return await WebhookCommands.Add(api, request, path, adminKey);
+        }
+
+        public async Task<TestWebhookResponse> Test()
         {
             return await Test(Api, $"{Path}test", AdminKey);
         }
 
-        public async static Task<TestFirstLimitReachedWebhookResponse> Test(GetAddesssApi api, string path, AdminKey adminKey)
+        public async static Task<TestWebhookResponse> Test(GetAddesssApi api, string path, AdminKey adminKey)
         {
-            if (api == null) throw new ArgumentNullException(nameof(api));
-
-            api.SetAuthorizationKey(adminKey);
-
-            var response = await api.Post(path);
-
-            var body = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                var message = GetMessage(body);
-
-                return new TestFirstLimitReachedWebhookResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, message, message);
-            }
-
-            return new TestFirstLimitReachedWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            return await Test(api, path, adminKey);
         }
 
         private static FirstLimitReachedWebhook GetFirstLimitWebhook(string body)
@@ -164,17 +127,17 @@ namespace getAddress.Sdk.Api
             return JsonConvert.DeserializeObject<FirstLimitReachedWebhook>(body);
         }
 
-      private static IEnumerable<FirstLimitReachedWebhook> ListFirstLimitReachedWebhooks(string body)
+        private static IEnumerable<Webhook> ListFirstLimitReachedWebhooks(string body)
       {
-            if (string.IsNullOrWhiteSpace(body)) return new List<FirstLimitReachedWebhook>();
+            if (string.IsNullOrWhiteSpace(body)) return new List<Webhook>();
 
             var json = JsonConvert.DeserializeObject<JArray>(body);
 
-            var list = new List<FirstLimitReachedWebhook>();
+            var list = new List<Webhook>();
 
             foreach (dynamic jsonWebhook in json)
             {
-                var webhook =  new FirstLimitReachedWebhook
+                var webhook =  new Webhook
                 {
                     Id = jsonWebhook.id,
                     Url = jsonWebhook.url

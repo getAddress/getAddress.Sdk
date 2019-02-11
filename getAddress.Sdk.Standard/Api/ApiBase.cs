@@ -34,34 +34,7 @@ namespace getAddress.Sdk.Api
             AdminKey = adminKey;
         }
 
-        protected class IdBase
-        {
-            public string Id { get; set; }
-            
-        }
-
        
-
-        protected class MessageAndId: IdBase
-        {
-           
-            public string Message { get; set; }
-        }
-
-
-
-        protected static MessageAndId GetMessageAndId(string body)
-        {
-            if (string.IsNullOrWhiteSpace(body)) return new MessageAndId();
-
-            var json = JsonConvert.DeserializeObject<dynamic>(body);
-
-            return new MessageAndId
-            {
-                Id = json.id,
-                Message = json.message
-            };
-        }
 
         protected static string GetMessage(string body)
         {

@@ -2,7 +2,7 @@
 
 namespace getAddress.Sdk.Api.Requests
 {
-    public class RemoveFirstLimitReachedWebhookRequest
+    public class RemoveFirstLimitReachedWebhookRequest: IRemoveWebhookRequest
     {
         [JsonProperty("id")]
         public int Id
@@ -19,4 +19,5 @@ namespace getAddress.Sdk.Api.Requests
             return new RemoveFirstLimitReachedWebhookRequest(id);
         }
     }
+
 }

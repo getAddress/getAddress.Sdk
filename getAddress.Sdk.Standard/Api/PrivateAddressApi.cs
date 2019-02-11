@@ -1,4 +1,5 @@
-﻿using getAddress.Sdk.Api.Requests;
+﻿using getAddress.Api;
+using getAddress.Sdk.Api.Requests;
 using getAddress.Sdk.Api.Responses;
 using Newtonsoft.Json;
 using System;
@@ -38,7 +39,7 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                var messageAndId = GetMessageAndId(body);
+                var messageAndId = MessageAndId.GetMessageAndId(body);
 
                 return new AddPrivateAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, messageAndId.Id);
             }

@@ -1,4 +1,5 @@
-﻿using getAddress.Sdk.Api.Requests;
+﻿using getAddress.Api;
+using getAddress.Sdk.Api.Requests;
 using getAddress.Sdk.Api.Responses;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -52,7 +53,7 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                var messageAndId = GetMessageAndId(body);
+                var messageAndId = MessageAndId.GetMessageAndId(body);
 
                 var id = long.Parse(messageAndId.Id);
 

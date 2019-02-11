@@ -10,10 +10,7 @@
 
         public class Success : RemoveFirstLimitReachedWebhookResponse
         {
-
-
             public string Message { get; set; }
-
 
             internal Success(int statusCode, string reasonPhase, string raw,  string message) : base(statusCode, reasonPhase, raw, true)
             {
