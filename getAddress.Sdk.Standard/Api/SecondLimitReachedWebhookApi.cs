@@ -112,13 +112,5 @@ namespace getAddress.Sdk.Api
             return await WebhookCommands.Add(api, request, path, adminKey);
         }
 
-        private static SecondLimitReachedWebhook GetSecondLimitWebhook(string body)
-        {
-            if (string.IsNullOrWhiteSpace(body)) return new SecondLimitReachedWebhook();
-
-            return JsonConvert.DeserializeObject<SecondLimitReachedWebhook>(body);
-        }
-
-   
     }
 }

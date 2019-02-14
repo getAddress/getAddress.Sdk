@@ -117,36 +117,9 @@ namespace getAddress.Sdk.Api
 
         public async static Task<TestWebhookResponse> Test(GetAddesssApi api, string path, AdminKey adminKey)
         {
-            return await Test(api, path, adminKey);
+            return await WebhookCommands.Test(api, path, adminKey);
         }
 
-        private static FirstLimitReachedWebhook GetFirstLimitWebhook(string body)
-        {
-            if (string.IsNullOrWhiteSpace(body)) return new FirstLimitReachedWebhook();
-
-            return JsonConvert.DeserializeObject<FirstLimitReachedWebhook>(body);
-        }
-
-        private static IEnumerable<Webhook> ListFirstLimitReachedWebhooks(string body)
-      {
-            if (string.IsNullOrWhiteSpace(body)) return new List<Webhook>();
-
-            var json = JsonConvert.DeserializeObject<JArray>(body);
-
-            var list = new List<Webhook>();
-
-            foreach (dynamic jsonWebhook in json)
-            {
-                var webhook =  new Webhook
-                {
-                    Id = jsonWebhook.id,
-                    Url = jsonWebhook.url
-                };
-
-                list.Add(webhook);
-            }
-
-            return list;
-        }
+       
     }
 }

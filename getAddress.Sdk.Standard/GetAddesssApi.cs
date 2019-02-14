@@ -39,11 +39,7 @@ namespace getAddress.Sdk
 
         public GetAddesssApi(ApiKey apiKey, AdminKey adminKey, HttpClient httpClient = null)
         {
-            _client = httpClient ?? new HttpClient();
-
-            _client.BaseAddress = _baseAddress;
-
-            _client.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
+            _client = httpClient ?? GetHttpClient(_baseAddress);
 
             AdminKey = adminKey;
 
@@ -64,6 +60,8 @@ namespace getAddress.Sdk
             FirstLimitReachedWebhook = new FirstLimitReachedWebhookApi(AdminKey, this);
 
             SecondLimitReachedWebhook = new SecondLimitReachedWebhookApi(AdminKey, this);
+
+            PaymentFailedWebhook = new PaymentFailedWebhookApi(AdminKey, this);
 
             Subscription = new SubscriptionApi(adminKey, this);
 
@@ -107,6 +105,11 @@ namespace getAddress.Sdk
         }
 
         public SecondLimitReachedWebhookApi SecondLimitReachedWebhook
+        {
+            get;
+        }
+
+        public PaymentFailedWebhookApi PaymentFailedWebhook
         {
             get;
         }
@@ -233,6 +236,17 @@ namespace getAddress.Sdk
             };
 
             return JsonConvert.DeserializeObject<T>(json, settings);
+        }
+
+        private static HttpClient GetHttpClient(Uri baseAddress)
+        {
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = baseAddress;
+
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
+
+            return httpClient;
         }
 
         public void Dispose()
