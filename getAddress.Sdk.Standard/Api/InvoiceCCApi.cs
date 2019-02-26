@@ -22,6 +22,7 @@ namespace getAddress.Sdk.Api
         {
             return await Get(Api, Path, AdminKey, request);
         }
+
         public async static Task<GetInvoiceCCResponse> Get(GetAddesssApi api, string path,
            AdminKey adminKey, GetInvoiceCCRequest request)
         {
@@ -74,7 +75,6 @@ namespace getAddress.Sdk.Api
             if (request == null) throw new ArgumentNullException(nameof(request));
             if (path == null) throw new ArgumentNullException(nameof(path));
 
-
             var fullPath = path + request.Id;
 
             api.SetAuthorizationKey(adminKey);
@@ -92,7 +92,6 @@ namespace getAddress.Sdk.Api
 
             return new RemoveInvoiceCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
-
 
         public async Task<ListInvoiceCCResponse> List()
         {

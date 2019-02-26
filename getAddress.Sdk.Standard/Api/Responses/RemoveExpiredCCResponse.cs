@@ -1,14 +1,14 @@
 ﻿
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class RemoveInvoiceCCResponse : ResponseBase<RemoveInvoiceCCResponse.Success, RemoveInvoiceCCResponse.Failed>
+    public abstract class RemoveExpiredCCResponse : ResponseBase<RemoveExpiredCCResponse.Success, RemoveExpiredCCResponse.Failed>
     {
-        protected RemoveInvoiceCCResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        protected RemoveExpiredCCResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
         {
 
         }
 
-        public class Success : RemoveInvoiceCCResponse
+        public class Success : RemoveExpiredCCResponse
         {
             public string Message { get; set; }
 
@@ -19,7 +19,7 @@ namespace getAddress.Sdk.Api.Responses
             }
         }
 
-        public class Failed : RemoveInvoiceCCResponse
+        public class Failed : RemoveExpiredCCResponse
         {
             internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
             {

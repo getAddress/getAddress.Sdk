@@ -1,21 +1,21 @@
 ﻿using Newtonsoft.Json;
 namespace getAddress.Sdk.Api.Requests
 {
-    public class RemoveInvoiceCCRequest
+    public class RemoveExpiredCCRequest
     {
         [JsonProperty("id")]
         public long Id
         {
             get;
         }
-        public RemoveInvoiceCCRequest(long id)
+        public RemoveExpiredCCRequest(long id)
         {
             Id = id;
         }
 
-        public static implicit operator RemoveInvoiceCCRequest(long id)
+        public static implicit operator RemoveExpiredCCRequest(long id)
         {
-            return new RemoveInvoiceCCRequest(id);
+            return new RemoveExpiredCCRequest(id);
         }
     }
 }

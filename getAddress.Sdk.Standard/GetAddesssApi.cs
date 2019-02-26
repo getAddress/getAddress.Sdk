@@ -74,20 +74,35 @@ namespace getAddress.Sdk
             InvoiceCC = new InvoiceCCApi(adminKey, this);
 
             Distance = new DistanceApi(apiKey, this);
+
+            ExpiredCC = new ExpiredCCApi(adminKey, this);
         }
 
         public ApiKeyApi ApiKeyApi
-        { get; }
+        {
+            get;
+        }
 
          public InvoiceApi Invoices
-        { get; }
+        {
+            get;
+        }
 
         public DistanceApi Distance
-        { get; }
+        {
+            get;
+        }
 
 
         public InvoiceCCApi InvoiceCC
-        { get; }
+        {
+            get;
+        }
+
+        public ExpiredCCApi ExpiredCC
+        {
+            get;
+        }
 
         public EmailAddressApi EmailAddress { get; }
 

@@ -26,7 +26,6 @@ namespace getAddress.Sdk.Api.Responses
         [JsonProperty("email-address")]
         public string EmailAddress { get; set; }
     }
-
 }
 
 
