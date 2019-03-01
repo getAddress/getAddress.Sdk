@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-    public class PaymentFailedWebhookApi:AdminApiBase
+    public class ExpiredWebhookApi : AdminApiBase
     {
-        public const string Path = "webhook/payment-failed/";
+        public const string Path = "webhook/expired/";
 
-        internal PaymentFailedWebhookApi(AdminKey adminKey, GetAddesssApi api) : base(adminKey,api)
+        internal ExpiredWebhookApi(AdminKey adminKey, GetAddesssApi api) : base(adminKey, api)
         {
 
         }

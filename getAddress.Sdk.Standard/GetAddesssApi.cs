@@ -63,6 +63,8 @@ namespace getAddress.Sdk
 
             PaymentFailedWebhook = new PaymentFailedWebhookApi(AdminKey, this);
 
+            ExpiredWebhook = new ExpiredWebhookApi(AdminKey, this);
+
             Subscription = new SubscriptionApi(adminKey, this);
 
             ApiKeyApi = new ApiKeyApi(adminKey, this);
@@ -125,6 +127,11 @@ namespace getAddress.Sdk
         }
 
         public PaymentFailedWebhookApi PaymentFailedWebhook
+        {
+            get;
+        }
+
+        public ExpiredWebhookApi ExpiredWebhook
         {
             get;
         }
