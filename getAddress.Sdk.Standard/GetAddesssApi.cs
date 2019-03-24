@@ -20,23 +20,6 @@ namespace getAddress.Sdk
         {
         }
 
-        public Uri BaseAddress
-        {
-            get
-            {
-                return _baseAddress;
-            }
-            set
-            {
-                _baseAddress = value;
-
-                if(_client != null)
-                {
-                    _client.BaseAddress = _baseAddress;
-                }
-            }
-        } 
-
         public GetAddesssApi(ApiKey apiKey, AdminKey adminKey, HttpClient httpClient = null)
         {
             _client = httpClient ?? GetHttpClient(_baseAddress);
@@ -78,6 +61,23 @@ namespace getAddress.Sdk
             Distance = new DistanceApi(apiKey, this);
 
             ExpiredCC = new ExpiredCCApi(adminKey, this);
+        }
+
+        public Uri BaseAddress
+        {
+            get
+            {
+                return _baseAddress;
+            }
+            set
+            {
+                _baseAddress = value;
+
+                if (_client != null)
+                {
+                    _client.BaseAddress = _baseAddress;
+                }
+            }
         }
 
         public ApiKeyApi ApiKeyApi

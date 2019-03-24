@@ -18,6 +18,6 @@ namespace getAddress.Sdk.Api.Requests
             return new GetDomainWhitelistRequest(id);
         }
     }
+    
 
-   
 }

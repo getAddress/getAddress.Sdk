@@ -1,4 +1,5 @@
-﻿using getAddress.Sdk.Api.Responses;
+﻿using getAddress.Sdk.Api.Requests;
+using getAddress.Sdk.Api.Responses;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
@@ -17,6 +18,16 @@ namespace getAddress.Sdk.Api
         public async Task<GetUsageResponse> Get(int day,int month, int year)
         {
             return await Get(Api, Path, AdminKey,day,month,year);
+        }
+        public async Task<GetUsageResponse> Get(GetUsageRequest request)
+        {
+            return await Get(Api, Path, AdminKey, request);
+        }
+
+        public async static Task<GetUsageResponse> Get(GetAddesssApi api, string path,
+            AdminKey adminKey, GetUsageRequest request)
+        {
+            return await Get(api, Path, adminKey, request.Day,request.Month,request.Year);
         }
 
         public async static Task<GetUsageResponse> Get(GetAddesssApi api, string path, 

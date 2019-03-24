@@ -1,7 +1,4 @@
 ﻿
-
-using System;
-
 namespace getAddress.Sdk
 {
     public class ApiKey : Key
@@ -12,11 +9,13 @@ namespace getAddress.Sdk
 
         }
 
-    public static implicit operator ApiKey(string str)  
-    {
-            return new ApiKey(str);
+        public static implicit operator ApiKey(string str)  
+        {
+                return new ApiKey(str);
+        }
+
     }
-    }
+
     public class AdminKey:Key
     {
         public AdminKey(string key):base(key)
@@ -24,15 +23,14 @@ namespace getAddress.Sdk
             
         }
 
-     public static implicit operator AdminKey(string str)  
-    {
-            return new AdminKey(str);
-    }
+        public static implicit operator AdminKey(string str)  
+        {
+                return new AdminKey(str);
+        }
     }
 
     public abstract class Key
     {
-
         public string Value { get; private set; }
 
         public Key(string key)
@@ -40,12 +38,10 @@ namespace getAddress.Sdk
             Value = key;
         }
 
-    public static implicit operator string(Key  key)
+        public static implicit operator string(Key  key)
         {
-            return key.Value;
-    }
-
-    
+                return key.Value;
+        }
 
     }
 }

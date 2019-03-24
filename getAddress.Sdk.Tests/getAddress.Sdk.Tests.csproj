@@ -71,7 +71,7 @@
     <Compile Include="ExpiredCCTests.cs" />
     <Compile Include="ListTests.cs" />
     <Compile Include="KeyHelper.cs" />
-    <Compile Include="PaymentFailedWebhookTests - Copy.cs" />
+    <Compile Include="ExpiredWebhookTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AddressTests.cs" />
     <Compile Include="IpAddressTests.cs" />

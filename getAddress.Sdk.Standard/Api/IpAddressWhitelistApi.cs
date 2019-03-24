@@ -125,10 +125,19 @@ namespace getAddress.Sdk.Api
             return list;
         }
 
+        public async Task<GetIpAddressWhitelistResponse> Get(GetIpAddressWhitelistRequest request)
+        {
+            return await Get(Api, Path, AdminKey, request);
+        }
 
         public async Task<GetIpAddressWhitelistResponse> Get(string id)
         {
             return await Get(Api, Path, AdminKey, id);
+        }
+
+        public async static Task<GetIpAddressWhitelistResponse> Get(GetAddesssApi api, string path, AdminKey adminKey, GetIpAddressWhitelistRequest request)
+        {
+            return await Get(api, Path, adminKey, request.Id);
         }
 
         public async static Task<GetIpAddressWhitelistResponse> Get(GetAddesssApi api, string path, AdminKey adminKey, string id)
