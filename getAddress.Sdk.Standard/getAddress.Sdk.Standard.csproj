@@ -7,13 +7,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>getAddress.Sdk</PackageId>
     <Authors>Lee Smith</Authors>
-    <AssemblyVersion>1.5.2.0</AssemblyVersion>
-    <FileVersion>1.5.2.0</FileVersion>
+    <AssemblyVersion>1.5.5.0</AssemblyVersion>
+    <FileVersion>1.5.5.0</FileVersion>
     <Company>Codeberry Ltd</Company>
-    <Version>1.5.2</Version>
+    <Version>1.5.5</Version>
     <PackageProjectUrl>https://github.com/getAddress/getAddress.Sdk</PackageProjectUrl>
     <Description>SDK for https://getAddress.io</Description>
-    <PackageReleaseNotes>Expired CC Webhook</PackageReleaseNotes>
+    <PackageReleaseNotes>Subscription API + update to HttpContext</PackageReleaseNotes>
     <Copyright>Codeberry Ltd</Copyright>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <PackageTags>getAddress SDK https://getaddress.io getaddress.io postcode address UK</PackageTags>
@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
 </Project>

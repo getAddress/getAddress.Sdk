@@ -18,6 +18,14 @@ namespace getAddress.Sdk.Api
             {
                 return await api.Subscription.Unsubscribe();
             }
-        }        
+        }
+
+        public async Task<SubscriptionResponse> Subscription(AdminKey adminKey = null)
+        {
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey))
+            {
+                return await api.Subscription.Get();
+            }
+        }
     }
 }
