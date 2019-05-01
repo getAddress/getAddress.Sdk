@@ -16,7 +16,7 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetApiKey();
 
-            using (var api = new GetAddesssApi(new ApiKey(apiKey)))
+            using (var api = new GetAddressApi(new ApiKey(apiKey)))
             {
                 var result = await api.Address.Get(new GetAddressRequest("NN13ER"));
 

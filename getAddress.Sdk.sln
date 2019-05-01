@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "getAddress.Sdk.Tests", "getAddress.Sdk.Tests\getAddress.Sdk.Tests.csproj", "{02AF85C9-2716-4ECD-B387-73C7F9C19823}"
 EndProject

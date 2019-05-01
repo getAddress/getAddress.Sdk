@@ -7,6 +7,18 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk
 {
+
+    public class GetAddressApi: GetAddesssApi
+    {
+        public GetAddressApi(ApiKey apiKey, HttpClient httpClient = null): base(apiKey, new AdminKey(string.Empty), httpClient)
+        {
+        }
+
+        public GetAddressApi(AdminKey adminKey, HttpClient httpClient = null): base(new ApiKey(string.Empty), adminKey, httpClient)
+        {
+        }
+    }
+
     public class GetAddesssApi:IDisposable
     {
         public Uri _baseAddress = new Uri("https://api.getaddress.io");
