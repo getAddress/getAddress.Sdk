@@ -14,7 +14,7 @@ PM> Install-Package getAddress.Sdk
 ```
 var apiKey = new ApiKey("<YOUR API KEY>");
 
-using (var api = new GetAddesssApi(apiKey))
+using (var api = new GetAddressApi(apiKey))
 {
     var result = await api.Address.Get(new GetAddressRequest("POSTCODE", "OPTIONAL HOUSE NAME"));
 
@@ -43,7 +43,7 @@ using (var api = new GetAddesssApi(apiKey))
 ```
 var adminKey = new AdminKey("Your Admin Key");
 
-using (var api = new GetAddesssApi(adminKey))
+using (var api = new GetAddressApi(adminKey))
 {
     var result = await api.Usage.Get();
 
@@ -63,7 +63,7 @@ using (var api = new GetAddesssApi(adminKey))
 ```
  var adminKey = new AdminKey("Your Admin Key");
 
-using (var api = new GetAddesssApi(adminKey))
+using (var api = new GetAddressApi(adminKey))
 {
     var result = await api.Usage.Get(DAY,MONTH,YEAR);
 
