@@ -14,30 +14,29 @@ PM> Install-Package getAddress.Sdk
 ```
 var apiKey = new ApiKey("<YOUR API KEY>");
 
-using (var api = new GetAddressApi(apiKey))
+IAddressService addresService = new AddressService(apiKey);
+
+var result = await addresService.Get(new GetAddressRequest("POSTCODE", "OPTIONAL HOUSE NAME"));
+
+if (result.IsSuccess)
 {
-    var result = await api.Address.Get(new GetAddressRequest("POSTCODE", "OPTIONAL HOUSE NAME"));
+    var successfulResult = result.SuccessfulResult;
 
-    if (result.IsSuccess)
+    var latitude = successfulResult.Latitude;
+
+    var Longitude = successfulResult.Longitude;
+
+    foreach (var address in successfulResult.Addresses)
     {
-        var successfulResult =  (GetAddressResponse.Success)result;
-
-        var latitude = successfulResult.Latitude;
-
-        var Longitude = successfulResult.Longitude;
-
-        foreach (var address in successfulResult.Addresses)
-        {
-            var line1 = address.Line1;
-            var line2 = address.Line2;
-            var line3 = address.Line3;
-            var line4 = address.Line4;
-            var locality = address.Locality;
-            var townOrCity = address.TownOrCity;
-            var county = address.County;
-        }
+        var line1 = address.Line1;
+        var line2 = address.Line2;
+        var line3 = address.Line3;
+        var line4 = address.Line4;
+        var locality = address.Locality;
+        var townOrCity = address.TownOrCity;
+        var county = address.County;
     }
-}         
+}
 ```
 ### Get the current day's usage and usage limits
 ```
