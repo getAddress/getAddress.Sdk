@@ -15,7 +15,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<GetUsageResponse> Get(AdminKey adminKey = null)
         {
-            using (var api = new GetAddesssApi(adminKey))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey))
             {
                 return await api.Usage.Get();
             }
@@ -23,7 +23,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<GetUsageResponse> Get(GetUsageRequest request, AdminKey adminKey = null)
         {
-            using (var api = new GetAddesssApi(adminKey))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey))
             {
                 return await api.Usage.Get(request);
             }
