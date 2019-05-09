@@ -40,41 +40,39 @@ if (result.IsSuccess)
 ```
 ### Get the current day's usage and usage limits
 ```
-var adminKey = new AdminKey("Your Admin Key");
+var adminKey = new AdminKey("<YOUR ADMINISTRATION KEY>");
 
-using (var api = new GetAddressApi(adminKey))
+IUsageService usageService = new UsageService(adminKey);
+
+var result = await usageService.Get();
+
+if (result.IsSuccess)
 {
-    var result = await api.Usage.Get();
+    var successfulResult = result.SuccessfulResult;
 
-    if (result.IsSuccess)
-    {
-        var successfulResult = (GetUsageResponse.Success)result;
+    var count = successfulResult.Usage.Count;
 
-        var count = successfulResult.Usage.Count;
+    var limit1 = successfulResult.Usage.Limit1;
 
-        var limit1 = successfulResult.Usage.Limit1;
-
-        var limit2 = successfulResult.Usage.Limit2;
-    }
+    var limit2 = successfulResult.Usage.Limit2;
 }
 ```
 ### Get usage and limits for a given day, month and year 
 ```
- var adminKey = new AdminKey("Your Admin Key");
+var adminKey = new AdminKey("<YOUR ADMINISTRATION KEY>");
 
-using (var api = new GetAddressApi(adminKey))
+IUsageService usageService = new UsageService(adminKey);
+
+var result = await usageService.Get(new GetUsageRequest(DAY,MONTH,YEAR));
+
+if (result.IsSuccess)
 {
-    var result = await api.Usage.Get(DAY,MONTH,YEAR);
+    var successfulResult = result.SuccessfulResult;
 
-    if (result.IsSuccess)
-    {
-        var successfulResult = (GetUsageResponse.Success)result;
+    var count = successfulResult.Usage.Count;
 
-        var count = successfulResult.Usage.Count;
+    var limit1 = successfulResult.Usage.Limit1;
 
-        var limit1 = successfulResult.Usage.Limit1;
-
-        var limit2 = successfulResult.Usage.Limit2;
-    }
+    var limit2 = successfulResult.Usage.Limit2;
 }
 ```
