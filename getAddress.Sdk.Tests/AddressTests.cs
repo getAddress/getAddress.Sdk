@@ -11,8 +11,18 @@ namespace getAddress.Sdk.Tests
     [TestClass]
     public class AddressTests
     {
+        [TestMethod]
+        public async Task GetAddressViaService()
+        {
+            var apiKey = KeyHelper.GetApiKey();
 
-       
+            var addressService = new AddressService(apiKey);
+
+            var result = await addressService.Get(new GetAddressRequest("NN13ER"));
+
+            Assert.IsTrue(result.IsSuccess);
+        }
+
         [TestMethod]
         public async Task GetAddress()
         {

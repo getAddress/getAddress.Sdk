@@ -13,7 +13,7 @@ namespace getAddress.Sdk.Api
         public InvoiceEmailCcService(AdminKey adminKey = null, HttpClient httpClient = null)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
-            HttpClient = httpClient ?? throw new System.ArgumentNullException(nameof(httpClient));
+            HttpClient = httpClient;
         }
 
         public async Task<AddInvoiceCCResponse> Add(AddInvoiceCCRequest request, AdminKey adminKey = null, HttpClient httpClient = null)

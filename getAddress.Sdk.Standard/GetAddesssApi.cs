@@ -36,9 +36,9 @@ namespace getAddress.Sdk
         {
             _client = httpClient ?? GetHttpClient(_baseAddress);
 
-            if(httpClient.BaseAddress == null)
+            if(_client.BaseAddress == null)
             {
-                httpClient.BaseAddress = _baseAddress;
+                _client.BaseAddress = _baseAddress;
             }
 
             AdminKey = adminKey;

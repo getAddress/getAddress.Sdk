@@ -13,7 +13,7 @@ namespace getAddress.Sdk.Api
         public DomainWhitelistService(AdminKey adminKey, HttpClient httpClient = null)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
-            HttpClient = httpClient ?? throw new System.ArgumentNullException(nameof(httpClient));
+            HttpClient = httpClient;
         }
 
         public async Task<AddDomainWhitelistResponse> Add(AddDomainWhitelistRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
