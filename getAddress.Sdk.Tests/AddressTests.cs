@@ -73,23 +73,32 @@ namespace getAddress.Sdk.Tests
         [TestMethod]
         public async Task GetAddress2()
         {
-            var adminKey = new AdminKey("Your Admin Key");
+            var apiKey = new ApiKey("<YOUR API KEY>");
 
-            using (var api = new GetAddesssApi(adminKey))
+            IAddressService addresService = new AddressService(apiKey);
+
+            var result = await addresService.Get(new GetAddressRequest("POSTCODE", "OPTIONAL HOUSE NAME"));
+
+            if (result.IsSuccess)
             {
-                var result = await api.Usage.Get();
+                var successfulResult = result.SuccessfulResult;
 
-                if (result.IsSuccess)
+                var latitude = successfulResult.Latitude;
+
+                var Longitude = successfulResult.Longitude;
+
+                foreach (var address in successfulResult.Addresses)
                 {
-                    var successfulResult = (GetUsageResponse.Success)result;
-
-                    var count = successfulResult.Usage.Count;
-
-                    var limit1 = successfulResult.Usage.Limit1;
-
-                    var limit2 = successfulResult.Usage.Limit2;
+                    var line1 = address.Line1;
+                    var line2 = address.Line2;
+                    var line3 = address.Line3;
+                    var line4 = address.Line4;
+                    var locality = address.Locality;
+                    var townOrCity = address.TownOrCity;
+                    var county = address.County;
                 }
             }
+
         }
 
     }
