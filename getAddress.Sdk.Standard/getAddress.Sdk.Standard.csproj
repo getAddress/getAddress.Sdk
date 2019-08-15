@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard1.1</TargetFramework>
@@ -7,13 +7,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>getAddress.Sdk</PackageId>
     <Authors>Lee Smith</Authors>
-    <AssemblyVersion>1.5.6.0</AssemblyVersion>
-    <FileVersion>1.5.6.0</FileVersion>
+    <AssemblyVersion>1.5.8.0</AssemblyVersion>
+    <FileVersion>1.5.8.0</FileVersion>
     <Company>Codeberry Ltd</Company>
-    <Version>1.5.6</Version>
+    <Version>1.5.8</Version>
     <PackageProjectUrl>https://github.com/getAddress/getAddress.Sdk</PackageProjectUrl>
     <Description>SDK for https://getAddress.io</Description>
-    <PackageReleaseNotes>GetAddressApi Spelling</PackageReleaseNotes>
+    <PackageReleaseNotes>HttpClient parameter added to services</PackageReleaseNotes>
     <Copyright>Codeberry Ltd</Copyright>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <PackageTags>getAddress SDK https://getaddress.io getaddress.io postcode address UK</PackageTags>
