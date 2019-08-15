@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using getAddress.Sdk.Api.Requests;
 using getAddress.Sdk.Api.Responses;
 
@@ -8,6 +9,6 @@ namespace getAddress.Sdk.Api
     {
         AdminKey AdminKey { get; }
 
-        Task<DistanceResponse> Get(DistanceRequest request, AdminKey adminKey = null);
+        Task<DistanceResponse> Get(DistanceRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
     }
 }

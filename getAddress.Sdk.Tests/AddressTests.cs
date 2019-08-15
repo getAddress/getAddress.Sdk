@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using getAddress.Sdk;
 using getAddress.Sdk.Api.Requests;
 using getAddress.Sdk.Api.Responses;
+using getAddress.Sdk.Api;
 
 namespace getAddress.Sdk.Tests
 {
@@ -11,6 +12,7 @@ namespace getAddress.Sdk.Tests
     public class AddressTests
     {
 
+       
         [TestMethod]
         public async Task GetAddress()
         {
