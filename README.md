@@ -14,9 +14,9 @@ PM> Install-Package getAddress.Sdk
 ```
 var apiKey = new ApiKey("<YOUR API KEY>");
 
-IAddressService addresService = new AddressService(apiKey);
+IAddressService addressService = new AddressService(apiKey);
 
-var result = await addresService.Get(new GetAddressRequest("POSTCODE", "OPTIONAL HOUSE NAME"));
+var result = await addressService.Get(new GetAddressRequest("POSTCODE", "OPTIONAL HOUSE NAME"));
 
 if (result.IsSuccess)
 {
