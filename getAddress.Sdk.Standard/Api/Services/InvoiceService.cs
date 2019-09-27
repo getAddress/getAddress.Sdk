@@ -33,5 +33,14 @@ namespace getAddress.Sdk.Api
             }
         }
 
+        public async Task<ListInvoicesResponse> List(ListInvoicesRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
+        {
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, httpClient))
+            {
+                return await api.Invoices.List(request);
+            }
+        }
+
+
     }
 }

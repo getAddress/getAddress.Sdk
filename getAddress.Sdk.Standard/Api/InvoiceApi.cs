@@ -38,11 +38,22 @@ namespace getAddress.Sdk.Api
             return await GetInternal(api, fullPath, adminKey,request.Number);
         }
 
-        public async  Task<ListInvoicesResponse> List()
+        public async Task<ListInvoicesResponse> List()
         {
             return await List(Api, Path, AdminKey);
         }
 
+        public async Task<ListInvoicesResponse> List(ListInvoicesRequest request)
+        {
+            if (request is null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            var fullPath = $"{Path}from/{request.From.Day}/{request.From.Month}/{request.From.Year}/To/{request.To.Day}/{request.To.Month}/{request.To.Year}";
+
+            return await List(Api, fullPath, AdminKey);
+        }
 
         public async static Task<ListInvoicesResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
         {
@@ -64,6 +75,8 @@ namespace getAddress.Sdk.Api
 
             return new ListInvoicesResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
+
+       
 
         private async static Task<GetInvoiceResponse> GetInternal(GetAddesssApi api, string path, AdminKey adminKey, string number)
         {

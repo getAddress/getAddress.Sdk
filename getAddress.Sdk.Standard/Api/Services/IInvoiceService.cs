@@ -9,5 +9,7 @@ namespace getAddress.Sdk.Api
     {
         Task<GetInvoiceResponse> Get(GetInvoiceRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
         Task<ListInvoicesResponse> List(AdminKey adminKey = null, HttpClient httpClient = null);
+
+        Task<ListInvoicesResponse> List(ListInvoicesRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
     }
 }
