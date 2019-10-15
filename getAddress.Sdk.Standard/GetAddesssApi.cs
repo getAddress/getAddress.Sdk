@@ -78,6 +78,8 @@ namespace getAddress.Sdk
             Distance = new DistanceApi(apiKey, this);
 
             ExpiredCC = new ExpiredCCApi(adminKey, this);
+
+            Permission = new PermissionApi(adminKey, this);
         }
 
         public Uri BaseAddress
@@ -102,7 +104,12 @@ namespace getAddress.Sdk
             get;
         }
 
-         public InvoiceApi Invoices
+        public PermissionApi Permission
+        {
+            get;
+        }
+
+        public InvoiceApi Invoices
         {
             get;
         }

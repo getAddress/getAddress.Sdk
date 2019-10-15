@@ -79,6 +79,7 @@
     <Compile Include="DistanceTests.cs" />
     <Compile Include="PaymentFailedWebhookTests.cs" />
     <Compile Include="SecondLimitReachedWebhookTests.cs" />
+    <Compile Include="PermissionTests.cs" />
     <Compile Include="SubscriptionTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 
 namespace getAddress.Sdk.Api.Requests
 {
+
     public class UpdateEmailAddressRequest
     {
         [JsonProperty("new-email-address")]

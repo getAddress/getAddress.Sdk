@@ -28,7 +28,22 @@ namespace getAddress.Api
             };
         }
     }
+    internal class MessageResponse 
+    {
+        public string Message { get; set; }
+
+        internal static MessageResponse GetMessageResponse(string body)
+        {
+            if (string.IsNullOrWhiteSpace(body)) return new MessageResponse();
+
+            var json = JsonConvert.DeserializeObject<dynamic>(body);
+
+            return new MessageResponse
+            {
+                Message = json.message
+            };
+        }
+    }
 
 
-    
 }

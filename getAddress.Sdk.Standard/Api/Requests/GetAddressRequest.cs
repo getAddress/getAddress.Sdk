@@ -23,8 +23,6 @@ namespace getAddress.Sdk.Api.Requests
             get;
         }
 
-        
-
         public GetAddressRequest(string postcode,string house = null, bool sort = false)
         {
             Postcode = postcode;
