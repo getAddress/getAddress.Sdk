@@ -5,12 +5,10 @@ namespace getAddress.Sdk.Api.Responses
 {
     public abstract class ListInvoicesResponse: ResponseBase<ListInvoicesResponse.Success,ListInvoicesResponse.Failed>
     {
-
         protected ListInvoicesResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)
         {
         
         }
-
         public class Success: ListInvoicesResponse
         {
             public IEnumerable<Invoice> Invoices { get; }
@@ -21,7 +19,6 @@ namespace getAddress.Sdk.Api.Responses
                 SuccessfulResult = this;
             }
         }
-
         public class Failed : ListInvoicesResponse
         {
             internal Failed(int statusCode, string reasonPhase, string raw) :base(statusCode, reasonPhase, raw, false)

@@ -17,7 +17,7 @@ namespace getAddress.Sdk.Tests
 
             var permissionService = new PermissionService(adminKey);
 
-            var addResponse = await permissionService.Add(new AddPermissionRequest(emailAddress, new PermissionRequest(true,false)));
+            var addResponse = await permissionService.Add(new AddPermissionRequest(emailAddress, new PermissionRequest(false,false,false)));
 
             Assert.IsTrue(addResponse.IsSuccess);
 
@@ -25,14 +25,21 @@ namespace getAddress.Sdk.Tests
 
             Assert.IsTrue(getResponse.IsSuccess);
 
-            var updateResponse = await permissionService.Update(new UpdatePermissionRequest(emailAddress, new PermissionRequest(true, true)));
+            var listResponse = await permissionService.List();
+
+            Assert.IsTrue(listResponse.IsSuccess);
+
+            var updateResponse = await permissionService.Update(new UpdatePermissionRequest(emailAddress, new PermissionRequest(true, true,true)));
 
             Assert.IsTrue(updateResponse.IsSuccess);
+
+            var getResponse2 = await permissionService.Get(new GetPermissionRequest(emailAddress));
+
+            Assert.IsTrue(getResponse2.IsSuccess);
 
             var deleteResponse = await permissionService.Remove(new RemovePermissionRequest(emailAddress));
 
             Assert.IsTrue(deleteResponse.IsSuccess);
-
         }
 
         

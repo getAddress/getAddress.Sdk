@@ -11,10 +11,14 @@ namespace getAddress.Sdk.Api.Requests
         [JsonProperty("unsubscribe")]
         public bool Unsubscribe { get; }
 
-        public PermissionRequest(bool viewInvoices, bool unsubscribe)//more permissions breaks bw compatibility 
+        [JsonProperty("update_card_details")]
+        public bool UpdateCardDetails { get; }
+
+        public PermissionRequest(bool viewInvoices, bool unsubscribe,bool updateCardDetails)//more permissions breaks bw compatibility 
         {
             ViewInvoices = viewInvoices;
             Unsubscribe = unsubscribe;
+            UpdateCardDetails = updateCardDetails;
         }
     }
     public class GetPermissionRequest

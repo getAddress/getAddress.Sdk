@@ -7,18 +7,19 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>getAddress.Sdk</PackageId>
     <Authors>Lee Smith</Authors>
-    <AssemblyVersion>1.6.0.0</AssemblyVersion>
-    <FileVersion>1.6.0.0</FileVersion>
+    <AssemblyVersion>1.6.2.0</AssemblyVersion>
+    <FileVersion>1.6.2.0</FileVersion>
     <Company>Codeberry Ltd</Company>
-    <Version>1.6.0</Version>
+    <Version>1.6.2</Version>
     <PackageProjectUrl>https://github.com/getAddress/getAddress.Sdk</PackageProjectUrl>
     <Description>SDK for https://getAddress.io</Description>
-    <PackageReleaseNotes>Invoices by date range</PackageReleaseNotes>
+    <PackageReleaseNotes>Permission API</PackageReleaseNotes>
     <Copyright>Codeberry Ltd</Copyright>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <PackageTags>getAddress SDK https://getaddress.io getaddress.io postcode address UK</PackageTags>
     <RepositoryUrl>https://github.com/getAddress/getAddress.Sdk</RepositoryUrl>
     <PackageIconUrl>https://avatars2.githubusercontent.com/u/8994465?s=400&amp;u=389cd7704dda5dd51a9aed58b755e9441938c7ea&amp;v=4</PackageIconUrl>
+    <Product>getAddress.Sdk.Standard.1.6.2</Product>
   </PropertyGroup>
 
   <ItemGroup>

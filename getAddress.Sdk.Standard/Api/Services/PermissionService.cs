@@ -33,6 +33,14 @@ namespace getAddress.Sdk.Api
             }
         }
 
+        public async Task<ListPermissionResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
+        {
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, httpClient))
+            {
+                return await api.Permission.List();
+            }
+        }
+
         public async Task<AddPermissionResponse> Add(AddPermissionRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
             using (var api = new GetAddesssApi(adminKey ?? AdminKey, httpClient))

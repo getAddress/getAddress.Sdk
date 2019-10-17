@@ -2,7 +2,9 @@
 using getAddress.Sdk.Api.Requests;
 using getAddress.Sdk.Api.Responses;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
@@ -44,10 +46,37 @@ namespace getAddress.Sdk.Api
             {
                 var permission = GetPermission(body);
 
-                return new PermissionResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, permission.Expires, permission.Permissions);
+                return new PermissionResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,permission);
             }
 
             return new PermissionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+        }
+
+        public async Task<ListPermissionResponse> List()
+        {
+            return await List(Api, Path, AdminKey);
+        }
+
+        public async static Task<ListPermissionResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+            if (path == null) throw new ArgumentNullException(nameof(path));
+            if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
+
+            api.SetAuthorizationKey(adminKey);
+
+            var response = await api.Get(path);
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var permissions = GetPermissions(body);
+
+                return new ListPermissionResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, permissions);
+            }
+
+            return new ListPermissionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
         public async Task<UpdatePermissionResponse> Update(UpdatePermissionRequest request)
@@ -138,13 +167,15 @@ namespace getAddress.Sdk.Api
             return JsonConvert.DeserializeObject<Permission>(body);
         }
 
-        private class Permission
+        private static IEnumerable<Permission> GetPermissions(string body)
         {
-            public DateTime Expires { get; set; }
+            if (string.IsNullOrWhiteSpace(body)) return new List<Permission>();
 
-            [JsonProperty("permissions")]
-            public Permissions Permissions { get; set; }
+            return JsonConvert.DeserializeObject<IEnumerable<Permission>>(body);
+
         }
+
+        
 
         
 
