@@ -30,7 +30,7 @@ namespace getAddress.Sdk.Api
             if (apiKey == null) throw new ArgumentNullException(nameof(apiKey));
             if (request == null) throw new ArgumentNullException(nameof(request));
 
-            var fullPath = $"{path}{request.Postcode}/{request.House}?sort={request.Sort}";
+            var fullPath = $"{path}{request.Postcode}/{request.House}?sort={request.Sort}&fuzzy={request.Fuzzy}";
 
             api.SetAuthorizationKey(apiKey);
 
@@ -62,7 +62,7 @@ namespace getAddress.Sdk.Api
             if (apiKey == null) throw new ArgumentNullException(nameof(apiKey));
             if (request == null) throw new ArgumentNullException(nameof(request));
 
-            var fullPath = $"{path}{request.Postcode}/{request.House}?sort={request.Sort}&expand={true}";
+            var fullPath = $"{path}{request.Postcode}/{request.House}?sort={request.Sort}&expand={true}&fuzzy={request.Fuzzy}";
 
             api.SetAuthorizationKey(apiKey);
 

@@ -23,11 +23,18 @@ namespace getAddress.Sdk.Api.Requests
             get;
         }
 
-        public GetAddressRequest(string postcode,string house = null, bool sort = false)
+        [JsonProperty("fuzzy")]
+        public bool Fuzzy
+        {
+            get;
+        }
+
+        public GetAddressRequest(string postcode,string house = null, bool sort = false, bool fuzzy = false)
         {
             Postcode = postcode;
             House = house;
             Sort = sort;
+            Fuzzy = fuzzy;
         }
 
     }

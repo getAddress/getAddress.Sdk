@@ -65,6 +65,19 @@ namespace getAddress.Sdk.Tests
             }
         }
 
+        [TestMethod]
+        public async Task GetAddress_Fuzzy()
+        {
+            var apiKey = KeyHelper.GetApiKey();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey)))
+            {
+                var result = await api.Address.Get(new GetAddressRequest("PE150SR",house: "Ltd", fuzzy: true));
+
+                Assert.IsTrue(result.IsSuccess);
+            }
+        }
+
 
         [TestMethod]
         public async Task GetAddress_Sort_With_House()
