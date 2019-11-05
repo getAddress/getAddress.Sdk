@@ -18,7 +18,7 @@ namespace getAddress.Sdk.Tests
 
             var addressService = new AddressService(apiKey);
 
-            var result = await addressService.Get(new GetAddressRequest("NN13ER"));
+            var result = await addressService.Get(new GetAddressRequest("CO91PU", "M.J.R. Site Solutions Ltd"));
 
             Assert.IsTrue(result.IsSuccess);
         }
@@ -93,36 +93,6 @@ namespace getAddress.Sdk.Tests
         }
 
 
-        [TestMethod]
-        public async Task GetAddress2()
-        {
-            var apiKey = new ApiKey("<YOUR API KEY>");
-
-            IAddressService addresService = new AddressService(apiKey);
-
-            var result = await addresService.Get(new GetAddressRequest("POSTCODE", "OPTIONAL HOUSE NAME"));
-
-            if (result.IsSuccess)
-            {
-                var successfulResult = result.SuccessfulResult;
-
-                var latitude = successfulResult.Latitude;
-
-                var Longitude = successfulResult.Longitude;
-
-                foreach (var address in successfulResult.Addresses)
-                {
-                    var line1 = address.Line1;
-                    var line2 = address.Line2;
-                    var line3 = address.Line3;
-                    var line4 = address.Line4;
-                    var locality = address.Locality;
-                    var townOrCity = address.TownOrCity;
-                    var county = address.County;
-                }
-            }
-
-        }
 
     }
 }
