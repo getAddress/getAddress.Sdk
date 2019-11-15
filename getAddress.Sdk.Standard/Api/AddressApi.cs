@@ -73,7 +73,7 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                var addressesBody = GetExpandedAddressBody(body);
+                var addressesBody = GetExpandedAddressFromBody(body);
                 double latitude = addressesBody.Item1;
                 double longitude = addressesBody.Item2;
                 var addresses = addressesBody.Item4;
@@ -108,14 +108,14 @@ namespace getAddress.Sdk.Api
 
             if (response.IsSuccessStatusCode)
             {
-                var addressBody = GetExpandedAddressBody(json);
+                var addressBody = GetSingleExpandedAddressFromBody(json);
                 
                 double latitude = addressBody.Item1;
                 double longitude = addressBody.Item2;
-                var addresses = addressBody.Item4;
+                var address = addressBody.Item4;
                 var postcode = addressBody.Item3;
 
-                return new PlaceDetailsResponse.Success((int)response.StatusCode, response.ReasonPhrase, json, latitude, longitude, postcode, addresses.FirstOrDefault());
+                return new PlaceDetailsResponse.Success((int)response.StatusCode, response.ReasonPhrase, json, latitude, longitude, postcode, address);
             }
 
             return new PlaceDetailsResponse.Failed((int)response.StatusCode, response.ReasonPhrase, json);
@@ -154,7 +154,7 @@ namespace getAddress.Sdk.Api
             return new Tuple <double,double, IEnumerable<Address>>(latitude, longitude, addressList);
         }
 
-        private static Tuple<double, double,string, IEnumerable<ExpandedAddress>> GetExpandedAddressBody(string body)
+        private static Tuple<double, double,string, IEnumerable<ExpandedAddress>> GetExpandedAddressFromBody(string body)
         {
             var addressList = new List<ExpandedAddress>();
 
@@ -167,55 +167,77 @@ namespace getAddress.Sdk.Api
 
             foreach (var address in json.addresses)
             {
-                string thoroughfare = address.thoroughfare; 
-                string buildingName = address.building_name;
-                string subuildingName = address.sub_building_name;
-                string subuildingNumber = address.sub_building_number;
-                string buildingNumber = address.building_number;
-                string line1 = address.line_1;
-                string line2 = address.line_2;
-                string line3 = address.line_3;
-                string line4 = address.line_4;
-                string locality = address.locality;
-                string townOrCity = address.town_or_city;
-                string county = address.county;
-                string district = address.district;
-                string country = address.country;
-
-                JArray jformattedAddress = address.formatted_address;
-
-                string[] formattedAddress = jformattedAddress.Select(jv => (string)jv).ToArray();
-
-                var expandedAddress = new ExpandedAddress
-                {
-                    FormattedAddress = new FormattedAddress
-                    {
-                       Line1 = formattedAddress[0],
-                       Line2 = formattedAddress[1],
-                       Line3 = formattedAddress[2],
-                       Line4 = formattedAddress[3],
-                       County = formattedAddress[4]
-                    },
-                    Thoroughfare = thoroughfare,
-                    BuildingName = buildingName,
-                    SubuildingName = subuildingName,
-                    SubuildingNumber = subuildingNumber,
-                    BuildingNumber = buildingNumber,
-                    Line1 = line1,
-                    Line2 = line2,
-                    Line3 = line3,
-                    Line4 = line4,
-                    County = county,
-                    Locality = locality,
-                    TownOrCity = townOrCity,
-                    District = district,
-                    Country = country
-                };
+                var expandedAddress = GetExpandedAddress(address);
 
                 addressList.Add(expandedAddress);
             }
 
             return new Tuple<double, double, string,IEnumerable<ExpandedAddress>>(latitude, longitude,postcode, addressList);
+        }
+
+        private static Tuple<double, double, string, ExpandedAddress> GetSingleExpandedAddressFromBody(string body)
+        {
+
+            if (string.IsNullOrWhiteSpace(body)) return new Tuple<double, double, string, ExpandedAddress>(0, 0, string.Empty, null);
+
+            var json = JsonConvert.DeserializeObject<dynamic>(body);
+            double latitude = json.latitude;
+            double longitude = json.longitude;
+            string postcode = json.postcode;
+            var expandedAddress = GetExpandedAddress(json.address);
+
+            return new Tuple<double, double, string, ExpandedAddress>(latitude, longitude, postcode, expandedAddress);
+        }
+
+
+        private static ExpandedAddress GetExpandedAddress(dynamic address)
+        {
+            string thoroughfare = address.thoroughfare;
+            string buildingName = address.building_name;
+            string subuildingName = address.sub_building_name;
+            string subuildingNumber = address.sub_building_number;
+            string buildingNumber = address.building_number;
+            string line1 = address.line_1;
+            string line2 = address.line_2;
+            string line3 = address.line_3;
+            string line4 = address.line_4;
+            string locality = address.locality;
+            string townOrCity = address.town_or_city;
+            string county = address.county;
+            string district = address.district;
+            string country = address.country;
+
+            JArray jformattedAddress = address.formatted_address;
+
+            string[] formattedAddress = jformattedAddress.Select(jv => (string)jv).ToArray();
+
+            var expandedAddress = new ExpandedAddress
+            {
+                FormattedAddress = new FormattedAddress
+                {
+                    Line1 = formattedAddress[0],
+                    Line2 = formattedAddress[1],
+                    Line3 = formattedAddress[2],
+                    Line4 = formattedAddress[3],
+                    County = formattedAddress[4]
+                },
+                Thoroughfare = thoroughfare,
+                BuildingName = buildingName,
+                SubuildingName = subuildingName,
+                SubuildingNumber = subuildingNumber,
+                BuildingNumber = buildingNumber,
+                Line1 = line1,
+                Line2 = line2,
+                Line3 = line3,
+                Line4 = line4,
+                County = county,
+                Locality = locality,
+                TownOrCity = townOrCity,
+                District = district,
+                Country = country
+            };
+
+            return expandedAddress;
         }
     }
 }

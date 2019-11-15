@@ -332,7 +332,7 @@ namespace getAddress.Sdk
 
         public void Dispose()
         {
-            _client.Dispose();
+            
         }
     }
 }
