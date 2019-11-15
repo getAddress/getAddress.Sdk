@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
+
     public class AddressApi: ApiKeyBase
     {
         public const string Path = "find/";
@@ -50,11 +51,11 @@ namespace getAddress.Sdk.Api
             return new GetAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);//todo: move failed responses
         }
 
-
         public async Task<GetExpandedAddressResponse> GetExpanded(GetAddressRequest request)
         {
             return await GetExpanded(Api, Path, this.ApiKey, request);
         }
+        
         public async static Task<GetExpandedAddressResponse> GetExpanded(GetAddesssApi api, string path, ApiKey apiKey, GetAddressRequest request)
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
@@ -80,8 +81,46 @@ namespace getAddress.Sdk.Api
                 return new GetExpandedAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, latitude, longitude,postcode, addresses);
             }
 
-            return new GetExpandedAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);//todo: move failed responses
+            return new GetExpandedAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
+
+        public async Task<PlaceDetailsResponse> PlaceDetails(PlaceDetailsRequest request)
+        {
+            var path = "google/place-details/";
+
+            return await PlaceDetails(Api, path, this.ApiKey, request);
+        }
+
+        public async static Task<PlaceDetailsResponse> PlaceDetails(GetAddesssApi api, string path, ApiKey apiKey, PlaceDetailsRequest request)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+            if (path == null) throw new ArgumentNullException(nameof(path));
+            if (apiKey == null) throw new ArgumentNullException(nameof(apiKey));
+            if (request == null) throw new ArgumentNullException(nameof(request));
+
+            var fullPath = $"{path}{request.PlaceId.Value}/?google-api-key={request.GoogleApiKey.Value}";
+
+            api.SetAuthorizationKey(apiKey);
+
+            var response = await api.Get(fullPath);
+
+            var json = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var addressBody = GetExpandedAddressBody(json);
+                
+                double latitude = addressBody.Item1;
+                double longitude = addressBody.Item2;
+                var addresses = addressBody.Item4;
+                var postcode = addressBody.Item3;
+
+                return new PlaceDetailsResponse.Success((int)response.StatusCode, response.ReasonPhrase, json, latitude, longitude, postcode, addresses.FirstOrDefault());
+            }
+
+            return new PlaceDetailsResponse.Failed((int)response.StatusCode, response.ReasonPhrase, json);
+        }
+
 
         private static Tuple<double,double,IEnumerable<Address>> GetAddressBody(string body)
         {

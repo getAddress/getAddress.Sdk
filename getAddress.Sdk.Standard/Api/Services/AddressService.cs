@@ -14,11 +14,12 @@ namespace getAddress.Sdk.Api
         }
 
         public ApiKey ApiKey { get; }
+
         public HttpClient HttpClient { get; }
 
         public async Task<GetAddressResponse> Get(GetAddressRequest request, ApiKey apiKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(apiKey ?? ApiKey,httpClient))
+            using (var api = new GetAddesssApi(apiKey ?? ApiKey, HttpClient ?? httpClient))
             {
                 return await api.Address.Get(request);
             }
@@ -26,9 +27,17 @@ namespace getAddress.Sdk.Api
 
         public async Task<GetExpandedAddressResponse> GetExpanded(GetAddressRequest request, ApiKey apiKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(apiKey ?? ApiKey,httpClient))
+            using (var api = new GetAddesssApi(apiKey ?? ApiKey, HttpClient ?? httpClient))
             {
                 return await api.Address.GetExpanded(request);
+            }
+        }
+
+        public async Task<PlaceDetailsResponse> PlaceDetails(PlaceDetailsRequest request, ApiKey apiKey = null, HttpClient httpClient = null)
+        {
+            using (var api = new GetAddesssApi(apiKey ?? ApiKey, HttpClient ?? httpClient))
+            {
+                return await api.Address.PlaceDetails(request);
             }
         }
     }

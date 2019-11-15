@@ -18,7 +18,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<AddIpAddressWhitelistResponse> Add(AddIpAddressWhitelistRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.IpAddressWhitelist.Add(request);
             }
@@ -26,7 +26,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<RemoveIpAddressWhitelistResponse> Remove(RemoveIpAddressWhitelistRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.IpAddressWhitelist.Remove(request);
             }
@@ -34,7 +34,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<ListIpAddressWhitelistResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey??AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey??AdminKey, HttpClient ?? httpClient))
             {
                 return await api.IpAddressWhitelist.List();
             }
@@ -42,7 +42,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<GetIpAddressWhitelistResponse> Get(GetIpAddressWhitelistRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.IpAddressWhitelist.Get(request);
             }

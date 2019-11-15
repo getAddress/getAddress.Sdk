@@ -18,7 +18,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<EmailAddressResponse> Update(UpdateEmailAddressRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.EmailAddress.Update(request);
             }
@@ -26,7 +26,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<EmailAddressResponse> Get(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.EmailAddress.Get();
             }

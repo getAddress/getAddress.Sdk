@@ -5,6 +5,7 @@ using getAddress.Sdk;
 using getAddress.Sdk.Api.Requests;
 using getAddress.Sdk.Api.Responses;
 using getAddress.Sdk.Api;
+using System.Net.Http;
 
 namespace getAddress.Sdk.Tests
 {
@@ -50,6 +51,26 @@ namespace getAddress.Sdk.Tests
                 Assert.IsTrue(result.IsSuccess);
 
             }
+        }
+
+        [TestMethod]
+        public async Task GetPlaceDetails()
+        {
+            var apiKey = KeyHelper.GetApiKey();
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            var addressService = new AddressService(apiKey, httpClient);
+
+            var googleApiKey = new GoogleApiKey(KeyHelper.GetGoogleApiKey());
+
+            var googlePlaceId = KeyHelper.GetGooglePlaceId();
+
+            var result = await addressService.PlaceDetails(new PlaceDetailsRequest(googlePlaceId, googleApiKey));
+
+            Assert.IsTrue(result.IsSuccess);
         }
 
         [TestMethod]

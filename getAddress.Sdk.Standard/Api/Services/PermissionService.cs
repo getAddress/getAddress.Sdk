@@ -27,7 +27,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<PermissionResponse> Get(GetPermissionRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.Permission.Get(request);
             }
@@ -35,7 +35,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<ListPermissionResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.Permission.List();
             }
@@ -43,7 +43,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<AddPermissionResponse> Add(AddPermissionRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.Permission.Add(request);
             }
@@ -51,7 +51,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<RemovePermissionResponse> Remove(RemovePermissionRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.Permission.Remove(request);
             }
@@ -59,7 +59,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<UpdatePermissionResponse> Update(UpdatePermissionRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.Permission.Update(request);
             }

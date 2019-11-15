@@ -19,7 +19,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<DistanceResponse> Get(DistanceRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.Distance.Get(request);
             }

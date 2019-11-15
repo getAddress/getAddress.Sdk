@@ -18,7 +18,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<AddPrivateAddressResponse> Add(AddPrivateAddressRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.PrivateAddress.Add(request);
             }
@@ -26,7 +26,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<RemovePrivateAddressResponse> Remove(RemovePrivateAddressRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.PrivateAddress.Remove(request);
             }
@@ -34,7 +34,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<ListPrivateAddressResponse> List(ListPrivateAddressRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.PrivateAddress.List(request);
             }
@@ -42,7 +42,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<GetPrivateAddressResponse> Get(GetPrivateAddressRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.PrivateAddress.Get(request);
             }

@@ -45,42 +45,67 @@ namespace getAddress.Sdk
 
             ApiKey = apiKey;
 
-            DomainWhitelist = new DomainWhitelistApi(AdminKey, this);
+            domainWhitelist = new Lazy<DomainWhitelistApi>(() => new DomainWhitelistApi(adminKey, this));
 
-            IpAddressWhitelist = new IpAddressWhitelistApi(AdminKey, this);
+            ipAddressWhitelist = new Lazy<IpAddressWhitelistApi>(() => new IpAddressWhitelistApi(adminKey, this));
 
-            PrivateAddress = new PrivateAddressApi(AdminKey, this);
+            privateAddress = new Lazy<PrivateAddressApi>(() => new PrivateAddressApi(adminKey, this));
 
-            Usage = new UsageApi(AdminKey, this);
+            usage = new Lazy<UsageApi>(() => new UsageApi(adminKey, this));
 
-            BillingAddress = new BillingAddressApi(AdminKey, this);
+            billingAddress = new Lazy<BillingAddressApi>(() => new BillingAddressApi(adminKey, this));
 
-            Address = new AddressApi(ApiKey, this);
+            address = new Lazy<AddressApi>(() => new AddressApi(apiKey, this));
 
-            FirstLimitReachedWebhook = new FirstLimitReachedWebhookApi(AdminKey, this);
+            firstLimitReachedWebhook = new Lazy<FirstLimitReachedWebhookApi>(() => new FirstLimitReachedWebhookApi(adminKey, this));
 
-            SecondLimitReachedWebhook = new SecondLimitReachedWebhookApi(AdminKey, this);
+            secondLimitReachedWebhook = new Lazy<SecondLimitReachedWebhookApi>(() => new SecondLimitReachedWebhookApi(adminKey, this));
 
-            PaymentFailedWebhook = new PaymentFailedWebhookApi(AdminKey, this);
+            paymentFailedWebhook = new Lazy<PaymentFailedWebhookApi>(() => new PaymentFailedWebhookApi(adminKey, this));
 
-            ExpiredWebhook = new ExpiredWebhookApi(AdminKey, this);
+            expiredWebhook = new Lazy<ExpiredWebhookApi>(() => new ExpiredWebhookApi(adminKey, this));
 
-            Subscription = new SubscriptionApi(adminKey, this);
+            subscription = new Lazy<SubscriptionApi>(() => new SubscriptionApi(adminKey, this));
 
-            ApiKeyApi = new ApiKeyApi(adminKey, this);
+            apiKeyApi = new Lazy<ApiKeyApi>(() => new ApiKeyApi(adminKey, this));
 
-            EmailAddress = new EmailAddressApi(adminKey, this);
+            emailAddress = new Lazy<EmailAddressApi>(() => new EmailAddressApi(adminKey, this));
 
-            Invoices = new InvoiceApi(adminKey, this);
+            invoices = new Lazy<InvoiceApi>(() => new InvoiceApi(adminKey, this));
 
-            InvoiceCC = new InvoiceCCApi(adminKey, this);
+            invoiceCC = new Lazy<InvoiceCCApi>(() => new InvoiceCCApi(adminKey, this));
 
-            Distance = new DistanceApi(apiKey, this);
+            distance = new Lazy<DistanceApi>(() => new DistanceApi(apiKey, this));
 
-            ExpiredCC = new ExpiredCCApi(adminKey, this);
+            expiredCC = new Lazy<ExpiredCCApi>(() => new ExpiredCCApi(adminKey, this));
 
-            Permission = new PermissionApi(adminKey, this);
+            permission = new Lazy<PermissionApi>(() => new PermissionApi(adminKey, this));
+
+            autocomplete = new Lazy<AutocompleteApi>(() =>new AutocompleteApi(apiKey, this));
         }
+
+        private Lazy<AutocompleteApi> autocomplete;
+        private Lazy<PermissionApi> permission;
+        private Lazy<ExpiredCCApi> expiredCC;
+        private Lazy<DistanceApi> distance;
+        private Lazy<InvoiceCCApi> invoiceCC;
+        private Lazy<InvoiceApi> invoices;
+        private Lazy<EmailAddressApi> emailAddress;
+        private Lazy<ApiKeyApi> apiKeyApi;
+        private Lazy<SubscriptionApi> subscription;
+        private Lazy<ExpiredWebhookApi> expiredWebhook;
+        private Lazy<PaymentFailedWebhookApi> paymentFailedWebhook;
+        private Lazy<SecondLimitReachedWebhookApi> secondLimitReachedWebhook;
+        private Lazy<FirstLimitReachedWebhookApi> firstLimitReachedWebhook;
+        private Lazy<AddressApi> address;
+        private Lazy<UsageApi> usage;
+        private Lazy<PrivateAddressApi> privateAddress;
+        private Lazy<IpAddressWhitelistApi> ipAddressWhitelist;
+        private Lazy<DomainWhitelistApi> domainWhitelist;
+        private Lazy<BillingAddressApi> billingAddress;
+       
+        
+
 
         public Uri BaseAddress
         {
@@ -99,41 +124,51 @@ namespace getAddress.Sdk
             }
         }
 
+        public AutocompleteApi Autocomplete
+        {
+            get { return autocomplete.Value; }
+        }
+
         public ApiKeyApi ApiKeyApi
         {
-            get;
+            get { return apiKeyApi.Value; }
         }
 
         public PermissionApi Permission
         {
-            get;
+            get { return permission.Value; }
         }
 
         public InvoiceApi Invoices
         {
-            get;
+            get { return invoices.Value; }
         }
 
         public DistanceApi Distance
         {
-            get;
+            get { return distance.Value; }
         }
 
 
         public InvoiceCCApi InvoiceCC
         {
-            get;
+            get { return invoiceCC.Value; }
         }
 
         public ExpiredCCApi ExpiredCC
         {
-            get;
+            get { return expiredCC.Value; }
         }
 
-        public EmailAddressApi EmailAddress { get; }
+        public EmailAddressApi EmailAddress 
+        { 
+            get { return emailAddress.Value; }
+        }
 
         public SubscriptionApi Subscription
-        { get; }
+        { 
+            get { return subscription.Value; }
+        }
 
         public ApiKey ApiKey
         {
@@ -147,52 +182,52 @@ namespace getAddress.Sdk
 
         public SecondLimitReachedWebhookApi SecondLimitReachedWebhook
         {
-            get;
+            get { return  secondLimitReachedWebhook.Value; }
         }
 
         public PaymentFailedWebhookApi PaymentFailedWebhook
         {
-            get;
+            get { return paymentFailedWebhook.Value; }
         }
 
         public ExpiredWebhookApi ExpiredWebhook
         {
-            get;
+            get { return expiredWebhook.Value; }
         }
 
         public FirstLimitReachedWebhookApi FirstLimitReachedWebhook
         {
-            get;
+            get { return firstLimitReachedWebhook.Value; }
         }
 
         public BillingAddressApi BillingAddress
         {
-            get;
+            get { return billingAddress.Value; }
         }
 
         public PrivateAddressApi PrivateAddress
         {
-            get;
+            get { return privateAddress.Value; }
         }
 
         public DomainWhitelistApi DomainWhitelist
         {
-            get;
+            get { return domainWhitelist.Value; }
         }
 
         public IpAddressWhitelistApi IpAddressWhitelist
         {
-            get;
+            get { return ipAddressWhitelist.Value; }
         }
 
         public UsageApi Usage
         {
-            get;
+            get { return usage.Value; }
         }
 
         public AddressApi Address
         {
-            get;
+            get { return address.Value; }
         }
 
         internal  void SetAuthorizationKey(Key key)

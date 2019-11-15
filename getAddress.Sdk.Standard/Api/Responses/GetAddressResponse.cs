@@ -2,6 +2,8 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
+
+
     public class GetAddressResponse : ResponseBase<GetAddressResponse.Success,GetAddressResponse.Failed>
     {
 
@@ -27,7 +29,7 @@ namespace getAddress.Sdk.Api.Responses
             }
         }
 
-        public class Failed : GetAddressResponse//todo: failed class for each possible response  
+        public class Failed : GetAddressResponse 
         {
             internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
             {

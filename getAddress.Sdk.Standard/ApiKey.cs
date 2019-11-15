@@ -1,6 +1,18 @@
 ﻿
 namespace getAddress.Sdk
 {
+
+    public class GoogleApiKey
+    {
+        public string Value { get; private set; }
+
+        public GoogleApiKey(string key)
+        {
+            Value = key;
+        }
+
+    }
+
     public class ApiKey : Key
     {
 

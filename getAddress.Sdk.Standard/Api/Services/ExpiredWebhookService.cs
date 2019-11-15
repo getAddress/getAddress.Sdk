@@ -18,7 +18,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<AddWebhookResponse> Add(AddWebhookRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.ExpiredWebhook.Add(request);
             }
@@ -26,7 +26,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<RemoveWebhookResponse> Remove(RemoveWebhookRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.ExpiredWebhook.Remove(request);
             }
@@ -34,7 +34,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<ListWebhookResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.ExpiredWebhook.List();
             }
@@ -42,7 +42,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<GetWebhookResponse> Get(GetWebhookRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.ExpiredWebhook.Get(request);
             }
@@ -50,7 +50,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<TestWebhookResponse> Test(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.ExpiredWebhook.Test();
             }

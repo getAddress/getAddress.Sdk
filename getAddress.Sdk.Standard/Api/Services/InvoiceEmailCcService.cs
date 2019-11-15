@@ -18,7 +18,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<AddInvoiceCCResponse> Add(AddInvoiceCCRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.InvoiceCC.Add(request);
             }
@@ -26,7 +26,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<RemoveInvoiceCCResponse> Remove(RemoveInvoiceCCRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.InvoiceCC.Remove(request);
             }
@@ -42,7 +42,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<GetInvoiceCCResponse> Get(GetInvoiceCCRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.InvoiceCC.Get(request);
             }

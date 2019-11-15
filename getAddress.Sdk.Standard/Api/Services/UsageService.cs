@@ -18,7 +18,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<GetUsageResponse> Get(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey??AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey??AdminKey, HttpClient ?? httpClient))
             {
                 return await api.Usage.Get();
             }
@@ -26,7 +26,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<GetUsageResponse> Get(GetUsageRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey??AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey??AdminKey, HttpClient ?? httpClient))
             {
                 return await api.Usage.Get(request);
             }
@@ -35,7 +35,7 @@ namespace getAddress.Sdk.Api
        
         public async Task<ListUsageResponse> List(ListUsageRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.Usage.List(request);
             }

@@ -19,7 +19,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<GetInvoiceResponse> Get(GetInvoiceRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.Invoices.Get(request);
             }
@@ -27,7 +27,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<ListInvoicesResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.Invoices.List();
             }
@@ -35,7 +35,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<ListInvoicesResponse> List(ListInvoicesRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, httpClient))
+            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
             {
                 return await api.Invoices.List(request);
             }

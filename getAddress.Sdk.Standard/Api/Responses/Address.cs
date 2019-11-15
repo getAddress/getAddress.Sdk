@@ -10,5 +10,4 @@
         public string TownOrCity { get; set; }
         public string County { get; set; }
     }
-
 }
