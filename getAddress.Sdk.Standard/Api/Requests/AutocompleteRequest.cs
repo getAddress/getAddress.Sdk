@@ -23,11 +23,20 @@ namespace getAddress.Sdk.Api.Requests
             get;
         }
 
-        public AutocompleteRequest(string input, GoogleApiKey googleApiKey, SessionToken sessionToken = null)
+        [JsonProperty("ip-address")]
+        public IpAddress IpAddress
+        {
+            get;
+            set;
+        }
+
+
+        public AutocompleteRequest(string input, GoogleApiKey googleApiKey, SessionToken sessionToken = null, IpAddress ipAddress = null)
         {
             Input = input;
             GoogleApiKey = googleApiKey;
             SessionToken = sessionToken;
+            IpAddress = ipAddress;
         }
     }
 }

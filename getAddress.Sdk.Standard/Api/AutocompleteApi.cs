@@ -46,6 +46,7 @@ namespace getAddress.Sdk.Api
             var fullPath = $"{path}postcodes/{request.Input}?google-api-key={request.GoogleApiKey.Value}";
 
             fullPath = AddSessionToken(fullPath, request);
+            fullPath = AddIpAddress(fullPath, request);
 
             api.SetAuthorizationKey(apiKey);
 
@@ -73,6 +74,7 @@ namespace getAddress.Sdk.Api
             var fullPath = $"{path}places/{request.Input}?google-api-key={request.GoogleApiKey.Value}";
 
             fullPath = AddSessionToken(fullPath, request);
+            fullPath = AddIpAddress(fullPath, request);
 
             api.SetAuthorizationKey(apiKey);
 
@@ -137,6 +139,16 @@ namespace getAddress.Sdk.Api
             }
             return fullPath;
         }
+
+        private static string AddIpAddress(string fullPath, AutocompleteRequest request)
+        {
+            if (!string.IsNullOrWhiteSpace(request.IpAddress?.Value))
+            {
+                fullPath += $"&ip-address={request.IpAddress.Value}";
+            }
+            return fullPath;
+        }
+
 
     }
 }

@@ -23,8 +23,11 @@ namespace getAddress.Sdk.Tests
             var autocompleteService = new AutocompleteService(apiKey, httpClient);
 
             var sessionToken = new SessionToken(Guid.NewGuid().ToString());
+            
+            var ipAddress = new IpAddress("192.168.0.1");
 
-            var result = await autocompleteService.Postcodes(new Api.Requests.AutocompleteRequest("pe15 0", new GoogleApiKey(googleApiKey), sessionToken: sessionToken));
+            var result = await autocompleteService.Postcodes(new Api.Requests.AutocompleteRequest("pe15 0", 
+                new GoogleApiKey(googleApiKey), sessionToken: sessionToken,ipAddress: ipAddress));
 
             Assert.IsTrue(result.IsSuccess);
         }
@@ -32,7 +35,6 @@ namespace getAddress.Sdk.Tests
         [TestMethod]
         public async Task Places()
         {
-            
             var apiKey = KeyHelper.GetApiKey();
 
             var googleApiKey = KeyHelper.GetGoogleApiKey();
