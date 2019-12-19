@@ -67,6 +67,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="TrackWebhookTests.cs" />
     <Compile Include="FirstLimitReachedWebhookTests.cs" />
     <Compile Include="ExpiredCCTests.cs" />
     <Compile Include="ListTests.cs" />

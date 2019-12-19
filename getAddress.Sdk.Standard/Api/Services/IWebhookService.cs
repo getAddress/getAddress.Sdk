@@ -26,5 +26,8 @@ namespace getAddress.Sdk.Api
     public interface IPaymentFailedWebhookService : IWebhookService
     {
     }
+    public interface ITrackWebhookService : IWebhookService
+    {
+    }
 
 }

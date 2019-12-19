@@ -65,6 +65,8 @@ namespace getAddress.Sdk
 
             expiredWebhook = new Lazy<ExpiredWebhookApi>(() => new ExpiredWebhookApi(adminKey, this));
 
+            trackWebhook = new Lazy<TrackWebhookApi>(() => new TrackWebhookApi(adminKey, this));
+
             subscription = new Lazy<SubscriptionApi>(() => new SubscriptionApi(adminKey, this));
 
             apiKeyApi = new Lazy<ApiKeyApi>(() => new ApiKeyApi(adminKey, this));
@@ -94,6 +96,7 @@ namespace getAddress.Sdk
         private Lazy<ApiKeyApi> apiKeyApi;
         private Lazy<SubscriptionApi> subscription;
         private Lazy<ExpiredWebhookApi> expiredWebhook;
+        private Lazy<TrackWebhookApi> trackWebhook;
         private Lazy<PaymentFailedWebhookApi> paymentFailedWebhook;
         private Lazy<SecondLimitReachedWebhookApi> secondLimitReachedWebhook;
         private Lazy<FirstLimitReachedWebhookApi> firstLimitReachedWebhook;
@@ -193,6 +196,11 @@ namespace getAddress.Sdk
         public ExpiredWebhookApi ExpiredWebhook
         {
             get { return expiredWebhook.Value; }
+        }
+
+        public TrackWebhookApi TrackWebhook
+        {
+            get { return trackWebhook.Value; }
         }
 
         public FirstLimitReachedWebhookApi FirstLimitReachedWebhook
