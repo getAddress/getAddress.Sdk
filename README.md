@@ -44,17 +44,19 @@ var adminKey = new AdminKey("<YOUR ADMINISTRATION KEY>");
 
 IUsageService usageService = new UsageService(adminKey);
 
-var result = await usageService.Get();
+var result = await usageService.GetV3();
 
 if (result.IsSuccess)
 {
     var successfulResult = result.SuccessfulResult;
 
-    var count = successfulResult.Usage.Count;
+    var usageToday = successfulResult.Usage.UsageToday;
 
-    var limit1 = successfulResult.Usage.Limit1;
+    var dailyLimit = successfulResult.Usage.DailyLimit;
 
-    var limit2 = successfulResult.Usage.Limit2;
+    var monthlyBuffer = successfulResult.Usage.MonthlyBuffer;
+
+    var monthlyBufferUsed = successfulResult.Usage.MonthlyBufferUsed;
 }
 ```
 ### Get usage and limits for a given day, month and year 
@@ -63,16 +65,18 @@ var adminKey = new AdminKey("<YOUR ADMINISTRATION KEY>");
 
 IUsageService usageService = new UsageService(adminKey);
 
-var result = await usageService.Get(new GetUsageRequest(DAY,MONTH,YEAR));
+var result = await usageService.GetV3(new GetUsageRequest(DAY,MONTH,YEAR));
 
 if (result.IsSuccess)
 {
     var successfulResult = result.SuccessfulResult;
 
-    var count = successfulResult.Usage.Count;
+    var usageToday = successfulResult.Usage.UsageToday;
 
-    var limit1 = successfulResult.Usage.Limit1;
+    var dailyLimit = successfulResult.Usage.DailyLimit;
 
-    var limit2 = successfulResult.Usage.Limit2;
+    var monthlyBuffer = successfulResult.Usage.MonthlyBuffer;
+
+    var monthlyBufferUsed = successfulResult.Usage.MonthlyBufferUsed;
 }
 ```
