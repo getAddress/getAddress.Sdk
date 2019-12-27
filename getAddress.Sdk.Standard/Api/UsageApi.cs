@@ -11,7 +11,8 @@ namespace getAddress.Sdk.Api
     public class UsageApi: AdminApiBase
     {
 
-        public const string Path = "v2/usage/";
+        public const string V2Path = "v2/usage/";
+        public const string V3Path = "v3/usage/";
 
         internal UsageApi(AdminKey adminKey, GetAddesssApi api) : base(adminKey,api)
         {
@@ -19,11 +20,16 @@ namespace getAddress.Sdk.Api
         }
         public async Task<GetUsageResponse> Get(int day,int month, int year)
         {
-            return await Get(Api, Path, AdminKey,day,month,year);
+            return await Get(Api, V2Path, AdminKey,day,month,year);
         }
         public async Task<GetUsageResponse> Get(GetUsageRequest request)
         {
-            return await Get(Api, Path, AdminKey, request);
+            return await Get(Api, V2Path, AdminKey, request);
+        }
+
+        public async Task<GetUsageV3Response> GetV3(GetUsageRequest request)
+        {
+            return await GetV3(Api, V3Path, AdminKey, request);
         }
 
         public async static Task<GetUsageResponse> Get(GetAddesssApi api, string path,
@@ -32,12 +38,26 @@ namespace getAddress.Sdk.Api
             return await Get(api, path, adminKey, request.Day,request.Month,request.Year);
         }
 
+        public async static Task<GetUsageV3Response> GetV3(GetAddesssApi api, string path,
+            AdminKey adminKey, GetUsageRequest request)
+        {
+            return await GetV3(api, path, adminKey, request.Day, request.Month, request.Year);
+        }
+
         public async static Task<GetUsageResponse> Get(GetAddesssApi api, string path, 
             AdminKey adminKey,int day, int month, int year)
         {
             var fullPath = $"{path}{day}/{month}/{year}";
 
             return await Get(api, fullPath, adminKey);
+        }
+
+        public async static Task<GetUsageV3Response> GetV3(GetAddesssApi api, string path,
+            AdminKey adminKey, int day, int month, int year)
+        {
+            var fullPath = $"{path}{day}/{month}/{year}";
+
+            return await GetV3(api, fullPath, adminKey);
         }
 
         public async Task<ListUsageResponse> List(ListUsageRequest request)
@@ -60,7 +80,12 @@ namespace getAddress.Sdk.Api
 
         public async Task<GetUsageResponse> Get()
         {
-            return await Get(Api, Path, AdminKey);
+            return await Get(Api, V2Path, AdminKey);
+        }
+
+        public async Task<GetUsageV3Response> GetV3()
+        {
+            return await GetV3(Api, V3Path, AdminKey);
         }
 
         public async static Task<GetUsageResponse> Get(GetAddesssApi api, string path, AdminKey adminKey)
@@ -69,7 +94,6 @@ namespace getAddress.Sdk.Api
             if (path == null) throw new ArgumentNullException(nameof(path));
             if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
             
-
             api.SetAuthorizationKey(adminKey);
 
             var response = await api.Get(path);
@@ -85,6 +109,29 @@ namespace getAddress.Sdk.Api
             }
 
             return new GetUsageResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+        }
+
+        public async static Task<GetUsageV3Response> GetV3(GetAddesssApi api, string path, AdminKey adminKey)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+            if (path == null) throw new ArgumentNullException(nameof(path));
+            if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
+
+            api.SetAuthorizationKey(adminKey);
+
+            var response = await api.Get(path);
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var usage = GetUsageV3(body);
+
+                return new GetUsageV3Response.Success((int)response.StatusCode, response.ReasonPhrase, body, usage.DailyLimit,
+                    usage.UsageToday, usage.MonthlyBuffer,usage.MonthlyBufferUsed);
+            }
+
+            return new GetUsageV3Response.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
         public async static Task<ListUsageResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
@@ -122,6 +169,21 @@ namespace getAddress.Sdk.Api
                  Count = json.count,
                  Limit1 = json.limit1,
                  Limit2 = json.limit2
+            };
+        }
+
+        private static UsageV3 GetUsageV3(string body)
+        {
+            if (string.IsNullOrWhiteSpace(body)) return new UsageV3();
+
+            var json = JsonConvert.DeserializeObject<dynamic>(body);
+
+            return new UsageV3
+            {
+                UsageToday = json.usage_today,
+                DailyLimit = json.daily_limit,
+                MonthlyBuffer = json.monthly_buffer,
+                MonthlyBufferUsed = json.monthly_buffer_used
             };
         }
 

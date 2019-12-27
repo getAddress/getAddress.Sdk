@@ -1,4 +1,6 @@
-﻿namespace getAddress.Sdk.Api.Responses
+﻿using Newtonsoft.Json;
+
+namespace getAddress.Sdk.Api.Responses
 {
     public class Usage
     {
@@ -7,6 +9,21 @@
         public int Limit1 { get; set; }
 
         public int Limit2 { get; set; }
+    }
+
+    public class UsageV3
+    {
+        [JsonProperty("usage_today")]
+        public int UsageToday { get; set; }
+
+        [JsonProperty("daily_limit")]
+        public int DailyLimit { get; set; }
+
+        [JsonProperty("monthly_buffer")]
+        public int MonthlyBuffer { get; set; }
+
+        [JsonProperty("monthly_buffer_used")]
+        public int MonthlyBufferUsed { get; set; }
     }
 
     public abstract class GetUsageResponse : ResponseBase<GetUsageResponse.Success,GetUsageResponse.Failed>
@@ -37,6 +54,40 @@
             internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
             {
                    FailedResult = this;
+            }
+        }
+    }
+
+    public abstract class GetUsageV3Response : ResponseBase<GetUsageV3Response.Success, GetUsageV3Response.Failed>
+    {
+
+        protected GetUsageV3Response(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        {
+
+        }
+
+        public class Success : GetUsageV3Response
+        {
+            public UsageV3 Usage { get; set; }
+
+            internal Success(int statusCode, string reasonPhase, string raw, int dailyLimit, int usageToday, int monthlyBuffer,int monthlyBufferUsed) : base(statusCode, reasonPhase, raw, true)
+            {
+                Usage = new UsageV3
+                {
+                    DailyLimit = dailyLimit,
+                    UsageToday = usageToday,
+                    MonthlyBuffer = monthlyBuffer,
+                    MonthlyBufferUsed = monthlyBufferUsed
+                };
+                SuccessfulResult = this;
+            }
+        }
+
+        public class Failed : GetUsageV3Response
+        {
+            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            {
+                FailedResult = this;
             }
         }
     }

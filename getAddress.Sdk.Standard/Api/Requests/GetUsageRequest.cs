@@ -6,7 +6,7 @@ namespace getAddress.Sdk.Api.Requests
     {
         public GetUsageRequest(int day, int month, int year)
         {
-           DateTime = new DateTime(year, month, day);
+            DateTime = new DateTime(year, month, day);
             Day = day;
             Month = month;
             Year = year;
