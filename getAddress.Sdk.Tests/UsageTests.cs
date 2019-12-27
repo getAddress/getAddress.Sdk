@@ -27,6 +27,17 @@ namespace getAddress.Sdk.Tests
             var result = await service.GetV3();
 
             Assert.IsTrue(result.IsSuccess);
+
+            var successfulResult = result.SuccessfulResult;
+
+            var usageToday = successfulResult.Usage.UsageToday;
+
+            var dailyLimit = successfulResult.Usage.DailyLimit;
+
+            var monthlyBuffer = successfulResult.Usage.MonthlyBuffer;
+
+            var monthlyBufferUsed = successfulResult.Usage.MonthlyBufferUsed;
+
         }
 
 
