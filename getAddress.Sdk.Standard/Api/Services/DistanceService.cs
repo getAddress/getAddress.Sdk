@@ -7,19 +7,19 @@ namespace getAddress.Sdk.Api
 {
     public class DistanceService : IDistanceService
     {
-        public AdminKey AdminKey { get; }
+        public ApiKey ApiKey { get; }
         public HttpClient HttpClient { get; }
 
-        public DistanceService(AdminKey adminKey, HttpClient httpClient = null)
+        public DistanceService(ApiKey apiKey, HttpClient httpClient = null)
         {
-            AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
+            ApiKey = apiKey ?? throw new System.ArgumentNullException(nameof(apiKey));
             HttpClient = httpClient;
         }
 
 
-        public async Task<DistanceResponse> Get(DistanceRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
+        public async Task<DistanceResponse> Get(DistanceRequest request, ApiKey apiKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
+            using (var api = new GetAddesssApi(apiKey ?? ApiKey, HttpClient ?? httpClient))
             {
                 return await api.Distance.Get(request);
             }

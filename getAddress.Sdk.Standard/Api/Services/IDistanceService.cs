@@ -7,8 +7,8 @@ namespace getAddress.Sdk.Api
 {
     public interface IDistanceService
     {
-        AdminKey AdminKey { get; }
+        ApiKey ApiKey { get; }
 
-        Task<DistanceResponse> Get(DistanceRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
+        Task<DistanceResponse> Get(DistanceRequest request, ApiKey apiKey = null, HttpClient httpClient = null);
     }
 }
