@@ -14,7 +14,7 @@
             public double Longitude { get; set; }
             public string Postcode { get; set; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, double latitude, double longitude, string postcode, ExpandedAddress address) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, double latitude, double longitude, string postcode, ExpandedAddress address) : base(statusCode, reasonPhrase, raw, true)
             {
                 Latitude = latitude;
                 Longitude = longitude;
@@ -26,7 +26,7 @@
 
         public class Failed : PlaceDetailsResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 this.FailedResult = this;
             }

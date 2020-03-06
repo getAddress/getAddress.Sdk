@@ -14,7 +14,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public string Message { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, string message) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, string message) : base(statusCode, reasonPhrase, raw, true)
             {
                 SuccessfulResult = this;
                 Message = message;
@@ -23,7 +23,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : RemovePermissionResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

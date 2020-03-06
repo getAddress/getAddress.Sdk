@@ -17,7 +17,7 @@ namespace getAddress.Sdk.Api.Responses
             public ExpiredCC ExpiredCC { get; }
 
 
-            internal Success(int statusCode, string reasonPhrase, string raw, ExpiredCC expiredCC) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, ExpiredCC expiredCC) : base(statusCode, reasonPhrase, raw, true)
             {
                 ExpiredCC = expiredCC;
                 this.SuccessfulResult = this;
@@ -26,7 +26,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : GetExpiredCCResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 this.FailedResult = this;
             }

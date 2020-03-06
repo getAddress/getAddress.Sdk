@@ -24,7 +24,7 @@ namespace getAddress.Sdk.Api.Responses
             public string Postcode { get; set; }
 
 
-            internal Success(int statusCode, string reasonPhrase, string raw, string line1, 
+            public Success(int statusCode, string reasonPhrase, string raw, string line1, 
                 string line2, string line3, string townOrCity, string county, string postcode) : base(statusCode, reasonPhrase, raw, true)
             {
                 Line1 = line1;
@@ -39,7 +39,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : BillingAddressResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

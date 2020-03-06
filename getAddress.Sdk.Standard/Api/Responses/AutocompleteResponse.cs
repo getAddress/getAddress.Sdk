@@ -14,8 +14,8 @@ namespace getAddress.Sdk.Api.Responses
         public class Success : AutocompleteResponse
         {
             public IEnumerable<Prediction> Predictions { get; }
-            
-            internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<Prediction> predictions) : base(statusCode, reasonPhrase, raw, true)
+
+            public Success(int statusCode, string reasonPhrase, string raw, IEnumerable<Prediction> predictions) : base(statusCode, reasonPhrase, raw, true)
             {
                 this.SuccessfulResult = this;
                 Predictions = predictions;
@@ -24,7 +24,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : AutocompleteResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 this.FailedResult = this;
             }

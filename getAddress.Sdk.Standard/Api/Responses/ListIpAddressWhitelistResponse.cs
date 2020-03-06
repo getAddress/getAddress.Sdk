@@ -1,6 +1,4 @@
-﻿
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace getAddress.Sdk.Api.Responses
 {
@@ -15,7 +13,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public IEnumerable<IpAddressWhitelist> IpAddressWhitelists { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<IpAddressWhitelist> ipAddressWhitelists) :base(statusCode, reasonPhrase, raw,true)
+            public Success(int statusCode, string reasonPhrase, string raw, IEnumerable<IpAddressWhitelist> ipAddressWhitelists) :base(statusCode, reasonPhrase, raw,true)
             {
                 
                     IpAddressWhitelists = ipAddressWhitelists;
@@ -25,7 +23,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : ListIpAddressWhitelistResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

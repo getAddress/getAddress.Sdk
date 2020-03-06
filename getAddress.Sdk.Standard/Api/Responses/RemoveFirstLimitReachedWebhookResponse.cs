@@ -12,23 +12,20 @@
         {
             public string Message { get; set; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw,  string message) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw,  string message) : base(statusCode, reasonPhrase, raw, true)
             {
-
                 SuccessfulResult = this;
                 Message = message;
             }
         }
 
-
         public class Failed : RemoveFirstLimitReachedWebhookResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }
         }
 
-      
     }
 }

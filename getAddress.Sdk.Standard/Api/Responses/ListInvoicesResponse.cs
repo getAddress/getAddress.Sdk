@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace getAddress.Sdk.Api.Responses
 {
@@ -13,7 +12,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public IEnumerable<Invoice> Invoices { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<Invoice> invoices) :base(statusCode, reasonPhrase, raw,true)
+            public Success(int statusCode, string reasonPhrase, string raw, IEnumerable<Invoice> invoices) :base(statusCode, reasonPhrase, raw,true)
             {
                 Invoices = invoices;
                 SuccessfulResult = this;
@@ -21,7 +20,7 @@ namespace getAddress.Sdk.Api.Responses
         }
         public class Failed : ListInvoicesResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

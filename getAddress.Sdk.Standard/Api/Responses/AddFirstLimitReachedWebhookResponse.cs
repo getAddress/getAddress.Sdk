@@ -14,7 +14,7 @@
 
             public string Message { get; set; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw,  string message,string id) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw,  string message,string id) : base(statusCode, reasonPhrase, raw, true)
             {
                 Id = ToInt(id);
                 SuccessfulResult = this;
@@ -24,7 +24,7 @@
 
         public class Failed : AddFirstLimitReachedWebhookResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

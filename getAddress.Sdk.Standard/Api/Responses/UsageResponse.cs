@@ -38,20 +38,27 @@ namespace getAddress.Sdk.Api.Responses
         {
             public Usage Usage { get; set; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, int counter, int limit1, int limit2) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, Usage usage) : base(statusCode, reasonPhrase, raw, true)
             {
-                Usage = new Usage {
-                    Count = counter,
-                    Limit1 = limit1,
-                    Limit2 = limit2
-                };
+                Usage = usage;
                 SuccessfulResult = this;
+            }
+
+
+            public Success(int statusCode, string reasonPhrase, string raw, int counter, int limit1, int limit2) : this(statusCode, reasonPhrase, raw, 
+                new Usage
+            {
+                Count = counter,
+                Limit1 = limit1,
+                Limit2 = limit2
+            })
+            { 
             }
         }
 
         public class Failed : GetUsageResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }
@@ -70,22 +77,26 @@ namespace getAddress.Sdk.Api.Responses
         {
             public UsageV3 Usage { get; set; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, int dailyLimit, int usageToday, int monthlyBuffer,int monthlyBufferUsed) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw,  UsageV3 usage) : base(statusCode, reasonPhrase, raw, true)
             {
-                Usage = new UsageV3
+                Usage = usage;
+                SuccessfulResult = this;
+            }
+
+            public Success(int statusCode, string reasonPhrase, string raw, int dailyLimit, int usageToday, int monthlyBuffer,int monthlyBufferUsed) 
+                : this(statusCode, reasonPhrase, raw, new UsageV3
                 {
                     DailyLimit = dailyLimit,
                     UsageToday = usageToday,
                     MonthlyBuffer = monthlyBuffer,
                     MonthlyBufferUsed = monthlyBufferUsed
-                };
-                SuccessfulResult = this;
-            }
+                })
+            {}
         }
 
         public class Failed : GetUsageV3Response
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

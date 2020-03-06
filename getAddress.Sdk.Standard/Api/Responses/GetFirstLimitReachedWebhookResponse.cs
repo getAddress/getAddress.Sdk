@@ -12,7 +12,7 @@
         {
             public FirstLimitReachedWebhook FirstLimitReachedWebhook { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, int id, string url) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, int id, string url) : base(statusCode, reasonPhrase, raw, true)
             {
                 FirstLimitReachedWebhook = new FirstLimitReachedWebhook {
                      Id= id,
@@ -25,7 +25,7 @@
 
         public class Failed : GetFirstLimitReachedWebhookResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

@@ -14,7 +14,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public IEnumerable<ExpiredCC> ExpiredCCs { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<ExpiredCC> expiredCCs) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, IEnumerable<ExpiredCC> expiredCCs) : base(statusCode, reasonPhrase, raw, true)
             {
                 ExpiredCCs = expiredCCs;
                 SuccessfulResult = this;
@@ -23,7 +23,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : ListExpiredCCResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

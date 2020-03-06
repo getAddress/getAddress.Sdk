@@ -19,7 +19,7 @@ namespace getAddress.Sdk.Api.Responses
             public double Longitude { get; set; }
             public string Postcode { get; set; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, double latitude, double longitude,string postcode, IEnumerable<ExpandedAddress> addresses) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, double latitude, double longitude,string postcode, IEnumerable<ExpandedAddress> addresses) : base(statusCode, reasonPhrase, raw, true)
             {
                 Latitude = latitude;
                 Longitude = longitude;
@@ -31,7 +31,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : GetExpandedAddressResponse//todo: failed class for each possible response  
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 this.FailedResult = this;
             }

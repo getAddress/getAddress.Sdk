@@ -14,7 +14,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public string ApiKey { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, string apiKey) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, string apiKey) : base(statusCode, reasonPhrase, raw, true)
             {
                 ApiKey = apiKey;
                 SuccessfulResult = this;
@@ -24,7 +24,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : ApiKeyResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

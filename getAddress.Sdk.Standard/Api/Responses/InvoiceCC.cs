@@ -14,7 +14,7 @@ namespace getAddress.Sdk.Api.Responses
 
         }
 
-         internal InvoiceCC(long id, string emailAddress)
+        public InvoiceCC(long id, string emailAddress)
         {
 
             Id = id;

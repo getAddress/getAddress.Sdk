@@ -2,10 +2,11 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public class IpAddressWhitelist {
+    public class IpAddressWhitelist 
+    {
         public string Id { get; set; }
         public string Value { get; set; }
-        }
+    }
 
     public abstract class GetIpAddressWhitelistResponse: ResponseBase<GetIpAddressWhitelistResponse.Success,GetIpAddressWhitelistResponse.Failed>
     {
@@ -19,7 +20,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public IpAddressWhitelist IpAddressWhitelist { get; set; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw,string id, string value):base(statusCode, reasonPhrase, raw,true)
+            public Success(int statusCode, string reasonPhrase, string raw,string id, string value):base(statusCode, reasonPhrase, raw,true)
             {
                 IpAddressWhitelist = new IpAddressWhitelist
                 {
@@ -32,7 +33,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : GetIpAddressWhitelistResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

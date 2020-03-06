@@ -4,7 +4,6 @@ namespace getAddress.Sdk.Api.Responses
 {
     public abstract class ResponseBase<S,F>
     {
-
         protected ResponseBase(int statusCode, string reasonPhrase, string raw, bool isSuccess)
         {
             StatusCode = statusCode;

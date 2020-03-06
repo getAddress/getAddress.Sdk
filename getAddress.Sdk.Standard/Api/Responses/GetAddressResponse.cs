@@ -20,7 +20,7 @@ namespace getAddress.Sdk.Api.Responses
             public double Latitude { get; set; }
             public double Longitude { get; set; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, double latitude, double longitude, IEnumerable<Address> addresses) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, double latitude, double longitude, IEnumerable<Address> addresses) : base(statusCode, reasonPhrase, raw, true)
             {
                 Latitude = latitude;
                 Longitude = longitude;
@@ -31,7 +31,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : GetAddressResponse 
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 this.FailedResult = this;
             }

@@ -8,7 +8,7 @@
 
         }
 
-        internal AddFirstLimitReachedWebhookResponse FormerResult()
+        public AddFirstLimitReachedWebhookResponse FormerResult()
         {
             if (IsSuccess)
             {
@@ -20,7 +20,7 @@
                     FailedResult.Raw);
         }
 
-        internal AddSecondLimitReachedWebhookResponse FormerResult2()
+        public AddSecondLimitReachedWebhookResponse FormerResult2()
         {
             if (IsSuccess)
             {
@@ -38,7 +38,7 @@
 
             public string Message { get; set; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, string message, int id) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, string message, int id) : base(statusCode, reasonPhrase, raw, true)
             {
                 Id = id;
                 SuccessfulResult = this;
@@ -48,7 +48,7 @@
 
         public class Failed : AddWebhookResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

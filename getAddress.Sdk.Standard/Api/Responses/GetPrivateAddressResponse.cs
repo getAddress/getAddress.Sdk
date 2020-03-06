@@ -17,28 +17,32 @@ namespace getAddress.Sdk.Api.Responses
         {
             public PrivateAddress PrivateAddress { get; }
 
-
-            internal Success(int statusCode, string reasonPhrase, string raw, string id,
-                string line1, string line2, string line3, string line4, string locality, string townOrCity, string county) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, PrivateAddress privateAddress) : base(statusCode, reasonPhrase, raw, true)
             {
-                PrivateAddress = new PrivateAddress
-                {
-                    Id = id,
-                    Line1 = line1,
-                    Line2 = line2,
-                    Line3 = line3,
-                    Line4 = line4,
-                    Locality = locality,
-                    TownOrCity = townOrCity,
-                    County = county
-                };
+                PrivateAddress = privateAddress;
                 SuccessfulResult = this;
+            }
+            public Success(int statusCode, string reasonPhrase, string raw, string id,
+                string line1, string line2, string line3, string line4, string locality, string townOrCity, string county) : this(statusCode, reasonPhrase, raw,
+                    new PrivateAddress
+                    {
+                        Id = id,
+                        Line1 = line1,
+                        Line2 = line2,
+                        Line3 = line3,
+                        Line4 = line4,
+                        Locality = locality,
+                        TownOrCity = townOrCity,
+                        County = county
+                    })
+            {
+               
             }
         }
 
         public class Failed : GetPrivateAddressResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

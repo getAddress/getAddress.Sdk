@@ -12,7 +12,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public string EmailAddress { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, string emailAddress) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, string emailAddress) : base(statusCode, reasonPhrase, raw, true)
             {
                 EmailAddress = emailAddress;
                 SuccessfulResult = this;
@@ -23,7 +23,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public string Message { get; set; }
 
-            internal FailedInvalidEmailAddress(int statusCode, string reasonPhrase, string raw,string message) : base(statusCode, reasonPhrase, raw, false)
+            public FailedInvalidEmailAddress(int statusCode, string reasonPhrase, string raw,string message) : base(statusCode, reasonPhrase, raw, false)
             {
                 Message = message;
             }
@@ -31,7 +31,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : EmailAddressResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

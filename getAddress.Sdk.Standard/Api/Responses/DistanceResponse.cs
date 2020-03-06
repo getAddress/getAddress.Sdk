@@ -12,7 +12,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public Distance Distance { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, Distance distance) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, Distance distance) : base(statusCode, reasonPhrase, raw, true)
             {
                 Distance = distance;
                 SuccessfulResult = this;
@@ -22,7 +22,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : DistanceResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

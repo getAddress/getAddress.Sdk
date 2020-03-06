@@ -6,21 +6,22 @@ namespace getAddress.Sdk.Api.Responses
 {
     public class ExpiredCC
     {
-        internal static ExpiredCC Blank(long id)
+        public static ExpiredCC Blank(long id)
         {
             var cc = new ExpiredCC(id, string.Empty);
             return cc;
         }
-        internal ExpiredCC()
+        public ExpiredCC()
         {
 
         }
-        internal ExpiredCC(long id, string emailAddress)
+        public ExpiredCC(long id, string emailAddress)
         {
 
             Id = id;
             EmailAddress = emailAddress;
         }
+
         [JsonProperty("id")]
         public long Id { get; set; }
 

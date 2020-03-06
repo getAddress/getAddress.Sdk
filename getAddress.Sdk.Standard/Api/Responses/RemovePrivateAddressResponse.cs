@@ -1,6 +1,4 @@
-﻿
-
-namespace getAddress.Sdk.Api.Responses
+﻿namespace getAddress.Sdk.Api.Responses
 {
     public class RemovePrivateAddressResponse: ResponseBase<RemovePrivateAddressResponse.Success,RemovePrivateAddressResponse.Failed>
     {
@@ -12,7 +10,7 @@ namespace getAddress.Sdk.Api.Responses
         public class Success : RemovePrivateAddressResponse
         {
 
-            internal Success(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, true)
             {
                 SuccessfulResult = this;
             }
@@ -20,9 +18,9 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : RemovePrivateAddressResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
-                   FailedResult = this;
+                FailedResult = this;
             }
         }
 

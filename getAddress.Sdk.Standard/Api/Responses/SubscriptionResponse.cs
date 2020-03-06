@@ -13,7 +13,6 @@ namespace getAddress.Sdk.Api.Responses
 
     public abstract class SubscriptionResponse : ResponseBase<SubscriptionResponse.Success, SubscriptionResponse.Failed>
     {
-
         protected SubscriptionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
@@ -23,7 +22,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public Subscription Subscription { get; set; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, Subscription subscription) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, Subscription subscription) : base(statusCode, reasonPhrase, raw, true)
             {
                 Subscription = subscription;
 
@@ -33,7 +32,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : SubscriptionResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

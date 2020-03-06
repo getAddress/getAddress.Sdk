@@ -8,47 +8,52 @@
 
         }
 
-        internal GetFirstLimitReachedWebhookResponse FormerResult()
+        public GetFirstLimitReachedWebhookResponse FormerResult()
         {
             if (this.IsSuccess)
             {
                 return new GetFirstLimitReachedWebhookResponse.Success(SuccessfulResult.StatusCode,
-                    SuccessfulResult.ReasonPhase, SuccessfulResult.Raw, SuccessfulResult.Webhook.Id,SuccessfulResult.Webhook.Url);
+                    SuccessfulResult.ReasonPhrase, SuccessfulResult.Raw, SuccessfulResult.Webhook.Id,SuccessfulResult.Webhook.Url);
             }
 
-            return new GetFirstLimitReachedWebhookResponse.Failed(FailedResult.StatusCode, FailedResult.ReasonPhase, FailedResult.Raw);
+            return new GetFirstLimitReachedWebhookResponse.Failed(FailedResult.StatusCode, FailedResult.ReasonPhrase, FailedResult.Raw);
         }
 
-        internal GetSecondLimitReachedWebhookResponse FormerResult2()
+        public GetSecondLimitReachedWebhookResponse FormerResult2()
         {
             if (this.IsSuccess)
             {
                 return new GetSecondLimitReachedWebhookResponse.Success(SuccessfulResult.StatusCode,
-                    SuccessfulResult.ReasonPhase, SuccessfulResult.Raw, SuccessfulResult.Webhook.Id, SuccessfulResult.Webhook.Url);
+                    SuccessfulResult.ReasonPhrase, SuccessfulResult.Raw, SuccessfulResult.Webhook.Id, SuccessfulResult.Webhook.Url);
             }
 
-            return new GetSecondLimitReachedWebhookResponse.Failed(FailedResult.StatusCode, FailedResult.ReasonPhase, FailedResult.Raw);
+            return new GetSecondLimitReachedWebhookResponse.Failed(FailedResult.StatusCode, FailedResult.ReasonPhrase, FailedResult.Raw);
         }
 
         public class Success : GetWebhookResponse
         {
             public Webhook Webhook { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, int id, string url) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, Webhook webhook) : base(statusCode, reasonPhrase, raw, true)
             {
-                Webhook = new Webhook
-                {
-                    Id = id,
-                    Url = url
-                };
+                Webhook = webhook;
                 SuccessfulResult = this;
+            }
+
+            public Success(int statusCode, string reasonPhrase, string raw, int id, string url) : this(statusCode, reasonPhrase, raw, new Webhook
+            {
+                Id = id,
+                Url = url
+            })
+            {
+
             }
         }
 
 
         public class Failed : GetWebhookResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

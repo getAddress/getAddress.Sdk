@@ -12,9 +12,8 @@
         {
             public string Message { get; set; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, string message) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, string message) : base(statusCode, reasonPhrase, raw, true)
             {
-
                 SuccessfulResult = this;
                 Message = message;
             }
@@ -25,12 +24,12 @@
             if (this.IsSuccess)
             {
                 return new RemoveFirstLimitReachedWebhookResponse.Success(SuccessfulResult.StatusCode,
-                    SuccessfulResult.ReasonPhase, SuccessfulResult.Raw, this.SuccessfulResult.Message);
+                    SuccessfulResult.ReasonPhrase, SuccessfulResult.Raw, this.SuccessfulResult.Message);
             }
             else
             {
                 return new RemoveFirstLimitReachedWebhookResponse.Failed(SuccessfulResult.StatusCode,
-                    SuccessfulResult.ReasonPhase, SuccessfulResult.Raw);
+                    SuccessfulResult.ReasonPhrase, SuccessfulResult.Raw);
             }
         }
 
@@ -39,19 +38,19 @@
             if (this.IsSuccess)
             {
                 return new RemoveSecondLimitReachedWebhookResponse.Success(SuccessfulResult.StatusCode,
-                    SuccessfulResult.ReasonPhase, SuccessfulResult.Raw, this.SuccessfulResult.Message);
+                    SuccessfulResult.ReasonPhrase, SuccessfulResult.Raw, this.SuccessfulResult.Message);
             }
             else
             {
                 return new RemoveSecondLimitReachedWebhookResponse.Failed(FailedResult.StatusCode,
-                    FailedResult.ReasonPhase, FailedResult.Raw);
+                    FailedResult.ReasonPhrase, FailedResult.Raw);
             }
 
         }
 
         public class Failed : RemoveWebhookResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

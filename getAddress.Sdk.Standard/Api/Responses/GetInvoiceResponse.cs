@@ -16,9 +16,9 @@ namespace getAddress.Sdk.Api.Responses
         public class Success : GetInvoiceResponse
         {
             public Invoice Invoice { get; }
-            
 
-            internal Success(int statusCode, string reasonPhrase, string raw, Invoice invoice) : base(statusCode, reasonPhrase, raw, true)
+
+            public Success(int statusCode, string reasonPhrase, string raw, Invoice invoice) : base(statusCode, reasonPhrase, raw, true)
             {
                 Invoice = invoice;
                 this.SuccessfulResult = this;
@@ -27,7 +27,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : GetInvoiceResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 this.FailedResult = this;
             }

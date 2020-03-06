@@ -15,7 +15,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public IEnumerable<FirstLimitReachedWebhook> Webhooks { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<FirstLimitReachedWebhook> webhooks) :base(statusCode, reasonPhrase, raw,true)
+            public Success(int statusCode, string reasonPhrase, string raw, IEnumerable<FirstLimitReachedWebhook> webhooks) :base(statusCode, reasonPhrase, raw,true)
             {
                 Webhooks = webhooks;
                 SuccessfulResult = this;
@@ -24,7 +24,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : ListFirstLimitReachedWebhookResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }
@@ -39,12 +39,12 @@ namespace getAddress.Sdk.Api.Responses
 
         }
 
-        internal ListFirstLimitReachedWebhookResponse FormerResult()
+        public ListFirstLimitReachedWebhookResponse FormerResult()
         {
             if (this.IsSuccess)
             {
                 return new ListFirstLimitReachedWebhookResponse.Success(SuccessfulResult.StatusCode,
-                    SuccessfulResult.ReasonPhase, SuccessfulResult.Raw, this.SuccessfulResult.Webhooks.Select(w => new FirstLimitReachedWebhook {
+                    SuccessfulResult.ReasonPhrase, SuccessfulResult.Raw, this.SuccessfulResult.Webhooks.Select(w => new FirstLimitReachedWebhook {
                         Id = w.Id,
                         Url = w.Url
                     }));
@@ -52,7 +52,7 @@ namespace getAddress.Sdk.Api.Responses
             else
             {
                 return new ListFirstLimitReachedWebhookResponse.Failed(SuccessfulResult.StatusCode,
-                    SuccessfulResult.ReasonPhase, SuccessfulResult.Raw);
+                    SuccessfulResult.ReasonPhrase, SuccessfulResult.Raw);
             }
         }
 
@@ -61,7 +61,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public IEnumerable<Webhook> Webhooks { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<Webhook> webhooks) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, IEnumerable<Webhook> webhooks) : base(statusCode, reasonPhrase, raw, true)
             {
                 Webhooks = webhooks;
                 SuccessfulResult = this;
@@ -70,7 +70,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : ListWebhookResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

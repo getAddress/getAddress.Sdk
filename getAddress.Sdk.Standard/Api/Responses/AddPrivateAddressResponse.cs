@@ -14,7 +14,7 @@ namespace getAddress.Sdk.Api.Responses
 
             public string Id { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, string message, string id) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, string message, string id) : base(statusCode, reasonPhrase, raw, true)
             {
                 Message = message;
                 Id = id;
@@ -24,7 +24,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : AddPrivateAddressResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

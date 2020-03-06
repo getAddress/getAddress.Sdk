@@ -15,20 +15,20 @@ namespace getAddress.Sdk.Api.Responses
         public decimal Tax { get; }
         public string Pdf { get; }
         public IReadOnlyCollection<InvoiceLine> Lines { get{ return new ReadOnlyCollection<InvoiceLine>(_lines); }  }
-        
-        internal void AddLine(InvoiceLine invoiceLine){
+
+        public void AddLine(InvoiceLine invoiceLine){
             _lines.Add(invoiceLine);
         }
 
 
-        internal static Invoice Blank(string number){
+        public static Invoice Blank(string number){
 
             var address = InvoiceAddress.Blank();
             var invoice=  new Invoice(DateTime.MinValue, number, 0, 0, string.Empty, address);
             return invoice;
         }
 
-        internal Invoice(DateTime date, string number
+        public Invoice(DateTime date, string number
             ,decimal total,decimal tax,string pdf, InvoiceAddress address)
         {
             Date = date;
@@ -47,7 +47,7 @@ namespace getAddress.Sdk.Api.Responses
         public decimal Price { get; }
         public decimal Subtotal { get; }
 
-        internal InvoiceLine(int quantity, string details, decimal price, decimal subtotal)
+        public InvoiceLine(int quantity, string details, decimal price, decimal subtotal)
         {
             Quantity = quantity;
             Details = details;
@@ -68,7 +68,7 @@ namespace getAddress.Sdk.Api.Responses
         public string Line5 { get; }
         public string Line6 { get; }
 
-        internal InvoiceAddress(string line1,string line2, string line3, 
+        public InvoiceAddress(string line1,string line2, string line3, 
             string line4, string line5, string line6)
         {
             Line1 = line1 ?? string.Empty;

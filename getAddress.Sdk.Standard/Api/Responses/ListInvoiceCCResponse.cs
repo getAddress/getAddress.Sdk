@@ -14,7 +14,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public IEnumerable<InvoiceCC> InvoiceCCs { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<InvoiceCC> invoiceCCs) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw, IEnumerable<InvoiceCC> invoiceCCs) : base(statusCode, reasonPhrase, raw, true)
             {
                 InvoiceCCs = invoiceCCs;
                 SuccessfulResult = this;
@@ -23,7 +23,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : ListInvoiceCCResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

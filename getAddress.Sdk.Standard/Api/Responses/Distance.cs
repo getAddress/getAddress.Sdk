@@ -15,7 +15,7 @@ namespace getAddress.Sdk.Api.Responses
         [JsonProperty("to")]
         public PostcodeAndCoords To { get; set; }
 
-        internal Distance()
+        public Distance()
         {
 
         }

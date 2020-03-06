@@ -12,21 +12,26 @@
         {
             public SecondLimitReachedWebhook SecondLimitReachedWebhook { get; }
 
-            internal Success(int statusCode, string reasonPhrase, string raw, int id, string url) : base(statusCode, reasonPhrase, raw, true)
+            public Success(int statusCode, string reasonPhrase, string raw,  SecondLimitReachedWebhook secondLimitReachedWebhook) : base(statusCode, reasonPhrase, raw, true)
             {
-                SecondLimitReachedWebhook = new SecondLimitReachedWebhook
-                {
-                    Id = id,
-                    Url = url
-                };
+                SecondLimitReachedWebhook = secondLimitReachedWebhook;
                 SuccessfulResult = this;
+            }
+            public Success(int statusCode, string reasonPhrase, string raw, int id, string url) : this(statusCode, reasonPhrase, raw, new SecondLimitReachedWebhook
+            {
+                Id = id,
+                Url = url
+            })
+            {
+               
+                
             }
         }
 
 
         public class Failed : GetSecondLimitReachedWebhookResponse
         {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }
