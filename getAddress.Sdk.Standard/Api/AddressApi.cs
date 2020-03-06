@@ -31,7 +31,7 @@ namespace getAddress.Sdk.Api
             if (apiKey == null) throw new ArgumentNullException(nameof(apiKey));
             if (request == null) throw new ArgumentNullException(nameof(request));
 
-            var fullPath = $"{path}{request.Postcode}/{request.House}/?sort={request.Sort}&fuzzy={request.Fuzzy}";
+            var fullPath = GetPath(path, request);
 
             api.SetAuthorizationKey(apiKey);
 
@@ -51,6 +51,30 @@ namespace getAddress.Sdk.Api
             return new GetAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);//todo: move failed responses
         }
 
+        private static string GetPath(string path, GetAddressRequest request) 
+        {
+            if (!string.IsNullOrWhiteSpace(request.House))
+            {
+                return $"{path}{request.Postcode}/{request.House}/?sort={request.Sort}&fuzzy={request.Fuzzy}";
+            }
+            else
+            {
+                return $"{path}{request.Postcode}/?sort={request.Sort}&fuzzy={request.Fuzzy}";
+            }
+        }
+
+        private static string GetExpandedPath(string path, GetAddressRequest request)
+        {
+            if (!string.IsNullOrWhiteSpace(request.House))
+            {
+                return $"{path}{request.Postcode}/{request.House}/?sort={request.Sort}&expand={true}&fuzzy={request.Fuzzy}";
+            }
+            else
+            {
+                return $"{path}{request.Postcode}/?sort={request.Sort}&expand={true}&fuzzy={request.Fuzzy}";
+            }
+        }
+
         public async Task<GetExpandedAddressResponse> GetExpanded(GetAddressRequest request)
         {
             return await GetExpanded(Api, Path, this.ApiKey, request);
@@ -63,7 +87,7 @@ namespace getAddress.Sdk.Api
             if (apiKey == null) throw new ArgumentNullException(nameof(apiKey));
             if (request == null) throw new ArgumentNullException(nameof(request));
 
-            var fullPath = $"{path}{request.Postcode}/{request.House}/?sort={request.Sort}&expand={true}&fuzzy={request.Fuzzy}";
+            var fullPath = GetExpandedPath(path, request);
 
             api.SetAuthorizationKey(apiKey);
 

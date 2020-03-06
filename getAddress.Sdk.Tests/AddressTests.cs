@@ -23,7 +23,7 @@ namespace getAddress.Sdk.Tests
 
             var addressService = new AddressService(apiKey, httpClient);
 
-            var result = await addressService.Get(new GetAddressRequest("CO91PU", "M.J.R. Site Solutions Ltd"));
+            var result = await addressService.Get(new GetAddressRequest("CO91PU",house: "M.J.R. Site Solutions Ltd"));
 
             Assert.IsTrue(result.IsSuccess);
         }
@@ -61,7 +61,23 @@ namespace getAddress.Sdk.Tests
                 var result = await api.Address.GetExpanded(new GetAddressRequest("NN13ER"));
 
                 Assert.IsTrue(result.IsSuccess);
+            }
+        }
 
+        [TestMethod]
+        public async Task GetExpandedAddressWithHouse()
+        {
+            var apiKey = KeyHelper.GetApiKey();
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey), httpClient))
+            {
+                var result = await api.Address.GetExpanded(new GetAddressRequest("NN13ER",house:"6"));
+
+                Assert.IsTrue(result.IsSuccess);
             }
         }
 
