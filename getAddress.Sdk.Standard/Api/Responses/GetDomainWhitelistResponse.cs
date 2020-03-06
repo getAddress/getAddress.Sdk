@@ -12,7 +12,7 @@ namespace getAddress.Sdk.Api.Responses
     public abstract class GetDomainWhitelistResponse: ResponseBase<GetDomainWhitelistResponse.Success,GetDomainWhitelistResponse.Failed>
     {
 
-        protected GetDomainWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)
+        protected GetDomainWhitelistResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
         {
         
         }
@@ -21,7 +21,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public DomainWhitelist DomainWhitelist { get; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, string id, string name) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, string id, string name) : base(statusCode, reasonPhrase, raw, true)
             {
                 DomainWhitelist = new DomainWhitelist {
                     Id = id,
@@ -33,7 +33,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : GetDomainWhitelistResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) :base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

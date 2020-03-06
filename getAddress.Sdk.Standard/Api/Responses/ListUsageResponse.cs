@@ -11,7 +11,7 @@ public class ListUsage
 public abstract class ListUsageResponse : ResponseBase<ListUsageResponse.Success, ListUsageResponse.Failed>
 {
 
-    protected ListUsageResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+    protected ListUsageResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
     {
 
     }
@@ -20,7 +20,7 @@ public abstract class ListUsageResponse : ResponseBase<ListUsageResponse.Success
     {
 
         public IEnumerable<ListUsage> Usages {get;}
-        internal Success(int statusCode, string reasonPhase, string raw, IEnumerable<ListUsage> usages) : base(statusCode, reasonPhase, raw, true)
+        internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<ListUsage> usages) : base(statusCode, reasonPhrase, raw, true)
         {
             
             SuccessfulResult = this;
@@ -30,7 +30,7 @@ public abstract class ListUsageResponse : ResponseBase<ListUsageResponse.Success
 
     public class Failed : ListUsageResponse
     {
-        internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+        internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
         {
             FailedResult = this;
         }

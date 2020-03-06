@@ -7,7 +7,7 @@ namespace getAddress.Sdk.Api.Responses
     public abstract class ListIpAddressWhitelistResponse: ResponseBase<ListIpAddressWhitelistResponse.Success,ListIpAddressWhitelistResponse.Failed>
     {
 
-        protected ListIpAddressWhitelistResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)
+        protected ListIpAddressWhitelistResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
         {
         }
 
@@ -15,7 +15,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public IEnumerable<IpAddressWhitelist> IpAddressWhitelists { get; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, IEnumerable<IpAddressWhitelist> ipAddressWhitelists) :base(statusCode, reasonPhase, raw,true)
+            internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<IpAddressWhitelist> ipAddressWhitelists) :base(statusCode, reasonPhrase, raw,true)
             {
                 
                     IpAddressWhitelists = ipAddressWhitelists;
@@ -25,7 +25,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : ListIpAddressWhitelistResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) :base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

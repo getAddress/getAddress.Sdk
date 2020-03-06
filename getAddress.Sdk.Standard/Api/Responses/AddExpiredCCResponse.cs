@@ -2,7 +2,7 @@
 {
     public abstract class AddExpiredCCResponse : ResponseBase<AddExpiredCCResponse.Success, AddExpiredCCResponse.Failed>
     {
-        protected AddExpiredCCResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        protected AddExpiredCCResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
         }
 
@@ -12,7 +12,7 @@
 
             public long Id { get; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, string message, long id) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, string message, long id) : base(statusCode, reasonPhrase, raw, true)
             {
                 Message = message;
                 Id = id;
@@ -22,7 +22,7 @@
 
         public class Failed : AddExpiredCCResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

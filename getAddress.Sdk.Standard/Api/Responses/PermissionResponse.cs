@@ -6,7 +6,7 @@ namespace getAddress.Sdk.Api.Responses
 {
     public class RemovePermissionResponse : ResponseBase<RemovePermissionResponse.Success, RemovePermissionResponse.Failed>
     {
-        internal RemovePermissionResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        internal RemovePermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
         }
 
@@ -14,7 +14,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public string Message { get; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, string message) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, string message) : base(statusCode, reasonPhrase, raw, true)
             {
                 SuccessfulResult = this;
                 Message = message;
@@ -23,7 +23,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : RemovePermissionResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }
@@ -32,7 +32,7 @@ namespace getAddress.Sdk.Api.Responses
 
     public class AddPermissionResponse : ResponseBase<AddPermissionResponse.Success, AddPermissionResponse.Failed>
     {
-        internal AddPermissionResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        internal AddPermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
         }
 
@@ -40,7 +40,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public string Message { get; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, string message) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, string message) : base(statusCode, reasonPhrase, raw, true)
             {
                 SuccessfulResult = this;
                 Message = message;
@@ -50,7 +50,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : AddPermissionResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }
@@ -59,7 +59,7 @@ namespace getAddress.Sdk.Api.Responses
 
     public class UpdatePermissionResponse : ResponseBase<UpdatePermissionResponse.Success, UpdatePermissionResponse.Failed>
     {
-        internal UpdatePermissionResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        internal UpdatePermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
         }
 
@@ -67,7 +67,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public string Message { get; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, string message) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, string message) : base(statusCode, reasonPhrase, raw, true)
             {
                 SuccessfulResult = this;
                 Message = message;
@@ -77,7 +77,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : UpdatePermissionResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }
@@ -86,7 +86,7 @@ namespace getAddress.Sdk.Api.Responses
 
     public class ListPermissionResponse : ResponseBase<ListPermissionResponse.Success, ListPermissionResponse.Failed>
     {
-        internal ListPermissionResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        internal ListPermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
         }
 
@@ -94,7 +94,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public IEnumerable<Permission> Permissions { get; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, IEnumerable<Permission> permissions) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<Permission> permissions) : base(statusCode, reasonPhrase, raw, true)
             {
                 SuccessfulResult = this;
                 Permissions = permissions;
@@ -103,7 +103,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : ListPermissionResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }
@@ -112,7 +112,7 @@ namespace getAddress.Sdk.Api.Responses
 
     public class PermissionResponse : ResponseBase<PermissionResponse.Success, PermissionResponse.Failed>
     {
-        internal PermissionResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        internal PermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
         }
 
@@ -120,7 +120,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public Permission Permission { get; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, Permission permission) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, Permission permission) : base(statusCode, reasonPhrase, raw, true)
             {
                 Permission = permission;
                 SuccessfulResult = this;
@@ -130,7 +130,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : PermissionResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

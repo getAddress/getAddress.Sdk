@@ -3,7 +3,7 @@
     public abstract class GetSecondLimitReachedWebhookResponse : ResponseBase<GetSecondLimitReachedWebhookResponse.Success, GetSecondLimitReachedWebhookResponse.Failed>
     {
 
-        protected GetSecondLimitReachedWebhookResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        protected GetSecondLimitReachedWebhookResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
         }
@@ -12,7 +12,7 @@
         {
             public SecondLimitReachedWebhook SecondLimitReachedWebhook { get; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, int id, string url) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, int id, string url) : base(statusCode, reasonPhrase, raw, true)
             {
                 SecondLimitReachedWebhook = new SecondLimitReachedWebhook
                 {
@@ -26,7 +26,7 @@
 
         public class Failed : GetSecondLimitReachedWebhookResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

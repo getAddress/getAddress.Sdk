@@ -5,7 +5,7 @@ namespace getAddress.Sdk.Api.Responses
     public abstract class ListExpiredCCResponse : ResponseBase<ListExpiredCCResponse.Success, ListExpiredCCResponse.Failed>
     {
 
-        protected ListExpiredCCResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        protected ListExpiredCCResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
         }
@@ -14,7 +14,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public IEnumerable<ExpiredCC> ExpiredCCs { get; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, IEnumerable<ExpiredCC> expiredCCs) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<ExpiredCC> expiredCCs) : base(statusCode, reasonPhrase, raw, true)
             {
                 ExpiredCCs = expiredCCs;
                 SuccessfulResult = this;
@@ -23,7 +23,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : ListExpiredCCResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

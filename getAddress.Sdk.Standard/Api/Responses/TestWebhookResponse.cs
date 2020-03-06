@@ -3,7 +3,7 @@
     public abstract class TestWebhookResponse : ResponseBase<TestWebhookResponse.Success, TestWebhookResponse.Failed>
     {
 
-        protected TestWebhookResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        protected TestWebhookResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
         }
@@ -13,7 +13,7 @@
 
             public string Message { get; set; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, string message, string id) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, string message, string id) : base(statusCode, reasonPhrase, raw, true)
             {
                 SuccessfulResult = this;
                 Message = message;
@@ -22,7 +22,7 @@
 
         public class Failed : TestWebhookResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

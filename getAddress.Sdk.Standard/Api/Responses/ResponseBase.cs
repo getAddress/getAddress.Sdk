@@ -1,12 +1,15 @@
-﻿namespace getAddress.Sdk.Api.Responses
+﻿using System;
+
+namespace getAddress.Sdk.Api.Responses
 {
     public abstract class ResponseBase<S,F>
     {
 
-        protected ResponseBase(int statusCode, string reasonPhase, string raw, bool isSuccess)
+        protected ResponseBase(int statusCode, string reasonPhrase, string raw, bool isSuccess)
         {
             StatusCode = statusCode;
-            ReasonPhase = reasonPhase;
+            ReasonPhase = reasonPhrase;
+            ReasonPhrase = reasonPhrase;
             Raw = raw;
             IsSuccess = isSuccess;
         }
@@ -16,7 +19,11 @@
 
         public bool IsSuccess { get; }
         public int StatusCode { get; }
+        
+        [Obsolete("Please use ReasonPhrase")]
         public string ReasonPhase { get; }
+
+        public string ReasonPhrase { get; }
 
         public string Raw { get; }
 

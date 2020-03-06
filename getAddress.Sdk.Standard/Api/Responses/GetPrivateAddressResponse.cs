@@ -9,7 +9,7 @@ namespace getAddress.Sdk.Api.Responses
     public class GetPrivateAddressResponse : ResponseBase<GetPrivateAddressResponse.Success,GetPrivateAddressResponse.Failed>
     {
 
-        protected GetPrivateAddressResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        protected GetPrivateAddressResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
         }
 
@@ -18,8 +18,8 @@ namespace getAddress.Sdk.Api.Responses
             public PrivateAddress PrivateAddress { get; }
 
 
-            internal Success(int statusCode, string reasonPhase, string raw, string id,
-                string line1, string line2, string line3, string line4, string locality, string townOrCity, string county) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, string id,
+                string line1, string line2, string line3, string line4, string locality, string townOrCity, string county) : base(statusCode, reasonPhrase, raw, true)
             {
                 PrivateAddress = new PrivateAddress
                 {
@@ -38,7 +38,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : GetPrivateAddressResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

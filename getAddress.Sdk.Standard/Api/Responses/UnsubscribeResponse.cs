@@ -2,7 +2,7 @@
 {
     public abstract class UnsubscribeResponse: ResponseBase<UnsubscribeResponse.Success,UnsubscribeResponse.Failed>
     {
-        protected UnsubscribeResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)
+        protected UnsubscribeResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
         {
         }
 
@@ -11,7 +11,7 @@
         {
           
 
-            internal Success(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, true)
             {
                 SuccessfulResult = this;
             }
@@ -19,7 +19,7 @@
 
         public class Failed : UnsubscribeResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

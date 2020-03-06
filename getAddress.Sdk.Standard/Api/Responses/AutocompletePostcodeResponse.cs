@@ -5,7 +5,7 @@ namespace getAddress.Sdk.Api.Responses
     public class AutocompletePostcodeResponse : ResponseBase<AutocompletePostcodeResponse.Success, AutocompletePostcodeResponse.Failed>
     {
 
-        protected AutocompletePostcodeResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        protected AutocompletePostcodeResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
 
@@ -15,7 +15,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public IEnumerable<PostcodePrediction> Predictions { get; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, IEnumerable<PostcodePrediction> predictions) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<PostcodePrediction> predictions) : base(statusCode, reasonPhrase, raw, true)
             {
                 this.SuccessfulResult = this;
                 Predictions = predictions;
@@ -24,7 +24,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : AutocompletePostcodeResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 this.FailedResult = this;
             }

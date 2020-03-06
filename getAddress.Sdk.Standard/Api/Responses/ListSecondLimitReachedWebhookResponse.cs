@@ -4,7 +4,7 @@ namespace getAddress.Sdk.Api.Responses
 {
     public abstract class ListSecondLimitReachedWebhookResponse: ResponseBase<ListSecondLimitReachedWebhookResponse.Success,ListSecondLimitReachedWebhookResponse.Failed>
     {
-        protected ListSecondLimitReachedWebhookResponse(int statusCode, string reasonPhase, string raw, bool isSuccess):base(statusCode,reasonPhase,raw,isSuccess)
+        protected ListSecondLimitReachedWebhookResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
         {
         
         }
@@ -13,7 +13,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public IEnumerable<SecondLimitReachedWebhook> Webhooks { get; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, IEnumerable<SecondLimitReachedWebhook> webhooks) :base(statusCode, reasonPhase, raw,true)
+            internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<SecondLimitReachedWebhook> webhooks) :base(statusCode, reasonPhrase, raw,true)
             {
                 Webhooks = webhooks;
                 SuccessfulResult = this;
@@ -22,7 +22,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : ListSecondLimitReachedWebhookResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) :base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }

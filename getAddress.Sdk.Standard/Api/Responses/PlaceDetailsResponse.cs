@@ -3,7 +3,7 @@
     public class PlaceDetailsResponse : ResponseBase<PlaceDetailsResponse.Success, PlaceDetailsResponse.Failed>
     {
 
-        protected PlaceDetailsResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        protected PlaceDetailsResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
         }
 
@@ -14,7 +14,7 @@
             public double Longitude { get; set; }
             public string Postcode { get; set; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, double latitude, double longitude, string postcode, ExpandedAddress address) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, double latitude, double longitude, string postcode, ExpandedAddress address) : base(statusCode, reasonPhrase, raw, true)
             {
                 Latitude = latitude;
                 Longitude = longitude;
@@ -26,7 +26,7 @@
 
         public class Failed : PlaceDetailsResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 this.FailedResult = this;
             }

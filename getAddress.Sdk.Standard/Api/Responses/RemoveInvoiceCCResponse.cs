@@ -3,7 +3,7 @@ namespace getAddress.Sdk.Api.Responses
 {
     public abstract class RemoveInvoiceCCResponse : ResponseBase<RemoveInvoiceCCResponse.Success, RemoveInvoiceCCResponse.Failed>
     {
-        protected RemoveInvoiceCCResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        protected RemoveInvoiceCCResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
         }
@@ -12,7 +12,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public string Message { get; set; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, string message) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, string message) : base(statusCode, reasonPhrase, raw, true)
             {
                 Message = message;
                 SuccessfulResult = this;
@@ -21,7 +21,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : RemoveInvoiceCCResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

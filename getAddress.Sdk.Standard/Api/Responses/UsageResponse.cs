@@ -29,7 +29,7 @@ namespace getAddress.Sdk.Api.Responses
     public abstract class GetUsageResponse : ResponseBase<GetUsageResponse.Success,GetUsageResponse.Failed>
     {
 
-        protected GetUsageResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        protected GetUsageResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
         }
@@ -38,7 +38,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public Usage Usage { get; set; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, int counter, int limit1, int limit2) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, int counter, int limit1, int limit2) : base(statusCode, reasonPhrase, raw, true)
             {
                 Usage = new Usage {
                     Count = counter,
@@ -51,7 +51,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : GetUsageResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }
@@ -61,7 +61,7 @@ namespace getAddress.Sdk.Api.Responses
     public abstract class GetUsageV3Response : ResponseBase<GetUsageV3Response.Success, GetUsageV3Response.Failed>
     {
 
-        protected GetUsageV3Response(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        protected GetUsageV3Response(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
         }
@@ -70,7 +70,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public UsageV3 Usage { get; set; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, int dailyLimit, int usageToday, int monthlyBuffer,int monthlyBufferUsed) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, int dailyLimit, int usageToday, int monthlyBuffer,int monthlyBufferUsed) : base(statusCode, reasonPhrase, raw, true)
             {
                 Usage = new UsageV3
                 {
@@ -85,7 +85,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : GetUsageV3Response
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

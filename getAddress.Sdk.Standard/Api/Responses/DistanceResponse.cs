@@ -3,7 +3,7 @@ namespace getAddress.Sdk.Api.Responses
 {
     public abstract class DistanceResponse : ResponseBase<DistanceResponse.Success, DistanceResponse.Failed>
     {
-        internal DistanceResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        internal DistanceResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
         }
 
@@ -12,7 +12,7 @@ namespace getAddress.Sdk.Api.Responses
         {
             public Distance Distance { get; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, Distance distance) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, Distance distance) : base(statusCode, reasonPhrase, raw, true)
             {
                 Distance = distance;
                 SuccessfulResult = this;
@@ -22,7 +22,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : DistanceResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }

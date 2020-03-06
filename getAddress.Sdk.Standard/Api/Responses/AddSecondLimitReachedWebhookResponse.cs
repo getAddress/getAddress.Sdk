@@ -2,7 +2,7 @@
 {
     public abstract class AddSecondLimitReachedWebhookResponse : ResponseBase<AddSecondLimitReachedWebhookResponse.Success, AddSecondLimitReachedWebhookResponse.Failed>
     {
-        protected AddSecondLimitReachedWebhookResponse(int statusCode, string reasonPhase, string raw, bool isSuccess) : base(statusCode, reasonPhase, raw, isSuccess)
+        protected AddSecondLimitReachedWebhookResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
         }
@@ -13,7 +13,7 @@
 
             public string Message { get; set; }
 
-            internal Success(int statusCode, string reasonPhase, string raw, string message, string id) : base(statusCode, reasonPhase, raw, true)
+            internal Success(int statusCode, string reasonPhrase, string raw, string message, string id) : base(statusCode, reasonPhrase, raw, true)
             {
                 Id = ToInt(id);
                 SuccessfulResult = this;
@@ -23,7 +23,7 @@
 
         public class Failed : AddSecondLimitReachedWebhookResponse
         {
-            internal Failed(int statusCode, string reasonPhase, string raw) : base(statusCode, reasonPhase, raw, false)
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }
