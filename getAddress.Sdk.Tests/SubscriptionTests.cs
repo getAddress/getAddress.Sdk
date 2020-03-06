@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,7 +13,11 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetAdminKey();
 
-            using (var api = new GetAddesssApi(new AdminKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new AdminKey(apiKey), httpClient))
             {
                 var result = await api.Subscription.Unsubscribe(code: "testing");
 
@@ -25,11 +30,15 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetAdminKey();
 
-            using (var api = new GetAddesssApi(new AdminKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new AdminKey(apiKey), httpClient))
             {
                 var result = await api.Subscription.Get();
 
-                Assert.IsTrue(!result.IsSuccess);
+                Assert.IsTrue(result.IsSuccess);
             }
         }
 

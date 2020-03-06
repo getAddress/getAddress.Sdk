@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using getAddress.Sdk.Api;
 using getAddress.Sdk.Api.Requests;
@@ -15,7 +17,11 @@ namespace getAddress.Sdk.Tests
             var adminKey = KeyHelper.GetAdminKey();
             var emailAddress = "support@getaddress.io";
 
-            var permissionService = new PermissionService(adminKey);
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            var permissionService = new PermissionService(adminKey, httpClient);
 
             var addResponse = await permissionService.Add(new AddPermissionRequest(emailAddress, new PermissionRequest(false,false,false)));
 
@@ -27,7 +33,7 @@ namespace getAddress.Sdk.Tests
 
             var listResponse = await permissionService.List();
 
-            Assert.IsTrue(listResponse.IsSuccess);
+            Assert.IsTrue(listResponse.IsSuccess && listResponse.SuccessfulResult.Permissions.Any());
 
             var updateResponse = await permissionService.Update(new UpdatePermissionRequest(emailAddress, new PermissionRequest(true, true,true)));
 

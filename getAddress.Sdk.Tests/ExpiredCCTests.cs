@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using getAddress.Sdk.Api.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,7 +15,11 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetAdminKey();
 
-            using (var api = new GetAddesssApi(new AdminKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new AdminKey(apiKey),httpClient))
             {
                 var listResult = await api.ExpiredCC.List();
 

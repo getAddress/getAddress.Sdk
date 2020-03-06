@@ -1,6 +1,7 @@
 ﻿using getAddress.Sdk.Api.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Tests
@@ -14,9 +15,13 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetAdminKey();
 
-            using (var api = new GetAddesssApi(new AdminKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new AdminKey(apiKey), httpClient))
             {
-                var addResult = await api.PaymentFailedWebhook.Add("https://enx4uqjelvo0p.x.pipedream.net/");
+                var addResult = await api.PaymentFailedWebhook.Add("https://getaddress.io/payment-failed-test/");
 
                 Assert.IsTrue(addResult.IsSuccess);
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using getAddress.Sdk.Api.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,9 +14,17 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetAdminKey();
 
-            using (var api = new GetAddesssApi(new AdminKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new AdminKey(apiKey),httpClient))
             {
-                var getResult = await api.InvoiceCC.Get(1);
+                var addResult = await api.InvoiceCC.Add(new AddInvoiceCCRequest("test@test.com"));
+
+                Assert.IsTrue(addResult.IsSuccess);
+
+                var getResult = await api.InvoiceCC.Get(addResult.SuccessfulResult.Id);
 
                 Assert.IsTrue(getResult.IsSuccess);
 
@@ -23,11 +32,9 @@ namespace getAddress.Sdk.Tests
 
                 Assert.IsTrue(listResult.IsSuccess);
 
-                var addResult = await api.InvoiceCC.Add(new AddInvoiceCCRequest("test@test.com"));
-
-                Assert.IsTrue(addResult.IsSuccess);
-
                 var deleteResult = await api.InvoiceCC.Remove(addResult.SuccessfulResult.Id);
+
+                Assert.IsTrue(deleteResult.IsSuccess);
 
             }
         }

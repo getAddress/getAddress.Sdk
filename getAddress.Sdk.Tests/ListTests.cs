@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace getAddress.Sdk.Tests
 {
@@ -12,7 +13,11 @@ namespace getAddress.Sdk.Tests
         {
             var adminKey = KeyHelper.GetAdminKey();
 
-            using (var api = new GetAddesssApi(new AdminKey(adminKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new AdminKey(adminKey),httpClient))
             {
                 var now = DateTime.Now;
                 var toDay = now.Day;
@@ -36,7 +41,11 @@ namespace getAddress.Sdk.Tests
         {
             var adminKey = KeyHelper.GetAdminKey();
 
-            using (var api = new GetAddesssApi(new AdminKey(adminKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new AdminKey(adminKey),httpClient))
             {
                 var now = DateTime.Now;
                 var toDay = now.Day;
@@ -60,7 +69,11 @@ namespace getAddress.Sdk.Tests
         {
             var adminKey = KeyHelper.GetAdminKey();
 
-            using (var api = new GetAddesssApi(new AdminKey(adminKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new AdminKey(adminKey),httpClient))
             {
                 var result = await api.DomainWhitelist.List();
 
@@ -74,7 +87,11 @@ namespace getAddress.Sdk.Tests
         {
             var adminKey = KeyHelper.GetAdminKey();
 
-            using (var api = new GetAddesssApi(new AdminKey(adminKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new AdminKey(adminKey),httpClient))
             {
                 var result = await api.IpAddressWhitelist.List();
 

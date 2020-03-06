@@ -40,6 +40,7 @@ namespace getAddress.Sdk.Tests
             var googleApiKey = KeyHelper.GetGoogleApiKey();
 
             var httpClient = new HttpClient();
+
             httpClient.BaseAddress = UrlHelper.GetStagingUri();
 
             var autocompleteService = new AutocompleteService(apiKey, httpClient);

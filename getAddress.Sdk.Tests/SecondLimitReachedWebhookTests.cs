@@ -1,5 +1,7 @@
 ﻿using getAddress.Sdk.Api.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Tests
@@ -13,11 +15,23 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetAdminKey();
 
-            using (var api = new GetAddesssApi(new AdminKey(apiKey)))
-            {
-                var result = await api.SecondLimitReachedWebhook.Get(new GetSecondLimitReachedRequest(3));
+            var httpClient = new HttpClient();
 
-                Assert.IsTrue(result.IsSuccess);
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new AdminKey(apiKey), httpClient))
+            {
+                var list = await api.SecondLimitReachedWebhook.List();
+
+                Assert.IsTrue(list.IsSuccess);
+
+                if (list.SuccessfulResult.Webhooks.Any())
+                {
+                    var result = await api.SecondLimitReachedWebhook.Get(new  GetSecondLimitReachedRequest(list.SuccessfulResult.Webhooks.First().Id));
+
+                    Assert.IsTrue(result.IsSuccess);
+                }
+
             }
         }
 
@@ -27,22 +41,13 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetAdminKey();
 
-            using (var api = new GetAddesssApi(new AdminKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new AdminKey(apiKey), httpClient))
             {
                 var result = await api.SecondLimitReachedWebhook.Test();
-
-                Assert.IsTrue(result.IsSuccess);
-            }
-        }
-
-        [TestMethod]
-        public async Task DeleteSecondReachedWebhook()
-        {
-            var apiKey = KeyHelper.GetAdminKey();
-
-            using (var api = new GetAddesssApi(new AdminKey(apiKey)))
-            {
-                var result = await api.SecondLimitReachedWebhook.Remove(new RemoveSecondLimitReachedWebhookRequest(1));
 
                 Assert.IsTrue(result.IsSuccess);
             }
@@ -53,7 +58,11 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetAdminKey();
 
-            using (var api = new GetAddesssApi(new AdminKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new AdminKey(apiKey), httpClient))
             {
                 var result = await api.SecondLimitReachedWebhook.List();
 
@@ -62,17 +71,26 @@ namespace getAddress.Sdk.Tests
         }
 
         [TestMethod]
-        public async Task AddSecondReachedWebhook()
+        public async Task AddFirstReachedWebhook()
         {
+
             var apiKey = KeyHelper.GetAdminKey();
 
-            using (var api = new GetAddesssApi(new AdminKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new AdminKey(apiKey), httpClient))
             {
                 var request = new AddSecondLimitReachedWebhookRequest("https://getaddress.io/webhook");
 
                 var result = await api.SecondLimitReachedWebhook.Add(request);
 
                 Assert.IsTrue(result.IsSuccess);
+
+                var deleteResult = await api.SecondLimitReachedWebhook.Remove(result.SuccessfulResult.Id);
+
+                Assert.IsTrue(deleteResult.IsSuccess);
             }
         }
     }

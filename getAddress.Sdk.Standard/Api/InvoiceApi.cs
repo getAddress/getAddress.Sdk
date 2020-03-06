@@ -20,8 +20,6 @@ namespace getAddress.Sdk.Api
 
         public async Task<GetInvoiceResponse> Get(GetInvoiceRequest request)
         {
-           
-
             return await Get(Api, Path, AdminKey,request);
         }
 

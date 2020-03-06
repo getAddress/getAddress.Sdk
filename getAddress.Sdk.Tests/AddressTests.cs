@@ -17,7 +17,11 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetApiKey();
 
-            var addressService = new AddressService(apiKey);
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            var addressService = new AddressService(apiKey, httpClient);
 
             var result = await addressService.Get(new GetAddressRequest("CO91PU", "M.J.R. Site Solutions Ltd"));
 
@@ -29,7 +33,11 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetApiKey();
 
-            using (var api = new GetAddressApi(new ApiKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddressApi(new ApiKey(apiKey), httpClient))
             {
                 var result = await api.Address.Get(new GetAddressRequest("NN13ER"));
 
@@ -44,7 +52,11 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetApiKey();
 
-            using (var api = new GetAddesssApi(new ApiKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey),httpClient))
             {
                 var result = await api.Address.GetExpanded(new GetAddressRequest("NN13ER"));
 
@@ -78,7 +90,11 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetApiKey();
 
-            using (var api = new GetAddesssApi(new ApiKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey), httpClient))
             {
                 var result = await api.Address.Get(new GetAddressRequest("PE150SR", sort: true));
 
@@ -91,7 +107,11 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetApiKey();
 
-            using (var api = new GetAddesssApi(new ApiKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey), httpClient))
             {
                 var result = await api.Address.Get(new GetAddressRequest("PE150SR",house: "Ltd", fuzzy: true));
 
@@ -105,7 +125,11 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetApiKey();
 
-            using (var api = new GetAddesssApi(new ApiKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey), httpClient))
             {
                 var result = await api.Address.Get(new GetAddressRequest("PE150SR", house:"1", sort: true));
 

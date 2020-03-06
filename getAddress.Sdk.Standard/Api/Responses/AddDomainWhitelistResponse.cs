@@ -9,8 +9,6 @@ namespace getAddress.Sdk.Api.Responses
         {
         }
 
-       
-
 
         public class Success : AddDomainWhitelistResponse
         {

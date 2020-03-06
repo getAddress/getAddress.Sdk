@@ -16,7 +16,11 @@ namespace getAddress.Sdk.Tests
         {
             var apiKey = KeyHelper.GetApiKey();
 
-            using (var api = new GetAddesssApi(new ApiKey(apiKey)))
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey),httpClient))
             {
                 var result = await api.Distance.Get(new DistanceRequest("nn13er","nn13er")); 
 

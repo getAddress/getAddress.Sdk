@@ -24,7 +24,7 @@ namespace getAddress.Sdk.Tests
 
             var service = new TrackWebhookService(apiKey, httpClient);
 
-            var addResult = await service.Add("https://enow375xiqy9k.x.pipedream.net/");
+            var addResult = await service.Add("https://getaddress.io/track-test");
 
             Assert.IsTrue(addResult.IsSuccess);
 
