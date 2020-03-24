@@ -2,6 +2,7 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
+
     public abstract class BillingAddressResponse : ResponseBase<BillingAddressResponse.Success,BillingAddressResponse.Failed>
     {
         protected BillingAddressResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)

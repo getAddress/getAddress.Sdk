@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
+
     public class AddressService : IAddressService
     {
         public AddressService(ApiKey apiKey, HttpClient httpClient = null)

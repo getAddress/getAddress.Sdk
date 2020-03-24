@@ -84,6 +84,8 @@ namespace getAddress.Sdk
             permission = new Lazy<PermissionApi>(() => new PermissionApi(adminKey, this));
 
             autocomplete = new Lazy<AutocompleteApi>(() =>new AutocompleteApi(apiKey, this));
+
+            token = new Lazy<TokenApi>(() => new TokenApi(adminKey, this));
         }
 
         private Lazy<AutocompleteApi> autocomplete;
@@ -106,8 +108,9 @@ namespace getAddress.Sdk
         private Lazy<IpAddressWhitelistApi> ipAddressWhitelist;
         private Lazy<DomainWhitelistApi> domainWhitelist;
         private Lazy<BillingAddressApi> billingAddress;
-       
+        private Lazy<TokenApi> token;
         
+
 
 
         public Uri BaseAddress
@@ -135,6 +138,11 @@ namespace getAddress.Sdk
         public ApiKeyApi ApiKeyApi
         {
             get { return apiKeyApi.Value; }
+        }
+
+        public TokenApi Token
+        {
+            get { return token.Value; }
         }
 
         public PermissionApi Permission
@@ -238,18 +246,23 @@ namespace getAddress.Sdk
             get { return address.Value; }
         }
 
-        internal  void SetAuthorizationKey(Key key)
+        internal void SetAuthorizationKey(Key key)
         {
             SetAuthorizationKey(_client, key);
         }
+        internal void SetBearerToken(string token)
+        {
+            SetBearerToken(_client, token);
+        }
 
+        internal static void SetBearerToken(HttpClient client, string token)
+        {
+            client.SetBearerToken(token);
+        }
 
         internal static void SetAuthorizationKey(HttpClient client, Key key)
         {
-            if (!string.IsNullOrWhiteSpace(key.Value))
-            {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("api-key", key.Value);
-            }
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("api-key", key.Value); 
         }
 
         internal  async Task<HttpResponseMessage> Post(string path, object entity = null)

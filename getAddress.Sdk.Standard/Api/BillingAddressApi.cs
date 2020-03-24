@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
+
     public class BillingAddressApi: AdminApiBase
     {
         public const string Path = "billing-address/";

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.1</TargetFramework>
     <AssemblyName>getAddress.Sdk.Standard.1.1</AssemblyName>
-    <RootNamespace>getAddress.Sdk.Standard._1._1</RootNamespace>
+    <RootNamespace>getAddress.Sdk</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>getAddress.Sdk</PackageId>
     <Authors>Lee Smith</Authors>

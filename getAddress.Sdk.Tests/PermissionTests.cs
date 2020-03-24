@@ -14,6 +14,7 @@ namespace getAddress.Sdk.Tests
         [TestMethod]
         public async Task Add_Get_Update_Delete()
         {
+            
             var adminKey = KeyHelper.GetAdminKey();
             var emailAddress = "support@getaddress.io";
 

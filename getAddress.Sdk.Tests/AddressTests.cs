@@ -9,6 +9,7 @@ using System.Net.Http;
 
 namespace getAddress.Sdk.Tests
 {
+
     [TestClass]
     public class AddressTests
     {
