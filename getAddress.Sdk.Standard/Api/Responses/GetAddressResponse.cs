@@ -3,8 +3,7 @@
 namespace getAddress.Sdk.Api.Responses
 {
 
-
-    public class GetAddressResponse : ResponseBase<GetAddressResponse.Success,GetAddressResponse.Failed>
+    public class GetAddressResponse : ResponseBase<GetAddressResponse.Success,GetAddressResponse.Failed,GetAddressResponse.TokenExpired>
     {
 
         protected GetAddressResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -12,7 +11,6 @@ namespace getAddress.Sdk.Api.Responses
 
             
         }
-
 
         public class Success : GetAddressResponse
         {
@@ -34,6 +32,15 @@ namespace getAddress.Sdk.Api.Responses
             public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 this.FailedResult = this;
+            }
+        }
+
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
             }
         }
     }

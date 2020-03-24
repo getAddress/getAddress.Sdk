@@ -17,6 +17,11 @@ namespace getAddress.Sdk
         public GetAddressApi(AdminKey adminKey, HttpClient httpClient = null) : base(new ApiKey(string.Empty), adminKey, httpClient)
         {
         }
+
+        public GetAddressApi(AccessToken accessToken,  HttpClient httpClient = null) : base(accessToken, httpClient)
+        {
+
+        }
     }
 
     public class GetAddesssApi:IDisposable
@@ -30,6 +35,13 @@ namespace getAddress.Sdk
 
         public GetAddesssApi(AdminKey adminKey, HttpClient httpClient = null):this(new ApiKey(string.Empty),adminKey,httpClient)
         {
+        }
+
+        public GetAddesssApi(AccessToken accessToken,  HttpClient httpClient = null) : this(new ApiKey(string.Empty), new AdminKey(string.Empty), httpClient)
+        {
+            AccessToken = accessToken;
+
+            _client.SetBearerToken(accessToken.Value);
         }
 
         public GetAddesssApi(ApiKey apiKey, AdminKey adminKey, HttpClient httpClient = null)
@@ -191,6 +203,21 @@ namespace getAddress.Sdk
             get;
         }
 
+        public AccessToken accessToken;
+        public AccessToken AccessToken
+        {
+            get { return accessToken; }
+            set 
+            {
+                if (!string.IsNullOrWhiteSpace(value?.Value))
+                {
+                    SetBearerToken(value.Value);
+                }
+                accessToken = value;
+            }
+        }
+
+
         public SecondLimitReachedWebhookApi SecondLimitReachedWebhook
         {
             get { return  secondLimitReachedWebhook.Value; }
@@ -246,9 +273,12 @@ namespace getAddress.Sdk
             get { return address.Value; }
         }
 
-        internal void SetAuthorizationKey(Key key)
+        internal void SetAuthorizationKey(Key key = null)
         {
-            SetAuthorizationKey(_client, key);
+            if (!string.IsNullOrWhiteSpace(key?.Value))
+            {
+                SetAuthorizationKey(_client, key);
+            }
         }
         internal void SetBearerToken(string token)
         {
@@ -306,11 +336,12 @@ namespace getAddress.Sdk
             return httpContent;
         }
 
-        internal  async Task<HttpResponseMessage> Delete(string path)
+        internal  async Task<HttpResponseMessage> Delete(string path, int loop = 0)
         {
             return await Delete(_client, path);
         }
-        internal static async Task<HttpResponseMessage> Delete(HttpClient client, string path)
+
+        private static async Task<HttpResponseMessage> Delete(HttpClient client, string path)
         {
             if (client == null) throw new ArgumentNullException(nameof(client));
             if (path == null) throw new ArgumentNullException(nameof(path));
@@ -318,11 +349,12 @@ namespace getAddress.Sdk
             return await client.DeleteAsync(path);
         }
 
-        internal  async Task<HttpResponseMessage> Get(string path)
+        internal async Task<HttpResponseMessage> Get(string path, int loop = 0)
         {
-            return await Get(_client, path);
+            return await Get(_client, path); 
         }
-        internal static async Task<HttpResponseMessage> Get(HttpClient client, string path)
+
+        private static async Task<HttpResponseMessage> Get(HttpClient client, string path)
         {
             if (client == null) throw new ArgumentNullException(nameof(client));
             if (path == null) throw new ArgumentNullException(nameof(path));

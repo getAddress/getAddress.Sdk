@@ -8,7 +8,7 @@ public class ListUsage
     public System.DateTime Date { get; set; }
 }
 
-public abstract class ListUsageResponse : ResponseBase<ListUsageResponse.Success, ListUsageResponse.Failed>
+public abstract class ListUsageResponse : ResponseBase<ListUsageResponse.Success, ListUsageResponse.Failed, ListUsageResponse.TokenExpired>
 {
 
     protected ListUsageResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -33,6 +33,15 @@ public abstract class ListUsageResponse : ResponseBase<ListUsageResponse.Success
         public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
         {
             FailedResult = this;
+        }
+    }
+
+    public class TokenExpired : Failed
+    {
+        public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+        {
+            FailedResult = this;
+            TokenExpiredResult = this;
         }
     }
 }

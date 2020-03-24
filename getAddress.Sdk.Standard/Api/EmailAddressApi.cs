@@ -26,7 +26,6 @@ namespace getAddress.Sdk.Api
             if (path == null) throw new ArgumentNullException(nameof(path));
             if (apiKey == null) throw new ArgumentNullException(nameof(apiKey));
 
-
             api.SetAuthorizationKey(apiKey);
 
             var response = await api.Get(path);
@@ -38,6 +37,10 @@ namespace getAddress.Sdk.Api
                 var model = GetEmailAddress(body);
 
                 return new EmailAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,model.EmailAddress );
+            }
+            else if (response.HasTokenExpired())
+            {
+                return new EmailAddressResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new EmailAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
@@ -66,6 +69,11 @@ namespace getAddress.Sdk.Api
             if(response.StatusCode == System.Net.HttpStatusCode.BadRequest){
                 var message = GetMessage(body);
                 return new EmailAddressResponse.FailedInvalidEmailAddress((int)response.StatusCode, response.ReasonPhrase, body,message);
+            }
+
+            if (response.HasTokenExpired())
+            {
+                return new EmailAddressResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new EmailAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);

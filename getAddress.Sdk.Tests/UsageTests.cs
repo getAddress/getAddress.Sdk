@@ -4,14 +4,35 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-
-
-
 namespace getAddress.Sdk.Tests
 {
     [TestClass]
     public class UsageWebhookTests
     {
+
+        [TestMethod]
+        public async Task Usage_With_Token()
+        {
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            var accessToken = await TokenHelper.GetAccessToken();
+
+            var usageService = new UsageService(accessToken, httpClient);
+
+            var getV3result = await usageService.GetV3();
+
+            Assert.IsTrue(getV3result.IsSuccess);
+
+            var getResult = await usageService.Get();
+
+            Assert.IsTrue(getResult.IsSuccess);
+
+            var listResult = await usageService.List(new ListUsageRequest(01,01,2020,01,03,2020));
+
+            Assert.IsTrue(listResult.IsSuccess);
+        }
 
         [TestMethod]
         public async Task Get_UsageV3()

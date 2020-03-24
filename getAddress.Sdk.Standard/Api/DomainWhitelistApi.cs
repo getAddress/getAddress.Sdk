@@ -43,6 +43,11 @@ namespace getAddress.Sdk.Api
                 return new AddDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, messageAndId.Id);
             }
 
+            if (response.HasTokenExpired())
+            {
+                return new AddDomainWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
+            }
+
             return new AddDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase,body);
         }
 
@@ -73,6 +78,11 @@ namespace getAddress.Sdk.Api
                 return new RemoveDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,message);
             }
 
+            if (response.HasTokenExpired())
+            {
+                return new RemoveDomainWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
+            }
+
             return new RemoveDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
@@ -97,6 +107,11 @@ namespace getAddress.Sdk.Api
                 var list = GetDomainWhitelists(body);
 
                 return new ListDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,list);
+            }
+
+            if (response.HasTokenExpired())
+            {
+                return new ListDomainWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new ListDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
@@ -151,6 +166,11 @@ namespace getAddress.Sdk.Api
                 var nameAndId = GetDomainWhitelist(body);
 
                 return new GetDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, nameAndId.Id, nameAndId.Name);
+            }
+
+            if (response.HasTokenExpired())
+            {
+                return new GetDomainWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new GetDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);

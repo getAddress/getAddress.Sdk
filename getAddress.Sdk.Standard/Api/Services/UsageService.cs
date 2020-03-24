@@ -7,21 +7,43 @@ namespace getAddress.Sdk.Api
 {
     public class UsageService : IUsageService
     {
-        public UsageService(AdminKey adminKey, HttpClient httpClient = null)
+        private UsageService(HttpClient httpClient = null)
         {
-            AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
             HttpClient = httpClient;
         }
+
+        public UsageService(AdminKey adminKey, HttpClient httpClient = null):this(httpClient)
+        {
+            AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
+        }
+
+        public UsageService(AccessToken accessToken,  HttpClient httpClient = null) : this(httpClient)
+        {
+            AccessToken = accessToken ?? throw new System.ArgumentNullException(nameof(accessToken));
+        }
+
+        public AccessToken AccessToken { get; }
 
         public AdminKey AdminKey { get; }
         public HttpClient HttpClient { get; }
 
         public async Task<GetUsageV3Response> GetV3(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.Usage.GetV3();
+        }
+
+        private GetAddesssApi GetAddesssApi(AdminKey adminKey = null, HttpClient httpClient = null)
+        {
+            if (AccessToken != null && adminKey == null)
             {
-                return await api.Usage.GetV3();
+                return new GetAddesssApi(AccessToken, HttpClient ?? httpClient);
             }
+            else
+            {
+                return new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient);
+            } 
         }
 
         public async Task<GetUsageResponse> Get(AdminKey adminKey = null, HttpClient httpClient = null)

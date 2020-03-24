@@ -60,6 +60,10 @@ namespace getAddress.Sdk.Api
 
                 return new AddInvoiceCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, id);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new AddInvoiceCCResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new AddInvoiceCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -89,6 +93,10 @@ namespace getAddress.Sdk.Api
 
                 return new RemoveInvoiceCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, message);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new RemoveInvoiceCCResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new RemoveInvoiceCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -115,6 +123,10 @@ namespace getAddress.Sdk.Api
 
                 return new ListInvoiceCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, list);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new ListInvoiceCCResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new ListInvoiceCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -137,6 +149,10 @@ namespace getAddress.Sdk.Api
                 var invoiceCC = GetCCInvoice(body);
 
                 return new GetInvoiceCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, invoiceCC);
+            }
+            else if (response.HasTokenExpired())
+            {
+                return new GetInvoiceCCResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new GetInvoiceCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);

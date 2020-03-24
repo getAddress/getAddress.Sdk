@@ -6,6 +6,14 @@ using System.Text;
 
 namespace getAddress.Sdk.Api
 {
+    internal static class HttpResponseMessageExtensions
+    {
+        public static bool HasTokenExpired(this HttpResponseMessage httpResponseMessage)
+        {
+            return httpResponseMessage.Headers.Contains("Token-Expired") && httpResponseMessage.StatusCode == System.Net.HttpStatusCode.Unauthorized;
+        }
+    }
+
     internal static class HttpClientExtensions
     {
         public static void SetToken(this HttpClient client, string scheme, string token)

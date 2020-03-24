@@ -1,6 +1,7 @@
 ﻿namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class RemoveFirstLimitReachedWebhookResponse : ResponseBase<RemoveFirstLimitReachedWebhookResponse.Success,RemoveFirstLimitReachedWebhookResponse.Failed>
+    public abstract class RemoveFirstLimitReachedWebhookResponse : ResponseBase<RemoveFirstLimitReachedWebhookResponse.Success,
+        RemoveFirstLimitReachedWebhookResponse.Failed,RemoveFirstLimitReachedWebhookResponse.TokenExpired>
     {
 
         protected RemoveFirstLimitReachedWebhookResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -26,6 +27,13 @@
                    FailedResult = this;
             }
         }
-
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
+            }
+        }
     }
 }

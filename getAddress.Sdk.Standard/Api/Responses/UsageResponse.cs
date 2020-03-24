@@ -26,7 +26,7 @@ namespace getAddress.Sdk.Api.Responses
         public int MonthlyBufferUsed { get; set; }
     }
 
-    public abstract class GetUsageResponse : ResponseBase<GetUsageResponse.Success,GetUsageResponse.Failed>
+    public abstract class GetUsageResponse : ResponseBase<GetUsageResponse.Success,GetUsageResponse.Failed, GetUsageResponse.TokenExpired>
     {
 
         protected GetUsageResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -63,9 +63,17 @@ namespace getAddress.Sdk.Api.Responses
                    FailedResult = this;
             }
         }
+
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+            }
+        }
     }
 
-    public abstract class GetUsageV3Response : ResponseBase<GetUsageV3Response.Success, GetUsageV3Response.Failed>
+    public abstract class GetUsageV3Response : ResponseBase<GetUsageV3Response.Success, GetUsageV3Response.Failed, GetUsageV3Response.TokenExpired>
     {
 
         protected GetUsageV3Response(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -99,6 +107,15 @@ namespace getAddress.Sdk.Api.Responses
             public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
+            }
+        }
+
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
             }
         }
     }

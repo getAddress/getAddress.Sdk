@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-
     public class AddressApi: ApiKeyBase
     {
         public const string Path = "find/";
@@ -46,6 +45,10 @@ namespace getAddress.Sdk.Api
                 double longitude = addressesBody.Item2;
                 var addresses = addressesBody.Item3;
                 return new GetAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,latitude,longitude,addresses);
+            }
+            if (response.HasTokenExpired())
+            {
+                return new GetAddressResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new GetAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);//todo: move failed responses
@@ -104,6 +107,10 @@ namespace getAddress.Sdk.Api
                 var postcode = addressesBody.Item3;
                 return new GetExpandedAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, latitude, longitude,postcode, addresses);
             }
+            if (response.HasTokenExpired())
+            {
+                return new GetExpandedAddressResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new GetExpandedAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -140,6 +147,10 @@ namespace getAddress.Sdk.Api
                 var postcode = addressBody.Item3;
 
                 return new PlaceDetailsResponse.Success((int)response.StatusCode, response.ReasonPhrase, json, latitude, longitude, postcode, address);
+            }
+            if (response.HasTokenExpired())
+            {
+                return new PlaceDetailsResponse.TokenExpired(response.ReasonPhrase, json);
             }
 
             return new PlaceDetailsResponse.Failed((int)response.StatusCode, response.ReasonPhrase, json);

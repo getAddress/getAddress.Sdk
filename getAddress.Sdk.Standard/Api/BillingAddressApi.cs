@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-
     public class BillingAddressApi: AdminApiBase
     {
         public const string Path = "billing-address/";
@@ -41,6 +40,10 @@ namespace getAddress.Sdk.Api
                 return new BillingAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,
                     address.Line1, address.Line2, address.Line3, address.TownOrCity, address.County, address.Postcode);
             }
+            if (response.HasTokenExpired())
+            {
+                return new BillingAddressResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new BillingAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -68,6 +71,11 @@ namespace getAddress.Sdk.Api
                 return new BillingAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,
                    address.Line1, address.Line2, address.Line3, address.TownOrCity, address.County, address.Postcode);
             }
+            if (response.HasTokenExpired())
+            {
+                return new BillingAddressResponse.TokenExpired(response.ReasonPhrase, body);
+            }
+
 
             return new BillingAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }

@@ -10,7 +10,6 @@ namespace getAddress.Sdk.Api
 {
     public class InvoiceApi: AdminApiBase
     {
-
         public const string Path = "invoices/";
 
         internal InvoiceApi(AdminKey adminKey, GetAddesssApi api) : base(adminKey,api)
@@ -70,6 +69,10 @@ namespace getAddress.Sdk.Api
 
                 return new ListInvoicesResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,list);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new ListInvoicesResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new ListInvoicesResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -94,6 +97,10 @@ namespace getAddress.Sdk.Api
                 var invoice = GetInvoice(body,number);
 
                 return new GetInvoiceResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, invoice);
+            }
+            else if (response.HasTokenExpired())
+            {
+                return new GetInvoiceResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new GetInvoiceResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
@@ -144,10 +151,6 @@ namespace getAddress.Sdk.Api
             }
 
             return invoice;
-            
-
-            
-
         }
 
     }

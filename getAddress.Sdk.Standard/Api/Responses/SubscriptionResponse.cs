@@ -11,7 +11,7 @@ namespace getAddress.Sdk.Api.Responses
         public string Term { get; set; }
     }
 
-    public abstract class SubscriptionResponse : ResponseBase<SubscriptionResponse.Success, SubscriptionResponse.Failed>
+    public abstract class SubscriptionResponse : ResponseBase<SubscriptionResponse.Success, SubscriptionResponse.Failed, SubscriptionResponse.TokenExpired>
     {
         protected SubscriptionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -35,6 +35,15 @@ namespace getAddress.Sdk.Api.Responses
             public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
+            }
+        }
+
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
             }
         }
     }

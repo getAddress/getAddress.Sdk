@@ -18,6 +18,7 @@ namespace getAddress.Sdk.Api
         {
 
         }
+
         public async Task<GetUsageResponse> Get(int day,int month, int year)
         {
             return await Get(Api, V2Path, AdminKey,day,month,year);
@@ -92,7 +93,6 @@ namespace getAddress.Sdk.Api
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
             if (path == null) throw new ArgumentNullException(nameof(path));
-            if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
             
             api.SetAuthorizationKey(adminKey);
 
@@ -107,7 +107,11 @@ namespace getAddress.Sdk.Api
                 return new GetUsageResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, usage.Count,
                     usage.Limit1, usage.Limit2);
             }
-
+            else if (response.HasTokenExpired())
+            {
+                return new GetUsageResponse.TokenExpired(response.ReasonPhrase, body);
+            }
+            
             return new GetUsageResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
@@ -115,7 +119,6 @@ namespace getAddress.Sdk.Api
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
             if (path == null) throw new ArgumentNullException(nameof(path));
-            if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
 
             api.SetAuthorizationKey(adminKey);
 
@@ -130,6 +133,10 @@ namespace getAddress.Sdk.Api
                 return new GetUsageV3Response.Success((int)response.StatusCode, response.ReasonPhrase, body, usage.DailyLimit,
                     usage.UsageToday, usage.MonthlyBuffer,usage.MonthlyBufferUsed);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new GetUsageV3Response.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new GetUsageV3Response.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -138,8 +145,6 @@ namespace getAddress.Sdk.Api
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
             if (path == null) throw new ArgumentNullException(nameof(path));
-            if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
-
 
             api.SetAuthorizationKey(adminKey);
 
@@ -152,6 +157,10 @@ namespace getAddress.Sdk.Api
                 var usages = ListUsages(body);
 
                 return new ListUsageResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,usages);
+            }
+            else if (response.HasTokenExpired())
+            {
+                return new ListUsageResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new ListUsageResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);

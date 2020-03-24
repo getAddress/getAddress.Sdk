@@ -60,6 +60,11 @@ namespace getAddress.Sdk.Api
 
                 return new AutocompletePostcodeResponse.Success((int)response.StatusCode, response.ReasonPhrase, json, predictions);
             }
+            if (response.HasTokenExpired())
+            {
+                return new AutocompletePostcodeResponse.TokenExpired(response.ReasonPhrase, json);
+            }
+
 
             return new AutocompletePostcodeResponse.Failed((int)response.StatusCode, response.ReasonPhrase, json);
         }
@@ -87,6 +92,10 @@ namespace getAddress.Sdk.Api
                 var predictions = GetPredictions(json);
 
                 return new AutocompleteResponse.Success((int)response.StatusCode, response.ReasonPhrase, json, predictions);
+            }
+            if (response.HasTokenExpired())
+            {
+                return new AutocompleteResponse.TokenExpired(response.ReasonPhrase, json);
             }
 
             return new AutocompleteResponse.Failed((int)response.StatusCode, response.ReasonPhrase, json);

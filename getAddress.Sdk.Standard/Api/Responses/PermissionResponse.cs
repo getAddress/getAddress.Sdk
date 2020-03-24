@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public class RemovePermissionResponse : ResponseBase<RemovePermissionResponse.Success, RemovePermissionResponse.Failed>
+    public class RemovePermissionResponse : ResponseBase<RemovePermissionResponse.Success,
+        RemovePermissionResponse.Failed, RemovePermissionResponse.TokenExpired>
     {
         internal RemovePermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -28,9 +29,18 @@ namespace getAddress.Sdk.Api.Responses
                 FailedResult = this;
             }
         }
+
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
+            }
+        }
     }
 
-    public class AddPermissionResponse : ResponseBase<AddPermissionResponse.Success, AddPermissionResponse.Failed>
+    public class AddPermissionResponse : ResponseBase<AddPermissionResponse.Success, AddPermissionResponse.Failed, AddPermissionResponse.TokenExpired>
     {
         internal AddPermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -55,9 +65,17 @@ namespace getAddress.Sdk.Api.Responses
                 FailedResult = this;
             }
         }
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
+            }
+        }
     }
 
-    public class UpdatePermissionResponse : ResponseBase<UpdatePermissionResponse.Success, UpdatePermissionResponse.Failed>
+    public class UpdatePermissionResponse : ResponseBase<UpdatePermissionResponse.Success, UpdatePermissionResponse.Failed, UpdatePermissionResponse.TokenExpired>
     {
         internal UpdatePermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -82,9 +100,18 @@ namespace getAddress.Sdk.Api.Responses
                 FailedResult = this;
             }
         }
+
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
+            }
+        }
     }
 
-    public class ListPermissionResponse : ResponseBase<ListPermissionResponse.Success, ListPermissionResponse.Failed>
+    public class ListPermissionResponse : ResponseBase<ListPermissionResponse.Success, ListPermissionResponse.Failed, ListPermissionResponse.TokenExpired>
     {
         internal ListPermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -108,9 +135,18 @@ namespace getAddress.Sdk.Api.Responses
                 FailedResult = this;
             }
         }
+
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
+            }
+        }
     }
 
-    public class PermissionResponse : ResponseBase<PermissionResponse.Success, PermissionResponse.Failed>
+    public class PermissionResponse : ResponseBase<PermissionResponse.Success, PermissionResponse.Failed, PermissionResponse.TokenExpired>
     {
         internal PermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -133,6 +169,15 @@ namespace getAddress.Sdk.Api.Responses
             internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
+            }
+        }
+
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
             }
         }
     }

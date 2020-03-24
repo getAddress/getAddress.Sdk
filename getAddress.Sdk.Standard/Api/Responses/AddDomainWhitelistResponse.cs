@@ -2,7 +2,8 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class AddDomainWhitelistResponse: ResponseBase<AddDomainWhitelistResponse.Success,AddDomainWhitelistResponse.Failed>
+    public abstract class AddDomainWhitelistResponse: ResponseBase<AddDomainWhitelistResponse.Success,
+        AddDomainWhitelistResponse.Failed,AddDomainWhitelistResponse.TokenExpired>
     {
 
         protected AddDomainWhitelistResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
@@ -29,6 +30,15 @@ namespace getAddress.Sdk.Api.Responses
             public Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
+            }
+        }
+
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
             }
         }
     }

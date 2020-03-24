@@ -3,7 +3,8 @@ using System.Linq;
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class ListFirstLimitReachedWebhookResponse: ResponseBase<ListFirstLimitReachedWebhookResponse.Success,ListFirstLimitReachedWebhookResponse.Failed>
+    public abstract class ListFirstLimitReachedWebhookResponse: ResponseBase<ListFirstLimitReachedWebhookResponse.Success,
+        ListFirstLimitReachedWebhookResponse.Failed, ListFirstLimitReachedWebhookResponse.TokenExpired>
     {
 
         protected ListFirstLimitReachedWebhookResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
@@ -29,9 +30,18 @@ namespace getAddress.Sdk.Api.Responses
                    FailedResult = this;
             }
         }
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
+            }
+        }
     }
 
-    public abstract class ListWebhookResponse : ResponseBase<ListWebhookResponse.Success, ListWebhookResponse.Failed>
+    public abstract class ListWebhookResponse : ResponseBase<ListWebhookResponse.Success, 
+        ListWebhookResponse.Failed, ListWebhookResponse.TokenExpired>
     {
 
         protected ListWebhookResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -73,6 +83,15 @@ namespace getAddress.Sdk.Api.Responses
             public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
+            }
+        }
+
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
             }
         }
     }

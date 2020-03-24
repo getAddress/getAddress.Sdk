@@ -57,6 +57,10 @@ namespace getAddress.Sdk.Api
 
                 return new AddExpiredCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, id);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new AddExpiredCCResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new AddExpiredCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -86,6 +90,10 @@ namespace getAddress.Sdk.Api
 
                 return new RemoveExpiredCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, message);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new RemoveExpiredCCResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new RemoveExpiredCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -112,6 +120,10 @@ namespace getAddress.Sdk.Api
 
                 return new ListExpiredCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, list);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new ListExpiredCCResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new ListExpiredCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -133,6 +145,10 @@ namespace getAddress.Sdk.Api
                 var cC = ExpiredCC.Deserialize(body);
 
                 return new GetExpiredCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, cC);
+            }
+            else if (response.HasTokenExpired())
+            {
+                return new GetExpiredCCResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new GetExpiredCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);

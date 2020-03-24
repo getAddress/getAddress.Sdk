@@ -3,7 +3,7 @@
 namespace getAddress.Sdk.Api.Responses
 {
 
-    public abstract class BillingAddressResponse : ResponseBase<BillingAddressResponse.Success,BillingAddressResponse.Failed>
+    public abstract class BillingAddressResponse : ResponseBase<BillingAddressResponse.Success,BillingAddressResponse.Failed,BillingAddressResponse.TokenExpired>
     {
         protected BillingAddressResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -43,6 +43,15 @@ namespace getAddress.Sdk.Api.Responses
             public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
+            }
+        }
+
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
             }
         }
     }

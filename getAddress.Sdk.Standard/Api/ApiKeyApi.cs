@@ -14,7 +14,6 @@ namespace getAddress.Sdk.Api
 
         }
 
-
         public async Task<ApiKeyResponse> Get()
         {
             return await Get(Api, Path, this.AdminKey);
@@ -38,6 +37,10 @@ namespace getAddress.Sdk.Api
                 var apiKeyModel = GetApiKey(body);
 
                 return new ApiKeyResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, apiKeyModel.ApiKey);
+            }
+            if (response.HasTokenExpired())
+            {
+                return new ApiKeyResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new ApiKeyResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
@@ -63,6 +66,10 @@ namespace getAddress.Sdk.Api
                 var model = GetApiKey(body);
 
                 return new ApiKeyResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,model.ApiKey);
+            }
+            if (response.HasTokenExpired())
+            {
+                return new ApiKeyResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new ApiKeyResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);

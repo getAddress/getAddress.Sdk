@@ -37,6 +37,10 @@ namespace getAddress.Sdk.Api
 
                 return new GetTokenResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,tokens.Tokens.Access,tokens.Tokens.Refresh);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new GetTokenResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new GetTokenResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -70,6 +74,10 @@ namespace getAddress.Sdk.Api
 
                 return new RefreshTokenResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,tokenContainer.Tokens.Access, tokenContainer.Tokens.Refresh);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new RefreshTokenResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new RefreshTokenResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -95,6 +103,10 @@ namespace getAddress.Sdk.Api
             if (response.IsSuccessStatusCode)
             { 
                 return new RevokeTokenResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
+            }
+            else if (response.HasTokenExpired())
+            {
+                return new RevokeTokenResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new RevokeTokenResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);

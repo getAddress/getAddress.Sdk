@@ -29,8 +29,6 @@ namespace getAddress.Sdk.Api
 
         protected AdminApiBase(AdminKey adminKey, GetAddesssApi api):base(api)
         {
-            if (adminKey == null) throw new ArgumentNullException(nameof(adminKey)); 
-
             AdminKey = adminKey;
         }
 

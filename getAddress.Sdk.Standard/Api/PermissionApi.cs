@@ -48,6 +48,10 @@ namespace getAddress.Sdk.Api
 
                 return new PermissionResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,permission);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new PermissionResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new PermissionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -75,6 +79,10 @@ namespace getAddress.Sdk.Api
 
                 return new ListPermissionResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, permissions);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new ListPermissionResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new ListPermissionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -101,6 +109,10 @@ namespace getAddress.Sdk.Api
 
                 return new UpdatePermissionResponse.Success((int)response.StatusCode, response.ReasonPhrase,body, message.Message);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new UpdatePermissionResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new UpdatePermissionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -126,6 +138,10 @@ namespace getAddress.Sdk.Api
                 var message = MessageResponse.GetMessageResponse(body);
 
                 return new AddPermissionResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, message.Message);
+            }
+            else if (response.HasTokenExpired())
+            {
+                return new AddPermissionResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new AddPermissionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
@@ -155,6 +171,10 @@ namespace getAddress.Sdk.Api
                 var message = MessageResponse.GetMessageResponse(body);
 
                 return new RemovePermissionResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, message.Message);
+            }
+            else if (response.HasTokenExpired())
+            {
+                return new RemovePermissionResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new RemovePermissionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);

@@ -2,7 +2,8 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public class GetExpandedAddressResponse : ResponseBase<GetExpandedAddressResponse.Success, GetExpandedAddressResponse.Failed>
+    public class GetExpandedAddressResponse : ResponseBase<GetExpandedAddressResponse.Success, 
+        GetExpandedAddressResponse.Failed, GetExpandedAddressResponse.TokenExpired>
     {
 
         protected GetExpandedAddressResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -29,11 +30,20 @@ namespace getAddress.Sdk.Api.Responses
             }
         }
 
-        public class Failed : GetExpandedAddressResponse//todo: failed class for each possible response  
+        public class Failed : GetExpandedAddressResponse
         {
             public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 this.FailedResult = this;
+            }
+        }
+
+        public class TokenExpired : Failed
+        {
+            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
+            {
+                FailedResult = this;
+                TokenExpiredResult = this;
             }
         }
     }

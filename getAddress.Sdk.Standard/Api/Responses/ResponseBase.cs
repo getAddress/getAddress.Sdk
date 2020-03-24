@@ -2,7 +2,7 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class ResponseBase<S,F>
+    public abstract class ResponseBase<S,F,X>
     {
         protected ResponseBase(int statusCode, string reasonPhrase, string raw, bool isSuccess)
         {
@@ -15,6 +15,8 @@ namespace getAddress.Sdk.Api.Responses
 
         public S SuccessfulResult{ get; protected set; }
         public F  FailedResult{ get; protected set; }
+
+        public X TokenExpiredResult { get; protected set; }
 
         public bool IsSuccess { get; }
         public int StatusCode { get; }

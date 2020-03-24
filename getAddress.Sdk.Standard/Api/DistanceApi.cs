@@ -40,6 +40,10 @@ namespace getAddress.Sdk.Api
 
                 return new DistanceResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, distance);
             }
+            if (response.HasTokenExpired())
+            {
+                return new DistanceResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new DistanceResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }

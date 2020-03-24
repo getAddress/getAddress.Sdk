@@ -42,6 +42,10 @@ namespace getAddress.Sdk.Api
 
                 return new AddIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, messageAndId.Id);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new AddIpAddressWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new AddIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase,body);
         }
@@ -72,6 +76,10 @@ namespace getAddress.Sdk.Api
 
                 return new RemoveIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,message);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new RemoveIpAddressWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new RemoveIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -97,6 +105,10 @@ namespace getAddress.Sdk.Api
                 var list = GetLists(body);
 
                 return new ListIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,list);
+            }
+            else if (response.HasTokenExpired())
+            {
+                return new ListIpAddressWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new ListIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
@@ -160,6 +172,10 @@ namespace getAddress.Sdk.Api
                 var valueAndId = GetIpAddressWhitelist(body);
 
                 return new GetIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, valueAndId.Id, valueAndId.Value);
+            }
+            else if (response.HasTokenExpired())
+            {
+                return new GetIpAddressWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new GetIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);

@@ -40,6 +40,10 @@ namespace getAddress.Sdk.Api
             {
                 return new UnsubscribeResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new UnsubscribeResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new UnsubscribeResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -67,6 +71,10 @@ namespace getAddress.Sdk.Api
                 var subscription = GetSubscription(body);
 
                 return new SubscriptionResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, subscription);
+            }
+            else if (response.HasTokenExpired())
+            {
+                return new SubscriptionResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new SubscriptionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);

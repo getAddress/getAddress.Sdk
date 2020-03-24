@@ -43,6 +43,10 @@ namespace getAddress.Sdk.Api
 
                 return new AddPrivateAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, messageAndId.Id);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new AddPrivateAddressResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new AddPrivateAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -71,6 +75,10 @@ namespace getAddress.Sdk.Api
             if (response.IsSuccessStatusCode)
             {
                 return new RemovePrivateAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
+            }
+            else if (response.HasTokenExpired())
+            {
+                return new RemovePrivateAddressResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new RemovePrivateAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
@@ -102,6 +110,10 @@ namespace getAddress.Sdk.Api
 
                 return new ListPrivateAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,addresses);
             }
+            else if (response.HasTokenExpired())
+            {
+                return new ListPrivateAddressResponse.TokenExpired(response.ReasonPhrase, body);
+            }
 
             return new ListPrivateAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
@@ -131,6 +143,10 @@ namespace getAddress.Sdk.Api
                 var addressAndId = GetPrivateAddress(body);
                 return new GetPrivateAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, addressAndId.Id,
                     addressAndId.Line1, addressAndId.Line2, addressAndId.Line3, addressAndId.Line4, addressAndId.Locality, addressAndId.TownOrCity, addressAndId.County);
+            }
+            else if (response.HasTokenExpired())
+            {
+                return new GetPrivateAddressResponse.TokenExpired(response.ReasonPhrase, body);
             }
 
             return new GetPrivateAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
