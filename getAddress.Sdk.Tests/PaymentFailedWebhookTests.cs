@@ -1,4 +1,5 @@
-﻿using getAddress.Sdk.Api.Requests;
+﻿using getAddress.Sdk.Api;
+using getAddress.Sdk.Api.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Net.Http;
@@ -9,6 +10,20 @@ namespace getAddress.Sdk.Tests
     [TestClass]
     public class PaymentFailedWebhookTests
     {
+
+        [TestMethod]
+        public async Task GivenAValidToken_ListReturnsSuccessfulResult()
+        {
+            var accessToken = await TokenHelper.GetAccessToken();
+
+            var httpClient = HttpClientHelper.ForStagingServer();
+
+            var service = new PaymentFailedWebhookService(accessToken, httpClient);
+
+            var listResponse = await service.List();
+
+            Assert.IsTrue(listResponse.IsSuccess);
+        }
 
         [TestMethod]
         public async Task GetWebhook()

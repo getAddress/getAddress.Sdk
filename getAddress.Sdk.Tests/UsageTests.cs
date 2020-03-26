@@ -11,6 +11,20 @@ namespace getAddress.Sdk.Tests
     {
 
         [TestMethod]
+        public async Task GivenAValidToken_GetReturnsSuccessfulResult()
+        {
+            var accessToken = await TokenHelper.GetAccessToken();
+
+            var httpClient = HttpClientHelper.ForStagingServer();
+
+            var service = new UsageService(accessToken, httpClient);
+
+            var listResponse = await service.Get();
+
+            Assert.IsTrue(listResponse.IsSuccess);
+        }
+
+        [TestMethod]
         public async Task Usage_With_Token()
         {
             var httpClient = new HttpClient();

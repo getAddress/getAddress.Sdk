@@ -14,6 +14,20 @@ namespace getAddress.Sdk.Tests
     {
 
         [TestMethod]
+        public async Task GivenAValidToken_ListReturnsSuccessfulResult()
+        {
+            var accessToken = await TokenHelper.GetAccessToken();
+
+            var httpClient = HttpClientHelper.ForStagingServer();
+
+            var service = new TrackWebhookService(accessToken, httpClient);
+
+            var listResponse = await service.List();
+
+            Assert.IsTrue(listResponse.IsSuccess);
+        }
+
+        [TestMethod]
         public async Task GetWebhook()
         {
             var apiKey = KeyHelper.GetAdminKey();

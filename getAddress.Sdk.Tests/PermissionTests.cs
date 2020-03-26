@@ -11,45 +11,60 @@ namespace getAddress.Sdk.Tests
     [TestClass]
     public class PermissionTests
     {
-        //[TestMethod]
-        //public async Task Add_Get_Update_Delete()
-        //{
-            
-        //    var adminKey = KeyHelper.GetAdminKey();
-        //    var emailAddress = "support@getaddress.io";
 
-        //    var httpClient = new HttpClient();
+        [TestMethod]
+        public async Task GivenAValidToken_ListReturnsSuccessfulResult()
+        {
+            var accessToken = await TokenHelper.GetAccessToken();
 
-        //    httpClient.BaseAddress = UrlHelper.GetStagingUri();
+            var httpClient = HttpClientHelper.ForStagingServer();
 
-        //    var permissionService = new PermissionService(adminKey, httpClient);
+            var service = new PermissionService(accessToken, httpClient);
 
-        //    var addResponse = await permissionService.Add(new AddPermissionRequest(emailAddress, new PermissionRequest(false,false,false)));
+            var listResponse = await service.List();
 
-        //    Assert.IsTrue(addResponse.IsSuccess);
+            Assert.IsTrue(listResponse.IsSuccess);
+        }
 
-        //    var getResponse = await permissionService.Get(new GetPermissionRequest(emailAddress));
+        [TestMethod]
+        public async Task Add_Get_Update_Delete()
+        {
 
-        //    Assert.IsTrue(getResponse.IsSuccess);
+            var adminKey = KeyHelper.GetAdminKey();
+            var emailAddress = "support@getaddress.io";
 
-        //    var listResponse = await permissionService.List();
+            var httpClient = new HttpClient();
 
-        //    Assert.IsTrue(listResponse.IsSuccess && listResponse.SuccessfulResult.Permissions.Any());
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
 
-        //    var updateResponse = await permissionService.Update(new UpdatePermissionRequest(emailAddress, new PermissionRequest(true, true,true)));
+            var permissionService = new PermissionService(adminKey, httpClient);
 
-        //    Assert.IsTrue(updateResponse.IsSuccess);
+            var addResponse = await permissionService.Add(new AddPermissionRequest(emailAddress, new PermissionRequest(false, false, false)));
 
-        //    var getResponse2 = await permissionService.Get(new GetPermissionRequest(emailAddress));
+            Assert.IsTrue(addResponse.IsSuccess);
 
-        //    Assert.IsTrue(getResponse2.IsSuccess);
+            var getResponse = await permissionService.Get(new GetPermissionRequest(emailAddress));
 
-        //    var deleteResponse = await permissionService.Remove(new RemovePermissionRequest(emailAddress));
+            Assert.IsTrue(getResponse.IsSuccess);
 
-        //    Assert.IsTrue(deleteResponse.IsSuccess);
-        //}
+            var listResponse = await permissionService.List();
 
-        
+            Assert.IsTrue(listResponse.IsSuccess && listResponse.SuccessfulResult.Permissions.Any());
+
+            var updateResponse = await permissionService.Update(new UpdatePermissionRequest(emailAddress, new PermissionRequest(true, true, true)));
+
+            Assert.IsTrue(updateResponse.IsSuccess);
+
+            var getResponse2 = await permissionService.Get(new GetPermissionRequest(emailAddress));
+
+            Assert.IsTrue(getResponse2.IsSuccess);
+
+            var deleteResponse = await permissionService.Remove(new RemovePermissionRequest(emailAddress));
+
+            Assert.IsTrue(deleteResponse.IsSuccess);
+        }
+
+
 
     }
 }

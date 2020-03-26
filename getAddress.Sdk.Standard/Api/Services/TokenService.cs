@@ -11,10 +11,7 @@ namespace getAddress.Sdk.Api
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
         }
 
-        public TokenService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken, httpClient)
-        {
-
-        }
+        
 
         public async Task<GetTokenResponse> Get(AdminKey adminKey = null, HttpClient httpClient = null)
         {

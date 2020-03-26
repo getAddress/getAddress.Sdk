@@ -14,6 +14,21 @@ namespace getAddress.Sdk.Tests
     public class AddressTests
     {
         [TestMethod]
+        public async Task GetAddressWithTokenViaService()
+        {
+            var accessToken = await TokenHelper.GetAccessToken(KeyHelper.GetApiKey);
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            var addressService = new AddressService(accessToken, httpClient);
+
+            var result = await addressService.Get(new GetAddressRequest("CO91PU", house: "M.J.R. Site Solutions Ltd"));
+
+            Assert.IsTrue(result.IsSuccess);
+        }
+        [TestMethod]
         public async Task GetAddressViaService()
         {
             var apiKey = KeyHelper.GetApiKey();

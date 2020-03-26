@@ -12,6 +12,23 @@ namespace getAddress.Sdk.Tests
     {
 
         [TestMethod]
+        public async Task GivenAValidToken_Should_Return_Expected_Distance()
+        {
+            var accessToken = await TokenHelper.GetAccessToken(KeyHelper.GetApiKey);
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            var distanceService = new DistanceService(accessToken, httpClient);
+
+            var result = await distanceService.Get(new DistanceRequest("nn13er", "nn13er"));
+
+            Assert.IsTrue(result.IsSuccess);
+
+        }
+
+        [TestMethod]
         public async Task Should_Return_Expected_Distance()
         {
             var apiKey = KeyHelper.GetApiKey();

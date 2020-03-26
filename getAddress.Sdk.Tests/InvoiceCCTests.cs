@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using getAddress.Sdk.Api;
 using getAddress.Sdk.Api.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -9,6 +10,21 @@ namespace getAddress.Sdk.Tests
     [TestClass]
     public class InvoiceCCTests
     {
+
+        [TestMethod]
+        public async Task GivenAValidToken_ListReturnsSuccessfulResult()
+        {
+            var accessToken = await TokenHelper.GetAccessToken();
+
+            var httpClient = HttpClientHelper.ForStagingServer();
+
+            var service = new InvoiceEmailCcService(accessToken, httpClient);
+
+            var listResponse = await service.List();
+
+            Assert.IsTrue(listResponse.IsSuccess);
+        }
+
         [TestMethod]
         public  async Task All_Methods()
         {

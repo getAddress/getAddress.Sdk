@@ -12,13 +12,15 @@ namespace getAddress.Sdk.Tests
     {
         private static AccessToken accessToken = null; 
 
-        public static async Task<AccessToken> GetAccessToken()
+        public static async Task<AccessToken> GetAccessToken(Func<string> getKey = null)
         {
             if(accessToken == null)
             {
+                getKey = getKey ?? KeyHelper.GetAdminKey;
+
                 HttpClient httpClient = new HttpClient();
 
-                var apiKey = KeyHelper.GetAdminKey();
+                var apiKey = getKey();
 
                 httpClient.BaseAddress = UrlHelper.GetStagingUri();
 
@@ -31,5 +33,7 @@ namespace getAddress.Sdk.Tests
 
             return accessToken;
         }
+
+
     }
 }

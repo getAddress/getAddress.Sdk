@@ -40,8 +40,6 @@ namespace getAddress.Sdk
         public GetAddesssApi(AccessToken accessToken,  HttpClient httpClient = null) : this(new ApiKey(string.Empty), new AdminKey(string.Empty), httpClient)
         {
             AccessToken = accessToken;
-
-            _client.SetBearerToken(accessToken.Value);
         }
 
         public GetAddesssApi(ApiKey apiKey, AdminKey adminKey, HttpClient httpClient = null)

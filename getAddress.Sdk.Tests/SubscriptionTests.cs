@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using getAddress.Sdk.Api;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace getAddress.Sdk.Tests
@@ -8,6 +9,21 @@ namespace getAddress.Sdk.Tests
     [TestClass]
     public class SubscriptionTests
     {
+
+        [TestMethod]
+        public async Task GivenAValidToken_SubscriptionReturnsSuccessfulResult()
+        {
+            var accessToken = await TokenHelper.GetAccessToken();
+
+            var httpClient = HttpClientHelper.ForStagingServer();
+
+            var service = new SubscriptionService(accessToken, httpClient);
+
+            var listResponse = await service.Subscription();
+
+            Assert.IsTrue(listResponse.IsSuccess);
+        }
+
         [TestMethod]
         public async Task Unsubscribe_Fails_Without_code()
         {
