@@ -13,56 +13,51 @@ namespace getAddress.Sdk.Api
         Task<UpdatePermissionResponse> Update(UpdatePermissionRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
     }
 
-    public class PermissionService : IPermissionService
+    public class PermissionService :ServiceBase, IPermissionService
     {
 
-        public AdminKey AdminKey { get; }
-        public HttpClient HttpClient { get; }
-
-        public PermissionService(AdminKey adminKey, HttpClient httpClient = null)
+        public PermissionService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
-            HttpClient = httpClient;
+        }
+        public PermissionService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken, httpClient)
+        {
+
         }
 
         public async Task<PermissionResponse> Get(GetPermissionRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.Permission.Get(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.Permission.Get(request);
         }
 
         public async Task<ListPermissionResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.Permission.List();
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.Permission.List();
         }
 
         public async Task<AddPermissionResponse> Add(AddPermissionRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.Permission.Add(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.Permission.Add(request);
         }
 
         public async Task<RemovePermissionResponse> Remove(RemovePermissionRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.Permission.Remove(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.Permission.Remove(request);
         }
 
         public async Task<UpdatePermissionResponse> Update(UpdatePermissionRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.Permission.Update(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.Permission.Update(request);
         }
 
     }

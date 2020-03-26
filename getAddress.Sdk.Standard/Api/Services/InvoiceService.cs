@@ -5,40 +5,37 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-    public class InvoiceService : IInvoiceService
+    public class InvoiceService : ServiceBase, IInvoiceService
     {
 
-        public InvoiceService(AdminKey adminKey, HttpClient httpClient = null)
+        public InvoiceService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
-            HttpClient = httpClient;
         }
+        public InvoiceService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken, httpClient)
+        {
 
-        public AdminKey AdminKey { get; }
-        public HttpClient HttpClient { get; }
+        }
 
         public async Task<GetInvoiceResponse> Get(GetInvoiceRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.Invoices.Get(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.Invoices.Get(request);
         }
 
         public async Task<ListInvoicesResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.Invoices.List();
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+            
+            return await api.Invoices.List();
         }
 
         public async Task<ListInvoicesResponse> List(ListInvoicesRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.Invoices.List(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.Invoices.List(request);
         }
 
 

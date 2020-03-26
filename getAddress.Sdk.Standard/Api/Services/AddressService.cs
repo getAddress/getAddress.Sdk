@@ -5,41 +5,36 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-
-    public class AddressService : IAddressService
+    public class AddressService : ServiceBase, IAddressService
     {
-        public AddressService(ApiKey apiKey, HttpClient httpClient = null)
+        public AddressService(ApiKey apiKey, HttpClient httpClient = null):base(httpClient)
         {
             ApiKey = apiKey ?? throw new System.ArgumentNullException(nameof(apiKey));
-            HttpClient = httpClient;
         }
+        public AddressService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken, httpClient)
+        {
 
-        public ApiKey ApiKey { get; }
-
-        public HttpClient HttpClient { get; }
+        }
 
         public async Task<GetAddressResponse> Get(GetAddressRequest request, ApiKey apiKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(apiKey ?? ApiKey, HttpClient ?? httpClient))
-            {
-                return await api.Address.Get(request);
-            }
+            var api = GetAddesssApi(apiKey, httpClient);
+            
+            return await api.Address.Get(request);
         }
 
         public async Task<GetExpandedAddressResponse> GetExpanded(GetAddressRequest request, ApiKey apiKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(apiKey ?? ApiKey, HttpClient ?? httpClient))
-            {
-                return await api.Address.GetExpanded(request);
-            }
+            var api = GetAddesssApi(apiKey, httpClient);
+
+            return await api.Address.GetExpanded(request);
         }
 
         public async Task<PlaceDetailsResponse> PlaceDetails(PlaceDetailsRequest request, ApiKey apiKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(apiKey ?? ApiKey, HttpClient ?? httpClient))
-            {
-                return await api.Address.PlaceDetails(request);
-            }
+            var api = GetAddesssApi(apiKey, httpClient);
+
+            return await api.Address.PlaceDetails(request);
         }
     }
 }

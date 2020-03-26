@@ -5,47 +5,44 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-    public class ExpiredEmailCcService : IExpiredEmailCcService
+    public class ExpiredEmailCcService : ServiceBase, IExpiredEmailCcService
     {
-        public AdminKey AdminKey { get; }
-        public HttpClient HttpClient { get; }
 
-        public ExpiredEmailCcService(AdminKey adminKey, HttpClient httpClient = null)
+        public ExpiredEmailCcService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
-            HttpClient = httpClient;
+        }
+        public ExpiredEmailCcService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken, httpClient)
+        {
+
         }
 
         public async Task<AddExpiredCCResponse> Add(AddExpiredCCRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.ExpiredCC.Add(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.ExpiredCC.Add(request);
         }
 
         public async Task<RemoveExpiredCCResponse> Remove(RemoveExpiredCCRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.ExpiredCC.Remove(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.ExpiredCC.Remove(request);
         }
 
         public async Task<ListExpiredCCResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.ExpiredCC.List();
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.ExpiredCC.List();
         }
 
         public async Task<GetExpiredCCResponse> Get(GetExpiredCCRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.ExpiredCC.Get(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.ExpiredCC.Get(request);
         }
     }
 }

@@ -5,55 +5,52 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-    public class TrackWebhookService : ITrackWebhookService
+    public class TrackWebhookService : ServiceBase, ITrackWebhookService
     {
-        public AdminKey AdminKey { get; }
-        public HttpClient HttpClient { get; }
 
-        public TrackWebhookService(AdminKey adminKey, HttpClient httpClient = null)
+        public TrackWebhookService(AdminKey adminKey, HttpClient httpClient = null) : base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
-            HttpClient = httpClient;
+        }
+
+        public TrackWebhookService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken,httpClient)
+        {
+          
         }
 
         public async Task<AddWebhookResponse> Add(AddWebhookRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.TrackWebhook.Add(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.TrackWebhook.Add(request);
         }
 
         public async Task<RemoveWebhookResponse> Remove(RemoveWebhookRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.TrackWebhook.Remove(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.TrackWebhook.Remove(request);
         }
 
         public async Task<ListWebhookResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.TrackWebhook.List();
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+            
+            return await api.TrackWebhook.List();
         }
 
         public async Task<GetWebhookResponse> Get(GetWebhookRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.TrackWebhook.Get(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.TrackWebhook.Get(request);
         }
 
         public async Task<TestWebhookResponse> Test(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.TrackWebhook.Test();
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.TrackWebhook.Test();
         }
     }
 }

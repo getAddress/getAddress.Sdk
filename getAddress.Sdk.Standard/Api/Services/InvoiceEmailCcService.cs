@@ -5,47 +5,44 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-    public class InvoiceEmailCcService : IInvoiceEmailCcService
+    public class InvoiceEmailCcService :ServiceBase, IInvoiceEmailCcService
     {
-        public AdminKey AdminKey { get; }
-        public HttpClient HttpClient { get; }
 
-        public InvoiceEmailCcService(AdminKey adminKey = null, HttpClient httpClient = null)
+        public InvoiceEmailCcService(AdminKey adminKey = null, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
-            HttpClient = httpClient;
+        }
+        public InvoiceEmailCcService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken, httpClient)
+        {
+
         }
 
         public async Task<AddInvoiceCCResponse> Add(AddInvoiceCCRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.InvoiceCC.Add(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.InvoiceCC.Add(request);
         }
 
         public async Task<RemoveInvoiceCCResponse> Remove(RemoveInvoiceCCRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.InvoiceCC.Remove(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.InvoiceCC.Remove(request);
         }
 
         public async Task<ListInvoiceCCResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey,httpClient))
-            {
-                return await api.InvoiceCC.List();
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.InvoiceCC.List();
         }
 
         public async Task<GetInvoiceCCResponse> Get(GetInvoiceCCRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.InvoiceCC.Get(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.InvoiceCC.Get(request);
         }
     }
 }

@@ -5,47 +5,44 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-    public class DomainWhitelistService : IDomainWhitelistService
+    public class DomainWhitelistService :ServiceBase, IDomainWhitelistService
     {
-        public AdminKey AdminKey { get; }
-        public HttpClient HttpClient { get; }
 
-        public DomainWhitelistService(AdminKey adminKey, HttpClient httpClient = null)
+        public DomainWhitelistService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
-            HttpClient = httpClient;
+        }
+        public DomainWhitelistService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken, httpClient)
+        {
+
         }
 
         public async Task<AddDomainWhitelistResponse> Add(AddDomainWhitelistRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.DomainWhitelist.Add(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.DomainWhitelist.Add(request);
         }
 
         public async Task<RemoveDomainWhitelistResponse> Remove(RemoveDomainWhitelistRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.DomainWhitelist.Remove(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.DomainWhitelist.Remove(request);
         }
 
         public async Task<ListDomainWhitelistResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.DomainWhitelist.List();
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.DomainWhitelist.List();
         }
 
         public async Task<GetDomainWhitelistResponse> Get(GetDomainWhitelistRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.DomainWhitelist.Get(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.DomainWhitelist.Get(request);
         }
 
         

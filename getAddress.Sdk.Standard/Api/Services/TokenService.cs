@@ -4,39 +4,38 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-    public class TokenService
+    public class TokenService : ServiceBase, ITokenService
     {
-        public TokenService(AdminKey adminKey, HttpClient httpClient = null)
+        public TokenService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
-            HttpClient = httpClient;
         }
 
-        public AdminKey AdminKey { get; }
-        public HttpClient HttpClient { get; }
-
-        public async Task<GetTokenResponse> Get(AdminKey apiKey = null, HttpClient httpClient = null)
+        public TokenService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken, httpClient)
         {
-            using (var api = new GetAddesssApi(apiKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.Token.Get();
-            }
+
         }
+
+        public async Task<GetTokenResponse> Get(AdminKey adminKey = null, HttpClient httpClient = null)
+        {
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.Token.Get();
+        }
+
 
         public async Task<RefreshTokenResponse> Refresh(RefreshToken token, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.Token.Refresh(token);
-            }
+            var api = GetAddesssApi(AdminKey, httpClient);
+
+            return await api.Token.Refresh(token);
         }
 
-        public async Task<RevokeTokenResponse> Revoke(AdminKey apiKey = null, HttpClient httpClient = null)
+        public async Task<RevokeTokenResponse> Revoke(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(apiKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.Token.Revoke();
-            }
+            var api = GetAddesssApi(AdminKey, httpClient);
+
+            return await api.Token.Revoke();   
         }
     }
 }

@@ -5,24 +5,22 @@ using System.Net.Http;
 
 namespace getAddress.Sdk.Api
 {
-    public class DistanceService : IDistanceService
+    public class DistanceService : ServiceBase, IDistanceService
     {
-        public ApiKey ApiKey { get; }
-        public HttpClient HttpClient { get; }
-
-        public DistanceService(ApiKey apiKey, HttpClient httpClient = null)
+        public DistanceService(ApiKey apiKey, HttpClient httpClient = null):base(httpClient)
         {
             ApiKey = apiKey ?? throw new System.ArgumentNullException(nameof(apiKey));
-            HttpClient = httpClient;
         }
+        public DistanceService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken, httpClient)
+        {
 
+        }
 
         public async Task<DistanceResponse> Get(DistanceRequest request, ApiKey apiKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(apiKey ?? ApiKey, HttpClient ?? httpClient))
-            {
-                return await api.Distance.Get(request);
-            }
+            var api = GetAddesssApi(apiKey, httpClient);
+
+            return await api.Distance.Get(request);
         }
 
        

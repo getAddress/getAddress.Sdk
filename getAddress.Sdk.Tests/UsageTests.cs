@@ -20,7 +20,7 @@ namespace getAddress.Sdk.Tests
             var accessToken = await TokenHelper.GetAccessToken();
 
             var usageService = new UsageService(accessToken, httpClient);
-
+            
             var getV3result = await usageService.GetV3();
 
             Assert.IsTrue(getV3result.IsSuccess);

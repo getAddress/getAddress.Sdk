@@ -5,55 +5,52 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-    public class PaymentFailedWebhookService : IPaymentFailedWebhookService
+    public class PaymentFailedWebhookService : ServiceBase, IPaymentFailedWebhookService
     {
-        public AdminKey AdminKey { get; }
-        public HttpClient HttpClient { get; }
 
-        public PaymentFailedWebhookService(AdminKey adminKey, HttpClient httpClient = null)
+        public PaymentFailedWebhookService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
-            HttpClient = httpClient;
+        }
+
+        public PaymentFailedWebhookService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken, httpClient)
+        {
+
         }
 
         public async Task<AddWebhookResponse> Add(AddWebhookRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.PaymentFailedWebhook.Add(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.PaymentFailedWebhook.Add(request);
         }
 
         public async Task<RemoveWebhookResponse> Remove(RemoveWebhookRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.PaymentFailedWebhook.Remove(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.PaymentFailedWebhook.Remove(request);
         }
 
         public async Task<ListWebhookResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.PaymentFailedWebhook.List();
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.PaymentFailedWebhook.List();
         }
 
         public async Task<GetWebhookResponse> Get(GetWebhookRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.PaymentFailedWebhook.Get(request);
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.PaymentFailedWebhook.Get(request);
         }
 
         public async Task<TestWebhookResponse> Test(AdminKey adminKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient))
-            {
-                return await api.PaymentFailedWebhook.Test();
-            }
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.PaymentFailedWebhook.Test();
         }
     }
 }

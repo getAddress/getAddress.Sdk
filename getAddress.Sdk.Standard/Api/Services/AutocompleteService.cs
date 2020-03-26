@@ -5,31 +5,34 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-    public class AutocompleteService
+    public interface IAutocompleteService
     {
-        public ApiKey ApiKey { get; }
-        public HttpClient HttpClient { get; }
+        Task<AutocompleteResponse> Palaces(AutocompleteRequest request, ApiKey apiKey = null, HttpClient httpClient = null);
+        Task<AutocompletePostcodeResponse> Postcodes(AutocompleteRequest request, ApiKey apiKey = null, HttpClient httpClient = null);
+    }
 
-        public AutocompleteService(ApiKey apiKey, HttpClient httpClient = null)
+    public class AutocompleteService : ServiceBase, IAutocompleteService
+    {
+        public AutocompleteService(ApiKey apiKey, HttpClient httpClient = null) : base(httpClient)
         {
             ApiKey = apiKey ?? throw new System.ArgumentNullException(nameof(apiKey));
-            HttpClient = httpClient;
         }
+        public AutocompleteService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken, httpClient)
+        {
 
+        }
 
         public async Task<AutocompletePostcodeResponse> Postcodes(AutocompleteRequest request, ApiKey apiKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(apiKey ?? ApiKey, HttpClient ?? httpClient))
-            {
-                return await api.Autocomplete.Postcodes(request);
-            }
+            var api = GetAddesssApi(apiKey, httpClient);
+
+            return await api.Autocomplete.Postcodes(request);
         }
         public async Task<AutocompleteResponse> Palaces(AutocompleteRequest request, ApiKey apiKey = null, HttpClient httpClient = null)
         {
-            using (var api = new GetAddesssApi(apiKey ?? ApiKey, HttpClient ?? httpClient))
-            {
-                return await api.Autocomplete.Places(request);
-            }
+            var api = GetAddesssApi(apiKey, httpClient);
+
+            return await api.Autocomplete.Places(request);
         }
 
     }
