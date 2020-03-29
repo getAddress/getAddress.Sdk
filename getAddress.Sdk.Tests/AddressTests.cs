@@ -63,6 +63,29 @@ namespace getAddress.Sdk.Tests
         }
 
 
+
+        [TestMethod]
+        public async Task GivenExpiredKey_GetReturnsExpiredResult()
+        {
+            var apiKey = KeyHelper.GetExpiredApiKey();
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            var addressService = new AddressService(apiKey, httpClient);
+
+            var result = await addressService.Get(new GetAddressRequest("NN13ER"));
+           
+            Assert.IsTrue(result.IsExpired);
+
+            if (result.TryGetExpired(out GetAddressResponse.AccountExpired accountExpired))
+            {
+                Assert.IsNotNull(accountExpired);
+            }
+
+        }
+
         [TestMethod]
         public async Task GetExpandedAddress()
         {

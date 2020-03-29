@@ -1,5 +1,6 @@
 ﻿using getAddress.Sdk.Api;
 using getAddress.Sdk.Api.Requests;
+using getAddress.Sdk.Api.Responses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Net.Http;
@@ -63,15 +64,16 @@ namespace getAddress.Sdk.Tests
 
             Assert.IsTrue(result.IsSuccess);
 
-            var successfulResult = result.SuccessfulResult;
+            if (result.TryGetSuccess(out GetUsageV3Response.Success successfulResult))
+            {
+                var usageToday = successfulResult.Usage.UsageToday;
 
-            var usageToday = successfulResult.Usage.UsageToday;
+                var dailyLimit = successfulResult.Usage.DailyLimit;
 
-            var dailyLimit = successfulResult.Usage.DailyLimit;
+                var monthlyBuffer = successfulResult.Usage.MonthlyBuffer;
 
-            var monthlyBuffer = successfulResult.Usage.MonthlyBuffer;
-
-            var monthlyBufferUsed = successfulResult.Usage.MonthlyBufferUsed;
+                var monthlyBufferUsed = successfulResult.Usage.MonthlyBufferUsed;
+            }
 
         }
 

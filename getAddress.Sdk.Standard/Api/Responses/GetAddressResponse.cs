@@ -2,15 +2,30 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-
     public class GetAddressResponse : ResponseBase<GetAddressResponse.Success,GetAddressResponse.Failed,GetAddressResponse.TokenExpired>
     {
-
         protected GetAddressResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
             
         }
+
+        public AccountExpired AccountExpiredResult { get; private set; }
+
+        public bool TryGetExpired(out AccountExpired accountExpiredResult)
+        {
+            if (IsExpired)
+            {
+                accountExpiredResult = AccountExpiredResult;
+                return true;
+            }
+
+            accountExpiredResult = default;
+            return false;
+        }
+
+        public bool IsExpired { get; private set; }
+        
 
         public class Success : GetAddressResponse
         {
@@ -39,8 +54,17 @@ namespace getAddress.Sdk.Api.Responses
         {
             public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
             {
-                FailedResult = this;
                 TokenExpiredResult = this;
+                IsTokenExpired = true;
+            }
+        }
+
+        public class AccountExpired : Failed
+        {
+            public AccountExpired(string reasonPhrase, string raw) : base(400, reasonPhrase, raw)
+            {
+                AccountExpiredResult = this;
+                IsExpired = true;
             }
         }
     }

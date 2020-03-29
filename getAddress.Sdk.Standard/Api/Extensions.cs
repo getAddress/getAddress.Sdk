@@ -12,6 +12,11 @@ namespace getAddress.Sdk.Api
         {
             return httpResponseMessage.Headers.Contains("Token-Expired") && httpResponseMessage.StatusCode == System.Net.HttpStatusCode.Unauthorized;
         }
+
+        public static bool HasAccountExpired(this HttpResponseMessage httpResponseMessage)
+        {
+            return httpResponseMessage.Headers.Contains("Account-Expired") && httpResponseMessage.StatusCode == System.Net.HttpStatusCode.BadRequest;
+        }
     }
 
     internal static class HttpClientExtensions

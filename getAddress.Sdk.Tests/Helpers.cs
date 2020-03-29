@@ -51,6 +51,15 @@ namespace getAddress.Sdk.Tests
             return apiKey;
         }
 
+        public static string GetExpiredApiKey()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("getaddress_expired_apikey", EnvironmentVariableTarget.User);
+
+            if (string.IsNullOrWhiteSpace(apiKey)) throw new Exception("Add your api key to your Environmental Variables");
+
+            return apiKey;
+        }
+
         public static string GetGoogleApiKey()
         {
             var apiKey = Environment.GetEnvironmentVariable("google_apikey", EnvironmentVariableTarget.User);

@@ -50,7 +50,10 @@ namespace getAddress.Sdk.Api
             {
                 return new GetAddressResponse.TokenExpired(response.ReasonPhrase, body);
             }
-
+            if (response.HasAccountExpired())
+            {
+                return new GetAddressResponse.AccountExpired(response.ReasonPhrase, body);
+            }
             return new GetAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);//todo: move failed responses
         }
 

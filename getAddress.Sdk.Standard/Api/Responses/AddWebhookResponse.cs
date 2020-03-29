@@ -58,8 +58,8 @@
         {
             public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
             {
-                FailedResult = this;
                 TokenExpiredResult = this;
+                IsTokenExpired = true;
             }
         }
 
