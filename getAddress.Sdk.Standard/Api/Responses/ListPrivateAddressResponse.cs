@@ -2,8 +2,11 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public class ListPrivateAddressResponse:  ResponseBase<ListPrivateAddressResponse.Success,
-        ListPrivateAddressResponse.Failed, ListPrivateAddressResponse.TokenExpired>
+    public class ListPrivateAddressResponse:  ResponseBase<
+        ListPrivateAddressResponse.Success,
+        ListPrivateAddressResponse.Failed, 
+        ListPrivateAddressResponse.TokenExpired,
+        ListPrivateAddressResponse.RateLimitedReached>
     {
 
         protected ListPrivateAddressResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
@@ -19,6 +22,11 @@ namespace getAddress.Sdk.Api.Responses
                 PrivateAddresses = privateAddresses;
                 SuccessfulResult = this;
             }
+
+            internal static Success NewSuccess(int statusCode, string reasonPhrase, string raw, IEnumerable<PrivateAddress> privateAddresses)
+            {
+                return new Success(statusCode, reasonPhrase, raw, privateAddresses);
+            }
         }
 
         public class Failed : ListPrivateAddressResponse
@@ -26,6 +34,11 @@ namespace getAddress.Sdk.Api.Responses
             public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
+            }
+
+            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
+            {
+                return new Failed(statusCode, reasonPhrase, raw);
             }
         }
 
@@ -35,6 +48,27 @@ namespace getAddress.Sdk.Api.Responses
             {
                 TokenExpiredResult = this;
                 IsTokenExpired = true;
+            }
+
+            internal static TokenExpired NewTokenExpired(string reasonPhrase, string raw)
+            {
+                return new TokenExpired(reasonPhrase, raw);
+            }
+        }
+
+        public class RateLimitedReached : Failed
+        {
+            public int RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            {
+                RetryAfterSeconds = retryAfterSeconds;
+                RateLimitReachedResult = this;
+                IsRateLimitReached = true;
+            }
+
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            {
+                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
         }
     }

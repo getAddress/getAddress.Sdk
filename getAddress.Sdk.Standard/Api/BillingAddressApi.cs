@@ -33,19 +33,25 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, BillingAddressResponse> success = (statusCode, phrase, json) =>
             {
-                var address = GetBillingAddress(body);
+                var address = GetBillingAddress(json);
 
-                return new BillingAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,
+                return new BillingAddressResponse.Success(statusCode, phrase, json,
                     address.Line1, address.Line2, address.Line3, address.TownOrCity, address.County, address.Postcode);
-            }
-            if (response.HasTokenExpired())
-            {
-                return new BillingAddressResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+            };
 
-            return new BillingAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, BillingAddressResponse> tokenExpired = (rp, b) => { return new BillingAddressResponse.TokenExpired(rp, b); };
+            Func<string, string, int, BillingAddressResponse> limitReached = (rp, b, r) => { return new BillingAddressResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, BillingAddressResponse> failed = (sc, rp, b) => { return new BillingAddressResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
+
         }
 
         public async Task<BillingAddressResponse> Update(BillingAddressRequest request)
@@ -64,20 +70,26 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
-            {
-                var address = GetBillingAddress(body);
 
-                return new BillingAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,
+            Func<int, string, string, BillingAddressResponse> success = (statusCode, phrase, json) =>
+            {
+                var address = GetBillingAddress(json);
+
+                return new BillingAddressResponse.Success(statusCode, phrase, json,
                    address.Line1, address.Line2, address.Line3, address.TownOrCity, address.County, address.Postcode);
-            }
-            if (response.HasTokenExpired())
-            {
-                return new BillingAddressResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+            };
 
+            Func<string, string, BillingAddressResponse> tokenExpired = (rp, b) => { return new BillingAddressResponse.TokenExpired(rp, b); };
+            Func<string, string, int, BillingAddressResponse> limitReached = (rp, b, r) => { return new BillingAddressResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, BillingAddressResponse> failed = (sc, rp, b) => { return new BillingAddressResponse.Failed(sc, rp, b); };
 
-            return new BillingAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
+
         }
 
         private static BillingAddress GetBillingAddress(string body)

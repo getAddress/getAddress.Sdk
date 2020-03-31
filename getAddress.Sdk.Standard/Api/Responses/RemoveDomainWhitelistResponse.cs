@@ -1,9 +1,10 @@
-﻿
-
-namespace getAddress.Sdk.Api.Responses
+﻿namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class RemoveDomainWhitelistResponse : ResponseBase<RemoveDomainWhitelistResponse.Success,
-        RemoveDomainWhitelistResponse.Failed, RemoveDomainWhitelistResponse.TokenExpired>
+    public abstract class RemoveDomainWhitelistResponse : ResponseBase<
+        RemoveDomainWhitelistResponse.Success,
+        RemoveDomainWhitelistResponse.Failed, 
+        RemoveDomainWhitelistResponse.TokenExpired,
+        RemoveDomainWhitelistResponse.RateLimitedReached>
     {
 
         protected RemoveDomainWhitelistResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -29,6 +30,10 @@ namespace getAddress.Sdk.Api.Responses
             {
                    FailedResult = this;
             }
+            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
+            {
+                return new Failed(statusCode, reasonPhrase, raw);
+            }
         }
 
         public class TokenExpired : Failed
@@ -37,6 +42,25 @@ namespace getAddress.Sdk.Api.Responses
             {
                 TokenExpiredResult = this;
                 IsTokenExpired = true;
+            }
+            internal static TokenExpired NewTokenExpired(string reasonPhrase, string raw)
+            {
+                return new TokenExpired(reasonPhrase, raw);
+            }
+        }
+
+        public class RateLimitedReached : Failed
+        {
+            public int RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            {
+                RetryAfterSeconds = retryAfterSeconds;
+                RateLimitReachedResult = this;
+                IsRateLimitReached = true;
+            }
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            {
+                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
         }
     }

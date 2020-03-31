@@ -31,18 +31,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, GetTokenResponse> success = (statusCode, phrase, json) =>
             {
-                var tokens = GetTokens(body);
+                var tokens = GetTokens(json);
 
-                return new GetTokenResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,tokens.Tokens.Access,tokens.Tokens.Refresh);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new GetTokenResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new GetTokenResponse.Success(statusCode, phrase, json, tokens.Tokens.Access, tokens.Tokens.Refresh);
+            };
 
-            return new GetTokenResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, GetTokenResponse> tokenExpired = (rp, b) => { return new GetTokenResponse.TokenExpired(rp, b); };
+            Func<string, string, int, GetTokenResponse> limitReached = (rp, b, r) => { return new GetTokenResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, GetTokenResponse> failed = (sc, rp, b) => { return new GetTokenResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
         public async Task<RefreshTokenResponse> Refresh(RefreshToken refreshToken)
@@ -68,18 +73,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, RefreshTokenResponse> success = (statusCode, phrase, json) =>
             {
-                var tokenContainer = GetTokens(body);
+                var tokenContainer = GetTokens(json);
 
-                return new RefreshTokenResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,tokenContainer.Tokens.Access, tokenContainer.Tokens.Refresh);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new RefreshTokenResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new RefreshTokenResponse.Success(statusCode, phrase, json, tokenContainer.Tokens.Access, tokenContainer.Tokens.Refresh);
+            };
 
-            return new RefreshTokenResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, RefreshTokenResponse> tokenExpired = (rp, b) => { return new RefreshTokenResponse.TokenExpired(rp, b); };
+            Func<string, string, int, RefreshTokenResponse> limitReached = (rp, b, r) => { return new RefreshTokenResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, RefreshTokenResponse> failed = (sc, rp, b) => { return new RefreshTokenResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
         public async Task<RevokeTokenResponse> Revoke()
@@ -100,16 +110,20 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
-            { 
-                return new RevokeTokenResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
-            }
-            else if (response.HasTokenExpired())
+            Func<int, string, string, RevokeTokenResponse> success = (statusCode, phrase, json) =>
             {
-                return new RevokeTokenResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new RevokeTokenResponse.Success(statusCode, phrase, json);
+            };
 
-            return new RevokeTokenResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, RevokeTokenResponse> tokenExpired = (rp, b) => { return new RevokeTokenResponse.TokenExpired(rp, b); };
+            Func<string, string, int, RevokeTokenResponse> limitReached = (rp, b, r) => { return new RevokeTokenResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, RevokeTokenResponse> failed = (sc, rp, b) => { return new RevokeTokenResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
         }
 
 

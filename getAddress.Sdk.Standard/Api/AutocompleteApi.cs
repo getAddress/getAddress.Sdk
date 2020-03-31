@@ -52,21 +52,26 @@ namespace getAddress.Sdk.Api
 
             var response = await api.Get(fullPath);
 
-            var json = await response.Content.ReadAsStringAsync();
+            var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, AutocompletePostcodeResponse> success = (statusCode, phrase, json) =>
             {
                 var predictions = GetPostcodePredictions(json);
 
-                return new AutocompletePostcodeResponse.Success((int)response.StatusCode, response.ReasonPhrase, json, predictions);
-            }
-            if (response.HasTokenExpired())
-            {
-                return new AutocompletePostcodeResponse.TokenExpired(response.ReasonPhrase, json);
-            }
+                return new AutocompletePostcodeResponse.Success(statusCode, phrase, json, predictions);
+            };
 
+            Func<string, string, AutocompletePostcodeResponse> tokenExpired = (rp, b) => { return new AutocompletePostcodeResponse.TokenExpired(rp, b); };
+            Func<string, string, int, AutocompletePostcodeResponse> limitReached = (rp, b, r) => { return new AutocompletePostcodeResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, AutocompletePostcodeResponse> failed = (sc, rp, b) => { return new AutocompletePostcodeResponse.Failed(sc, rp, b); };
 
-            return new AutocompletePostcodeResponse.Failed((int)response.StatusCode, response.ReasonPhrase, json);
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
+
         }
 
         private async static Task<AutocompleteResponse> GetResponse(GetAddesssApi api, string path, ApiKey apiKey, AutocompleteRequest request)
@@ -85,20 +90,26 @@ namespace getAddress.Sdk.Api
 
             var response = await api.Get(fullPath);
 
-            var json = await response.Content.ReadAsStringAsync();
+            var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, AutocompleteResponse> success = (statusCode, phrase, json) =>
             {
                 var predictions = GetPredictions(json);
 
-                return new AutocompleteResponse.Success((int)response.StatusCode, response.ReasonPhrase, json, predictions);
-            }
-            if (response.HasTokenExpired())
-            {
-                return new AutocompleteResponse.TokenExpired(response.ReasonPhrase, json);
-            }
+                return new AutocompleteResponse.Success(statusCode, phrase, json, predictions);
+            };
 
-            return new AutocompleteResponse.Failed((int)response.StatusCode, response.ReasonPhrase, json);
+            Func<string, string, AutocompleteResponse> tokenExpired = (rp, b) => { return new AutocompleteResponse.TokenExpired(rp, b); };
+            Func<string, string, int, AutocompleteResponse> limitReached = (rp, b, r) => { return new AutocompleteResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, AutocompleteResponse> failed = (sc, rp, b) => { return new AutocompleteResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
+
         }
 
         private static IEnumerable<Prediction> GetPredictions(string json)

@@ -25,25 +25,29 @@ namespace getAddress.Sdk.Api
             if (path == null) throw new ArgumentNullException(nameof(path));
             if (apiKey == null) throw new ArgumentNullException(nameof(apiKey));
 
-
             api.SetAuthorizationKey(apiKey);
 
             var response = await api.Get(path);
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, ApiKeyResponse> success = (statusCode, phrase, json) =>
             {
-                var apiKeyModel = GetApiKey(body);
+                var apiKeyModel = GetApiKey(json);
 
-                return new ApiKeyResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, apiKeyModel.ApiKey);
-            }
-            if (response.HasTokenExpired())
-            {
-                return new ApiKeyResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new ApiKeyResponse.Success(statusCode, phrase, json, apiKeyModel.ApiKey);
+            };
 
-            return new ApiKeyResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, ApiKeyResponse> tokenExpired = (rp, b) => { return new ApiKeyResponse.TokenExpired(rp, b); };
+            Func<string, string,int, ApiKeyResponse> limitReached = (rp, b,r) => { return new ApiKeyResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, ApiKeyResponse> failed = (sc,rp, b) => { return new ApiKeyResponse.Failed(sc,rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
         }
 
         public async Task<ApiKeyResponse> Update()
@@ -61,18 +65,25 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
-            {
-                var model = GetApiKey(body);
 
-                return new ApiKeyResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,model.ApiKey);
-            }
-            if (response.HasTokenExpired())
+            Func<int, string, string, ApiKeyResponse> success = (statusCode, phrase, json) =>
             {
-                return new ApiKeyResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                var model = GetApiKey(json);
 
-            return new ApiKeyResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+                return new ApiKeyResponse.Success(statusCode, phrase, json, model.ApiKey);
+            };
+
+            Func<string, string, ApiKeyResponse> tokenExpired = (rp, b) => { return new ApiKeyResponse.TokenExpired(rp, b); };
+            Func<string, string, int, ApiKeyResponse> limitReached = (rp, b, r) => { return new ApiKeyResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, ApiKeyResponse> failed = (sc, rp, b) => { return new ApiKeyResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
+
         }
 
 

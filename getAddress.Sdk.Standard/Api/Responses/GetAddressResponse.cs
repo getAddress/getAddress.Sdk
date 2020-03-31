@@ -2,7 +2,11 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public class GetAddressResponse : ResponseBase<GetAddressResponse.Success,GetAddressResponse.Failed,GetAddressResponse.TokenExpired>
+    public class GetAddressResponse : ResponseBase<
+        GetAddressResponse.Success,
+        GetAddressResponse.Failed,
+        GetAddressResponse.TokenExpired,
+        GetAddressResponse.RateLimitedReached>
     {
         protected GetAddressResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -12,7 +16,11 @@ namespace getAddress.Sdk.Api.Responses
 
         public AccountExpired AccountExpiredResult { get; private set; }
 
-        public bool TryGetExpired(out AccountExpired accountExpiredResult)
+        public NotFound NotFoundResult { get; private set; }
+
+        public InvalidPostcode InvalidPostcodeResult { get; private set; }
+
+        public bool TryGetExpiredResult(out AccountExpired accountExpiredResult)
         {
             if (IsExpired)
             {
@@ -24,8 +32,35 @@ namespace getAddress.Sdk.Api.Responses
             return false;
         }
 
+        public bool TryGetNotFoundResult(out NotFound notFoundResult)
+        {
+            if (IsNotFound)
+            {
+                notFoundResult = NotFoundResult;
+                return true;
+            }
+
+            notFoundResult = default;
+            return false;
+        }
+
+        public bool TryGetInvalidPostcodeResult(out InvalidPostcode invalidPostcode)
+        {
+            if (IsInvalidPostcode)
+            {
+                invalidPostcode = InvalidPostcodeResult;
+                return true;
+            }
+
+            invalidPostcode = default;
+            return false;
+        }
+
         public bool IsExpired { get; private set; }
-        
+
+        public bool IsNotFound { get; private set; }
+
+        public bool IsInvalidPostcode { get; private set; }
 
         public class Success : GetAddressResponse
         {
@@ -48,6 +83,11 @@ namespace getAddress.Sdk.Api.Responses
             {
                 this.FailedResult = this;
             }
+
+            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
+            {
+                return new Failed(statusCode, reasonPhrase, raw);
+            }
         }
 
         public class TokenExpired : Failed
@@ -56,6 +96,11 @@ namespace getAddress.Sdk.Api.Responses
             {
                 TokenExpiredResult = this;
                 IsTokenExpired = true;
+            }
+
+            internal static TokenExpired NewTokenExpired(string reasonPhrase, string raw)
+            {
+                return new TokenExpired(reasonPhrase, raw);
             }
         }
 
@@ -67,5 +112,39 @@ namespace getAddress.Sdk.Api.Responses
                 IsExpired = true;
             }
         }
+
+        public class NotFound : Failed
+        {
+            public NotFound(string reasonPhrase, string raw) : base(404, reasonPhrase, raw)
+            {
+                NotFoundResult = this;
+                IsNotFound = true;
+            }
+        }
+
+        public class InvalidPostcode : Failed
+        {
+            public InvalidPostcode(string reasonPhrase, string raw) : base(400, reasonPhrase, raw)
+            {
+                InvalidPostcodeResult = this;
+                IsInvalidPostcode = true;
+            }
+        }
+
+        public class RateLimitedReached : Failed
+        {
+            public int RetryAfterSeconds {get;}
+            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            {
+                RetryAfterSeconds = retryAfterSeconds;
+                RateLimitReachedResult = this;
+                IsRateLimitReached = true;
+            }
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            {
+                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
+            }
+        }
+
     }
 }

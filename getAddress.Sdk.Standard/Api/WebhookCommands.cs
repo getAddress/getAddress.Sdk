@@ -25,14 +25,22 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, RemoveWebhookResponse> success = (statusCode, phrase, json) =>
             {
-                var message = GetMessage(body);
+                var message = GetMessage(json);
 
-                return new RemoveWebhookResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, message);
-            }
+                return new RemoveWebhookResponse.Success(statusCode, phrase, json, message);
+            };
 
-            return new RemoveWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, RemoveWebhookResponse> tokenExpired = (rp, b) => { return new RemoveWebhookResponse.TokenExpired(rp, b); };
+            Func<string, string, int, RemoveWebhookResponse> limitReached = (rp, b, r) => { return new RemoveWebhookResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, RemoveWebhookResponse> failed = (sc, rp, b) => { return new RemoveWebhookResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
         }
 
         internal async static Task<GetWebhookResponse> Get(GetAddesssApi api, string path, AdminKey adminKey, GetWebhookRequest request)
@@ -50,14 +58,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, GetWebhookResponse> success = (statusCode, phrase, json) =>
             {
-                var webhook = GetWebhook(body);
+                var webhook = GetWebhook(json);
 
-                return new GetWebhookResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, webhook.Id, webhook.Url);
-            }
+                return new GetWebhookResponse.Success(statusCode,phrase, json, webhook.Id, webhook.Url);
+            };
 
-            return new GetWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, GetWebhookResponse> tokenExpired = (rp, b) => { return new GetWebhookResponse.TokenExpired(rp, b); };
+            Func<string, string, int, GetWebhookResponse> limitReached = (rp, b, r) => { return new GetWebhookResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, GetWebhookResponse> failed = (sc, rp, b) => { return new GetWebhookResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
         internal async static Task<ListWebhookResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
@@ -72,14 +89,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, ListWebhookResponse> success = (statusCode, phrase, json) =>
             {
-                var webhooks = ListWebhooks(body);
+                var webhooks = ListWebhooks(json);
 
-                return new ListWebhookResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, webhooks);
-            }
+                return new ListWebhookResponse.Success(statusCode, phrase, json, webhooks);
+            };
 
-            return new ListWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, ListWebhookResponse> tokenExpired = (rp, b) => { return new ListWebhookResponse.TokenExpired(rp, b); };
+            Func<string, string, int, ListWebhookResponse> limitReached = (rp, b, r) => { return new ListWebhookResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, ListWebhookResponse> failed = (sc, rp, b) => { return new ListWebhookResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
         internal async static Task<AddWebhookResponse> Add(GetAddesssApi api, AddWebhookRequest request, string path, AdminKey adminKey)
@@ -93,14 +119,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, AddWebhookResponse> success = (statusCode, phrase, json) =>
             {
-                var messageAndId = MessageAndId.GetMessageAndId(body);
+                var messageAndId = MessageAndId.GetMessageAndId(json);
 
-                return new AddWebhookResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, int.Parse(messageAndId.Id));
-            }
+                return new AddWebhookResponse.Success(statusCode, phrase, json, messageAndId.Message, int.Parse(messageAndId.Id));
+            };
 
-            return new AddWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, AddWebhookResponse> tokenExpired = (rp, b) => { return new AddWebhookResponse.TokenExpired(rp, b); };
+            Func<string, string, int, AddWebhookResponse> limitReached = (rp, b, r) => { return new AddWebhookResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, AddWebhookResponse> failed = (sc, rp, b) => { return new AddWebhookResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
         internal async static Task<TestWebhookResponse> Test(GetAddesssApi api, string path, AdminKey adminKey)
@@ -113,14 +148,22 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, TestWebhookResponse> success = (statusCode, phrase, json) =>
             {
-                var message = GetMessage(body);
+                var message = GetMessage(json);
 
-                return new TestWebhookResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, message, message);
-            }
+                return new TestWebhookResponse.Success(statusCode,phrase, json, message, message);
+            };
 
-            return new TestWebhookResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, TestWebhookResponse> tokenExpired = (rp, b) => { return new TestWebhookResponse.TokenExpired(rp, b); };
+            Func<string, string, int, TestWebhookResponse> limitReached = (rp, b, r) => { return new TestWebhookResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, TestWebhookResponse> failed = (sc, rp, b) => { return new TestWebhookResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
         }
 
         private static Webhook GetWebhook(string body)

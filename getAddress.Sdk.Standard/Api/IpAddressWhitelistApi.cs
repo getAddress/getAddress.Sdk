@@ -35,19 +35,24 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, AddIpAddressWhitelistResponse> success = (statusCode, phrase, json) =>
             {
-                var messageAndId = MessageAndId.GetMessageAndId(body);
+                var messageAndId = MessageAndId.GetMessageAndId(json);
 
-                return new AddIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, messageAndId.Id);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new AddIpAddressWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new AddIpAddressWhitelistResponse.Success(statusCode, phrase, json, messageAndId.Message, messageAndId.Id);
+            };
 
-            return new AddIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase,body);
+            Func<string, string, AddIpAddressWhitelistResponse> tokenExpired = (rp, b) => { return new AddIpAddressWhitelistResponse.TokenExpired(rp, b); };
+            Func<string, string, int, AddIpAddressWhitelistResponse> limitReached = (rp, b, r) => { return new AddIpAddressWhitelistResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, AddIpAddressWhitelistResponse> failed = (sc, rp, b) => { return new AddIpAddressWhitelistResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
+            
         }
 
         public async  Task<RemoveIpAddressWhitelistResponse> Remove(RemoveIpAddressWhitelistRequest request)
@@ -70,18 +75,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, RemoveIpAddressWhitelistResponse> success = (statusCode, phrase, json) =>
             {
-                var message = GetMessage(body);
+                var message = GetMessage(json);
 
-                return new RemoveIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,message);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new RemoveIpAddressWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new RemoveIpAddressWhitelistResponse.Success(statusCode,phrase, json, message);
+            };
 
-            return new RemoveIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, RemoveIpAddressWhitelistResponse> tokenExpired = (rp, b) => { return new RemoveIpAddressWhitelistResponse.TokenExpired(rp, b); };
+            Func<string, string, int, RemoveIpAddressWhitelistResponse> limitReached = (rp, b, r) => { return new RemoveIpAddressWhitelistResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, RemoveIpAddressWhitelistResponse> failed = (sc, rp, b) => { return new RemoveIpAddressWhitelistResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
         public async  Task<ListIpAddressWhitelistResponse> List()
@@ -100,18 +110,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, ListIpAddressWhitelistResponse> success = (statusCode, phrase, json) =>
             {
-                var list = GetLists(body);
+                var list = GetLists(json);
 
-                return new ListIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,list);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new ListIpAddressWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new ListIpAddressWhitelistResponse.Success(statusCode, phrase, json, list);
+            };
 
-            return new ListIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, ListIpAddressWhitelistResponse> tokenExpired = (rp, b) => { return new ListIpAddressWhitelistResponse.TokenExpired(rp, b); };
+            Func<string, string, int, ListIpAddressWhitelistResponse> limitReached = (rp, b, r) => { return new ListIpAddressWhitelistResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, ListIpAddressWhitelistResponse> failed = (sc, rp, b) => { return new ListIpAddressWhitelistResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
 
@@ -167,18 +182,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, GetIpAddressWhitelistResponse> success = (statusCode, phrase, json) =>
             {
-                var valueAndId = GetIpAddressWhitelist(body);
+                var valueAndId = GetIpAddressWhitelist(json);
 
-                return new GetIpAddressWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, valueAndId.Id, valueAndId.Value);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new GetIpAddressWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new GetIpAddressWhitelistResponse.Success(statusCode, phrase, json, valueAndId.Id, valueAndId.Value);
+            };
 
-            return new GetIpAddressWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, GetIpAddressWhitelistResponse> tokenExpired = (rp, b) => { return new GetIpAddressWhitelistResponse.TokenExpired(rp, b); };
+            Func<string, string, int, GetIpAddressWhitelistResponse> limitReached = (rp, b, r) => { return new GetIpAddressWhitelistResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, GetIpAddressWhitelistResponse> failed = (sc, rp, b) => { return new GetIpAddressWhitelistResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
         protected static IpAddressWhitelist GetIpAddressWhitelist(string body)

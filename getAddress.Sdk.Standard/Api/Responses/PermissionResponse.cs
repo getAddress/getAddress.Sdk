@@ -5,7 +5,9 @@ using System.Collections.Generic;
 namespace getAddress.Sdk.Api.Responses
 {
     public class RemovePermissionResponse : ResponseBase<RemovePermissionResponse.Success,
-        RemovePermissionResponse.Failed, RemovePermissionResponse.TokenExpired>
+        RemovePermissionResponse.Failed, 
+        RemovePermissionResponse.TokenExpired,
+        RemovePermissionResponse.RateLimitedReached>
     {
         internal RemovePermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -28,6 +30,11 @@ namespace getAddress.Sdk.Api.Responses
             {
                 FailedResult = this;
             }
+
+            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
+            {
+                return new Failed(statusCode, reasonPhrase, raw);
+            }
         }
 
         public class TokenExpired : Failed
@@ -37,10 +44,34 @@ namespace getAddress.Sdk.Api.Responses
                 TokenExpiredResult = this;
                 IsTokenExpired = true;
             }
+
+            internal static TokenExpired NewTokenExpired(string reasonPhrase, string raw)
+            {
+                return new TokenExpired(reasonPhrase, raw);
+            }
+        }
+
+        public class RateLimitedReached : Failed
+        {
+            public int RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            {
+                RetryAfterSeconds = retryAfterSeconds;
+                RateLimitReachedResult = this;
+                IsRateLimitReached = true;
+            }
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            {
+                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
+            }
         }
     }
 
-    public class AddPermissionResponse : ResponseBase<AddPermissionResponse.Success, AddPermissionResponse.Failed, AddPermissionResponse.TokenExpired>
+    public class AddPermissionResponse : ResponseBase<
+        AddPermissionResponse.Success, 
+        AddPermissionResponse.Failed, 
+        AddPermissionResponse.TokenExpired,
+        AddPermissionResponse.RateLimitedReached>
     {
         internal AddPermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -64,6 +95,10 @@ namespace getAddress.Sdk.Api.Responses
             {
                 FailedResult = this;
             }
+            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
+            {
+                return new Failed(statusCode, reasonPhrase, raw);
+            }
         }
         public class TokenExpired : Failed
         {
@@ -73,9 +108,28 @@ namespace getAddress.Sdk.Api.Responses
                 IsTokenExpired = true;
             }
         }
+
+        public class RateLimitedReached : Failed
+        {
+            public int RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            {
+                RetryAfterSeconds = retryAfterSeconds;
+                RateLimitReachedResult = this;
+                IsRateLimitReached = true;
+            }
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            {
+                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
+            }
+        }
     }
 
-    public class UpdatePermissionResponse : ResponseBase<UpdatePermissionResponse.Success, UpdatePermissionResponse.Failed, UpdatePermissionResponse.TokenExpired>
+    public class UpdatePermissionResponse : ResponseBase<
+        UpdatePermissionResponse.Success, 
+        UpdatePermissionResponse.Failed, 
+        UpdatePermissionResponse.TokenExpired,
+        UpdatePermissionResponse.RateLimitedReached>
     {
         internal UpdatePermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -99,6 +153,11 @@ namespace getAddress.Sdk.Api.Responses
             {
                 FailedResult = this;
             }
+
+            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
+            {
+                return new Failed(statusCode, reasonPhrase, raw);
+            }
         }
 
         public class TokenExpired : Failed
@@ -109,9 +168,28 @@ namespace getAddress.Sdk.Api.Responses
                 IsTokenExpired = true;
             }
         }
+
+        public class RateLimitedReached : Failed
+        {
+            public int RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            {
+                RetryAfterSeconds = retryAfterSeconds;
+                RateLimitReachedResult = this;
+                IsRateLimitReached = true;
+            }
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            {
+                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
+            }
+        }
     }
 
-    public class ListPermissionResponse : ResponseBase<ListPermissionResponse.Success, ListPermissionResponse.Failed, ListPermissionResponse.TokenExpired>
+    public class ListPermissionResponse : ResponseBase<
+        ListPermissionResponse.Success, 
+        ListPermissionResponse.Failed, 
+        ListPermissionResponse.TokenExpired,
+        ListPermissionResponse.RateLimitedReached>
     {
         internal ListPermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -134,6 +212,11 @@ namespace getAddress.Sdk.Api.Responses
             {
                 FailedResult = this;
             }
+
+            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
+            {
+                return new Failed(statusCode, reasonPhrase, raw);
+            }
         }
 
         public class TokenExpired : Failed
@@ -144,9 +227,28 @@ namespace getAddress.Sdk.Api.Responses
                 IsTokenExpired = true;
             }
         }
+
+        public class RateLimitedReached : Failed
+        {
+            public int RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            {
+                RetryAfterSeconds = retryAfterSeconds;
+                RateLimitReachedResult = this;
+                IsRateLimitReached = true;
+            }
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            {
+                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
+            }
+        }
     }
 
-    public class PermissionResponse : ResponseBase<PermissionResponse.Success, PermissionResponse.Failed, PermissionResponse.TokenExpired>
+    public class PermissionResponse : ResponseBase<
+        PermissionResponse.Success, 
+        PermissionResponse.Failed, 
+        PermissionResponse.TokenExpired,
+        PermissionResponse.RateLimitedReached>
     {
         internal PermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -170,6 +272,11 @@ namespace getAddress.Sdk.Api.Responses
             {
                 FailedResult = this;
             }
+
+            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
+            {
+                return new Failed(statusCode, reasonPhrase, raw);
+            }
         }
 
         public class TokenExpired : Failed
@@ -178,6 +285,21 @@ namespace getAddress.Sdk.Api.Responses
             {
                 TokenExpiredResult = this;
                 IsTokenExpired = true;
+            }
+        }
+
+        public class RateLimitedReached : Failed
+        {
+            public int RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            {
+                RetryAfterSeconds = retryAfterSeconds;
+                RateLimitReachedResult = this;
+                IsRateLimitReached = true;
+            }
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            {
+                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
         }
     }

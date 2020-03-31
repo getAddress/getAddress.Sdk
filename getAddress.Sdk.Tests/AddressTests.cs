@@ -28,6 +28,7 @@ namespace getAddress.Sdk.Tests
 
             Assert.IsTrue(result.IsSuccess);
         }
+
         [TestMethod]
         public async Task GetAddressViaService()
         {
@@ -63,6 +64,70 @@ namespace getAddress.Sdk.Tests
         }
 
 
+        [TestMethod]
+        public async Task GivenInvalidPostcode_GetReturnsInvalidPostcodeResult()
+        {
+            var apiKey = KeyHelper.GetApiKey();
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            var addressService = new AddressService(apiKey, httpClient);
+
+            var result = await addressService.Get(new GetAddressRequest("XX4 00X"));
+
+            Assert.IsTrue(result.IsInvalidPostcode);
+
+            if (result.TryGetInvalidPostcodeResult(out GetAddressResponse.InvalidPostcode invalid))
+            {
+                Assert.IsNotNull(invalid);
+            }
+        }
+
+
+        [TestMethod]
+        public async Task GivenTooManyRequests_GetReturnsRateLimitReachedResult()
+        {
+            var apiKey = KeyHelper.GetApiKey();
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            var addressService = new AddressService(apiKey, httpClient);
+
+            var result = await addressService.Get(new GetAddressRequest("XX4 29X"));
+
+            //Assert.IsTrue(result.IsInvalidPostcode);
+
+            //if (result.TryGetInvalidPostcodeResult(out GetAddressResponse.InvalidPostcode invalid))
+            //{
+            //    Assert.IsNotNull(invalid);
+            //}
+        }
+
+        [TestMethod]
+        public async Task GivenUnknownPostcode_GetReturnsNotFound()
+        {
+            var apiKey = KeyHelper.GetApiKey();
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            var addressService = new AddressService(apiKey, httpClient);
+
+            var result = await addressService.Get(new GetAddressRequest("XX4 04X"));
+
+            Assert.IsTrue(result.IsNotFound);
+
+            if (result.TryGetNotFoundResult(out GetAddressResponse.NotFound notFound))
+            {
+                Assert.IsNotNull(notFound);
+            }
+
+        }
 
         [TestMethod]
         public async Task GivenExpiredKey_GetReturnsExpiredResult()
@@ -79,7 +144,7 @@ namespace getAddress.Sdk.Tests
            
             Assert.IsTrue(result.IsExpired);
 
-            if (result.TryGetExpired(out GetAddressResponse.AccountExpired accountExpired))
+            if (result.TryGetExpiredResult(out GetAddressResponse.AccountExpired accountExpired))
             {
                 Assert.IsNotNull(accountExpired);
             }

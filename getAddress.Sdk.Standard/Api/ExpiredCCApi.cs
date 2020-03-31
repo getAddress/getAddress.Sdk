@@ -49,20 +49,25 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, AddExpiredCCResponse> success = (statusCode, phrase, json) =>
             {
-                var messageAndId = MessageAndId.GetMessageAndId(body);
+                var messageAndId = MessageAndId.GetMessageAndId(json);
 
                 var id = long.Parse(messageAndId.Id);
 
-                return new AddExpiredCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, id);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new AddExpiredCCResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new AddExpiredCCResponse.Success(statusCode, phrase, json, messageAndId.Message, id);
+            };
 
-            return new AddExpiredCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, AddExpiredCCResponse> tokenExpired = (rp, b) => { return new AddExpiredCCResponse.TokenExpired(rp, b); };
+            Func<string, string, int, AddExpiredCCResponse> limitReached = (rp, b, r) => { return new AddExpiredCCResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, AddExpiredCCResponse> failed = (sc, rp, b) => { return new AddExpiredCCResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+           
         }
 
         public async Task<RemoveExpiredCCResponse> Remove(RemoveExpiredCCRequest request)
@@ -84,18 +89,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, RemoveExpiredCCResponse> success = (statusCode, phrase, json) =>
             {
-                var message = GetMessage(body);
+                var m = GetMessage(json);
 
-                return new RemoveExpiredCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, message);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new RemoveExpiredCCResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new RemoveExpiredCCResponse.Success(statusCode, phrase, json, m);
+            };
 
-            return new RemoveExpiredCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, RemoveExpiredCCResponse> tokenExpired = (rp, b) => { return new RemoveExpiredCCResponse.TokenExpired(rp, b); };
+            Func<string, string, int, RemoveExpiredCCResponse> limitReached = (rp, b, r) => { return new RemoveExpiredCCResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, RemoveExpiredCCResponse> failed = (sc, rp, b) => { return new RemoveExpiredCCResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
         }
 
         public async Task<ListExpiredCCResponse> List()
@@ -114,18 +124,22 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, ListExpiredCCResponse> success = (statusCode, phrase, json) =>
             {
-                var list = ExpiredCC.DeserializeToList(body);
+                var list = ExpiredCC.DeserializeToList(json);
 
-                return new ListExpiredCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, list);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new ListExpiredCCResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new ListExpiredCCResponse.Success(statusCode, phrase, json, list);
+            };
 
-            return new ListExpiredCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, ListExpiredCCResponse> tokenExpired = (rp, b) => { return new ListExpiredCCResponse.TokenExpired(rp, b); };
+            Func<string, string, int, ListExpiredCCResponse> limitReached = (rp, b, r) => { return new ListExpiredCCResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, ListExpiredCCResponse> failed = (sc, rp, b) => { return new ListExpiredCCResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
         }
 
         private async static Task<GetExpiredCCResponse> GetCCInternal(GetAddesssApi api, string path, AdminKey adminKey, long id)
@@ -140,18 +154,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, GetExpiredCCResponse> success = (statusCode, phrase, json) =>
             {
                 var cC = ExpiredCC.Deserialize(body);
 
-                return new GetExpiredCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, cC);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new GetExpiredCCResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new GetExpiredCCResponse.Success(statusCode, phrase, json, cC);
+            };
 
-            return new GetExpiredCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, GetExpiredCCResponse> tokenExpired = (rp, b) => { return new GetExpiredCCResponse.TokenExpired(rp, b); };
+            Func<string, string, int, GetExpiredCCResponse> limitReached = (rp, b, r) => { return new GetExpiredCCResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, GetExpiredCCResponse> failed = (sc, rp, b) => { return new GetExpiredCCResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
     }

@@ -52,20 +52,25 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, AddInvoiceCCResponse> success = (statusCode, phrase, json) =>
             {
-                var messageAndId = MessageAndId.GetMessageAndId(body);
+                var messageAndId = MessageAndId.GetMessageAndId(json);
 
                 var id = long.Parse(messageAndId.Id);
 
-                return new AddInvoiceCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, id);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new AddInvoiceCCResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new AddInvoiceCCResponse.Success(statusCode, phrase, json, messageAndId.Message, id);
+            };
 
-            return new AddInvoiceCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, AddInvoiceCCResponse> tokenExpired = (rp, b) => { return new AddInvoiceCCResponse.TokenExpired(rp, b); };
+            Func<string, string, int, AddInvoiceCCResponse> limitReached = (rp, b, r) => { return new AddInvoiceCCResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, AddInvoiceCCResponse> failed = (sc, rp, b) => { return new AddInvoiceCCResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
         public async Task<RemoveInvoiceCCResponse> Remove(RemoveInvoiceCCRequest request)
@@ -87,18 +92,24 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, RemoveInvoiceCCResponse> success = (statusCode, phrase, json) =>
             {
-                var message = GetMessage(body);
+                var message = GetMessage(json);
 
-                return new RemoveInvoiceCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, message);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new RemoveInvoiceCCResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new RemoveInvoiceCCResponse.Success(statusCode, phrase, json, message);
+            };
 
-            return new RemoveInvoiceCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, RemoveInvoiceCCResponse> tokenExpired = (rp, b) => { return new RemoveInvoiceCCResponse.TokenExpired(rp, b); };
+            Func<string, string, int, RemoveInvoiceCCResponse> limitReached = (rp, b, r) => { return new RemoveInvoiceCCResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, RemoveInvoiceCCResponse> failed = (sc, rp, b) => { return new RemoveInvoiceCCResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
+
         }
 
         public async Task<ListInvoiceCCResponse> List()
@@ -117,18 +128,22 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, ListInvoiceCCResponse> success = (statusCode, phrase, json) =>
             {
-                var list = GetInvoiceCCList(body);
+                var list = GetInvoiceCCList(json);
 
-                return new ListInvoiceCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, list);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new ListInvoiceCCResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new ListInvoiceCCResponse.Success(statusCode, phrase, json, list);
+            };
 
-            return new ListInvoiceCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, ListInvoiceCCResponse> tokenExpired = (rp, b) => { return new ListInvoiceCCResponse.TokenExpired(rp, b); };
+            Func<string, string, int, ListInvoiceCCResponse> limitReached = (rp, b, r) => { return new ListInvoiceCCResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, ListInvoiceCCResponse> failed = (sc, rp, b) => { return new ListInvoiceCCResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
         }
 
         private async static Task<GetInvoiceCCResponse> GetCCInternal(GetAddesssApi api, string path, AdminKey adminKey, long id)
@@ -144,18 +159,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, GetInvoiceCCResponse> success = (statusCode, phrase, json) =>
             {
-                var invoiceCC = GetCCInvoice(body);
+                var invoiceCC = GetCCInvoice(json);
 
-                return new GetInvoiceCCResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, invoiceCC);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new GetInvoiceCCResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new GetInvoiceCCResponse.Success(statusCode, phrase, json, invoiceCC);
+            };
 
-            return new GetInvoiceCCResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, GetInvoiceCCResponse> tokenExpired = (rp, b) => { return new GetInvoiceCCResponse.TokenExpired(rp, b); };
+            Func<string, string, int, GetInvoiceCCResponse> limitReached = (rp, b, r) => { return new GetInvoiceCCResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, GetInvoiceCCResponse> failed = (sc, rp, b) => { return new GetInvoiceCCResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
        
         private static IEnumerable<InvoiceCC> GetInvoiceCCList(string body)

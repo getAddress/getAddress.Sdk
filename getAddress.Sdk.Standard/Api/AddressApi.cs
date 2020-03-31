@@ -38,23 +38,33 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, GetAddressResponse> success = (statusCode, phrase, json) =>
             {
-                var addressesBody = GetAddressBody(body);
+                var addressesBody = GetAddressBody(json);
                 double latitude = addressesBody.Item1;
                 double longitude = addressesBody.Item2;
                 var addresses = addressesBody.Item3;
-                return new GetAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,latitude,longitude,addresses);
-            }
-            if (response.HasTokenExpired())
-            {
-                return new GetAddressResponse.TokenExpired(response.ReasonPhrase, body);
-            }
-            if (response.HasAccountExpired())
-            {
-                return new GetAddressResponse.AccountExpired(response.ReasonPhrase, body);
-            }
-            return new GetAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);//todo: move failed responses
+
+                return new GetAddressResponse.Success(statusCode, phrase, json, latitude, longitude, addresses);
+            };
+
+            Func<string, string,GetAddressResponse> tokenExpired = (rp, b) => { return new GetAddressResponse.TokenExpired(rp, b); };
+            Func<string, string,GetAddressResponse> notFound =  (rp,b) => { return new GetAddressResponse.NotFound(rp, b); };
+            Func<string, string, GetAddressResponse> invalidPostcode = (rp, b) => { return new GetAddressResponse.InvalidPostcode(rp, b); };
+            Func<string, string, GetAddressResponse> accountExpired = (rp, b) => { return new GetAddressResponse.AccountExpired(rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                GetAddressResponse.RateLimitedReached.NewRateLimitedReached,
+                GetAddressResponse.Failed.NewFailed,
+                notFound:notFound,
+                invalidPostcode: invalidPostcode,
+                accountExpired: accountExpired
+                );
+
+
+           
         }
 
         private static string GetPath(string path, GetAddressRequest request) 
@@ -101,21 +111,32 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+
+            Func<int, string, string, GetExpandedAddressResponse> success = (statusCode, phrase, json) =>
             {
-                var addressesBody = GetExpandedAddressFromBody(body);
+                var addressesBody = GetExpandedAddressFromBody(json);
                 double latitude = addressesBody.Item1;
                 double longitude = addressesBody.Item2;
                 var addresses = addressesBody.Item4;
                 var postcode = addressesBody.Item3;
-                return new GetExpandedAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, latitude, longitude,postcode, addresses);
-            }
-            if (response.HasTokenExpired())
-            {
-                return new GetExpandedAddressResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new GetExpandedAddressResponse.Success(statusCode, phrase, json, latitude, longitude, postcode, addresses);
+            };
 
-            return new GetExpandedAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, GetExpandedAddressResponse> tokenExpired = (rp, b) => { return new GetExpandedAddressResponse.TokenExpired(rp, b); };
+            Func<string, string, GetExpandedAddressResponse> notFound = (rp, b) => { return new GetExpandedAddressResponse.NotFound(rp, b); };
+            Func<string, string, GetExpandedAddressResponse> invalidPostcode = (rp, b) => { return new GetExpandedAddressResponse.InvalidPostcode(rp, b); };
+            Func<string, string, GetExpandedAddressResponse> accountExpired = (rp, b) => { return new GetExpandedAddressResponse.AccountExpired(rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                GetExpandedAddressResponse.RateLimitedReached.NewRateLimitedReached,
+                GetExpandedAddressResponse.Failed.NewFailed,
+                notFound: notFound,
+                invalidPostcode: invalidPostcode,
+                accountExpired: accountExpired
+                );
+
         }
 
         public async Task<PlaceDetailsResponse> PlaceDetails(PlaceDetailsRequest request)
@@ -138,25 +159,31 @@ namespace getAddress.Sdk.Api
 
             var response = await api.Get(fullPath);
 
-            var json = await response.Content.ReadAsStringAsync();
+            var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+
+            Func<int, string, string, PlaceDetailsResponse> success = (statusCode, phrase, json) =>
             {
                 var addressBody = GetSingleExpandedAddressFromBody(json);
-                
+
                 double latitude = addressBody.Item1;
                 double longitude = addressBody.Item2;
                 var address = addressBody.Item4;
                 var postcode = addressBody.Item3;
 
-                return new PlaceDetailsResponse.Success((int)response.StatusCode, response.ReasonPhrase, json, latitude, longitude, postcode, address);
-            }
-            if (response.HasTokenExpired())
-            {
-                return new PlaceDetailsResponse.TokenExpired(response.ReasonPhrase, json);
-            }
+                return new PlaceDetailsResponse.Success(statusCode, phrase, json, latitude, longitude, postcode, address);
+            };
 
-            return new PlaceDetailsResponse.Failed((int)response.StatusCode, response.ReasonPhrase, json);
+            Func<string, string, PlaceDetailsResponse> tokenExpired = (rp, b) => { return new PlaceDetailsResponse.TokenExpired(rp, b); };
+
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                PlaceDetailsResponse.RateLimitedReached.NewRateLimitedReached,
+                PlaceDetailsResponse.Failed.NewFailed
+                );
+
         }
 
 

@@ -63,18 +63,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, ListInvoicesResponse> success = (statusCode, phrase, json) =>
             {
-                var list = GetInvoiceList(body);
+                var list = GetInvoiceList(json);
 
-                return new ListInvoicesResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,list);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new ListInvoicesResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new ListInvoicesResponse.Success(statusCode,phrase, json, list);
+            };
 
-            return new ListInvoicesResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, ListInvoicesResponse> tokenExpired = (rp, b) => { return new ListInvoicesResponse.TokenExpired(rp, b); };
+            Func<string, string, int, ListInvoicesResponse> limitReached = (rp, b, r) => { return new ListInvoicesResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, ListInvoicesResponse> failed = (sc, rp, b) => { return new ListInvoicesResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
        
@@ -85,25 +90,28 @@ namespace getAddress.Sdk.Api
             if (path == null) throw new ArgumentNullException(nameof(path));
             if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
             
-
             api.SetAuthorizationKey(adminKey);
 
             var response = await api.Get(path);
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, GetInvoiceResponse> success = (statusCode, phrase, json) =>
             {
-                var invoice = GetInvoice(body,number);
+                var invoice = GetInvoice(json, number);
 
-                return new GetInvoiceResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, invoice);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new GetInvoiceResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new GetInvoiceResponse.Success(statusCode, phrase, json, invoice);
+            };
 
-            return new GetInvoiceResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, GetInvoiceResponse> tokenExpired = (rp, b) => { return new GetInvoiceResponse.TokenExpired(rp, b); };
+            Func<string, string, int, GetInvoiceResponse> limitReached = (rp, b, r) => { return new GetInvoiceResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, GetInvoiceResponse> failed = (sc, rp, b) => { return new GetInvoiceResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
         }
 
         private static IEnumerable<Invoice> GetInvoiceList(string body)

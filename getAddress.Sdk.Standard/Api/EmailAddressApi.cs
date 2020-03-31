@@ -32,18 +32,24 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, EmailAddressResponse> success = (statusCode, phrase, json) =>
             {
-                var model = GetEmailAddress(body);
+                var model = GetEmailAddress(json);
 
-                return new EmailAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,model.EmailAddress );
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new EmailAddressResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new EmailAddressResponse.Success(statusCode, phrase, json, model.EmailAddress);
+            };
 
-            return new EmailAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, EmailAddressResponse> tokenExpired = (rp, b) => { return new EmailAddressResponse.TokenExpired(rp, b); };
+            Func<string, string, int, EmailAddressResponse> limitReached = (rp, b, r) => { return new EmailAddressResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, EmailAddressResponse> failed = (sc, rp, b) => { return new EmailAddressResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
+
         }
 
         public async Task<EmailAddressResponse> Update(UpdateEmailAddressRequest request)
@@ -61,22 +67,22 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, EmailAddressResponse> success = (statusCode, phrase, json) =>
             {
-                return new EmailAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,request.NewEmailAddress);
-            }
+                return new EmailAddressResponse.Success(statusCode, phrase, json, request.NewEmailAddress);
+            };
 
-            if(response.StatusCode == System.Net.HttpStatusCode.BadRequest){
-                var message = GetMessage(body);
-                return new EmailAddressResponse.FailedInvalidEmailAddress((int)response.StatusCode, response.ReasonPhrase, body,message);
-            }
+            Func<string, string, EmailAddressResponse> tokenExpired = (rp, b) => { return new EmailAddressResponse.TokenExpired(rp, b); };
+            Func<string, string, int, EmailAddressResponse> limitReached = (rp, b, r) => { return new EmailAddressResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, EmailAddressResponse> failed = (sc, rp, b) => { return new EmailAddressResponse.Failed(sc, rp, b); };
 
-            if (response.HasTokenExpired())
-            {
-                return new EmailAddressResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
 
-            return new EmailAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
 

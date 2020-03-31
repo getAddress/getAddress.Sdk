@@ -2,7 +2,7 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class ResponseBase<S, F, X>
+    public abstract class ResponseBase<S, F, X,R>
     {
         protected ResponseBase(int statusCode, string reasonPhrase, string raw, bool isSuccess)
         {
@@ -15,12 +15,26 @@ namespace getAddress.Sdk.Api.Responses
 
         public S SuccessfulResult { get; protected set; }
         public F FailedResult { get; protected set; }
-
         public X TokenExpiredResult { get; protected set; }
+        public R RateLimitReachedResult { get; protected set; }
 
         public bool IsSuccess { get; }
 
         public bool IsTokenExpired { get; protected set; }
+
+        public bool IsRateLimitReached { get; protected set; }
+
+        public bool TryRateLimitReached(out R rateLimitReachResult)
+        {
+            if (IsRateLimitReached)
+            {
+                rateLimitReachResult = RateLimitReachedResult;
+                return true;
+            }
+
+            rateLimitReachResult = default;
+            return false;
+        }
 
         public bool TryGetSuccess(out S successfulResult)
         {
@@ -30,7 +44,19 @@ namespace getAddress.Sdk.Api.Responses
                 return true;
             }
 
-            successfulResult = default(S);
+            successfulResult = default;
+            return false;
+        }
+
+        public bool TryGetTokenExpired(out X tokenExpiredResult)
+        {
+            if (IsRateLimitReached)
+            {
+                tokenExpiredResult = TokenExpiredResult;
+                return true;
+            }
+
+            tokenExpiredResult = default;
             return false;
         }
 
@@ -42,6 +68,8 @@ namespace getAddress.Sdk.Api.Responses
         public string ReasonPhrase { get; }
 
         public string Raw { get; }
+
+
 
     }
 }

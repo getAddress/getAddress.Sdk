@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 
 namespace getAddress.Sdk.Api
 {
@@ -54,5 +55,8 @@ namespace getAddress.Sdk.Api
 
             Api = api;
         }
+
+
+        
     }
 }

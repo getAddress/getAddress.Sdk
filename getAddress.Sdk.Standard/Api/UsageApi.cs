@@ -100,19 +100,24 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, GetUsageResponse> success = (statusCode, phrase, json) =>
             {
-                var usage = GetUsage(body);
+                var usage = GetUsage(json);
 
-                return new GetUsageResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, usage.Count,
+                return new GetUsageResponse.Success(statusCode, phrase, json, usage.Count,
                     usage.Limit1, usage.Limit2);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new GetUsageResponse.TokenExpired(response.ReasonPhrase, body);
-            }
-            
-            return new GetUsageResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            };
+
+            Func<string, string, GetUsageResponse> tokenExpired = (rp, b) => { return new GetUsageResponse.TokenExpired(rp, b); };
+            Func<string, string, int, GetUsageResponse> limitReached = (rp, b, r) => { return new GetUsageResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, GetUsageResponse> failed = (sc, rp, b) => { return new GetUsageResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
         public async static Task<GetUsageV3Response> GetV3(GetAddesssApi api, string path, AdminKey adminKey)
@@ -126,19 +131,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, GetUsageV3Response> success = (statusCode, phrase, json) =>
             {
-                var usage = GetUsageV3(body);
+                var usage = GetUsageV3(json);
 
-                return new GetUsageV3Response.Success((int)response.StatusCode, response.ReasonPhrase, body, usage.DailyLimit,
-                    usage.UsageToday, usage.MonthlyBuffer,usage.MonthlyBufferUsed);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new GetUsageV3Response.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new GetUsageV3Response.Success(statusCode, phrase, json, usage.DailyLimit,
+                    usage.UsageToday, usage.MonthlyBuffer, usage.MonthlyBufferUsed);
+            };
 
-            return new GetUsageV3Response.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, GetUsageV3Response> tokenExpired = (rp, b) => { return new GetUsageV3Response.TokenExpired(rp, b); };
+            Func<string, string, int, GetUsageV3Response> limitReached = (rp, b, r) => { return new GetUsageV3Response.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, GetUsageV3Response> failed = (sc, rp, b) => { return new GetUsageV3Response.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
         }
 
         public async static Task<ListUsageResponse> List(GetAddesssApi api, string path, AdminKey adminKey)
@@ -152,18 +161,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, ListUsageResponse> success = (statusCode, phrase, json) =>
             {
-                var usages = ListUsages(body);
+                var usages = ListUsages(json);
 
-                return new ListUsageResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,usages);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new ListUsageResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new ListUsageResponse.Success(statusCode, phrase, json, usages);
+            };
 
-            return new ListUsageResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, ListUsageResponse> tokenExpired = (rp, b) => { return new ListUsageResponse.TokenExpired(rp, b); };
+            Func<string, string, int, ListUsageResponse> limitReached = (rp, b, r) => { return new ListUsageResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, ListUsageResponse> failed = (sc, rp, b) => { return new ListUsageResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
 

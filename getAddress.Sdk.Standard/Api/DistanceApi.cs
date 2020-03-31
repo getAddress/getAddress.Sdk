@@ -25,7 +25,6 @@ namespace getAddress.Sdk.Api
             if (path == null) throw new ArgumentNullException(nameof(path));
             if (apiKey == null) throw new ArgumentNullException(nameof(apiKey));
 
-
             api.SetAuthorizationKey(apiKey);
 
             var fullPath = $"{path}{request.PostcodeFrom}/{request.PostcodeTo}";
@@ -34,18 +33,24 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, DistanceResponse> success = (statusCode, phrase, json) =>
             {
-                var distance = Distance.FromJson(body);
+                var distance = Distance.FromJson(json);
 
-                return new DistanceResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, distance);
-            }
-            if (response.HasTokenExpired())
-            {
-                return new DistanceResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new DistanceResponse.Success(statusCode, phrase, json, distance);
+            };
 
-            return new DistanceResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, DistanceResponse> tokenExpired = (rp, b) => { return new DistanceResponse.TokenExpired(rp, b); };
+            Func<string, string, int, DistanceResponse> limitReached = (rp, b, r) => { return new DistanceResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, DistanceResponse> failed = (sc, rp, b) => { return new DistanceResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
+
         }
 
     }

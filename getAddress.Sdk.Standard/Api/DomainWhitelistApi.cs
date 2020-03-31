@@ -35,20 +35,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, AddDomainWhitelistResponse> success = (statusCode, phrase, json) =>
             {
-                var messageAndId = MessageAndId.GetMessageAndId(body);
+                var messageAndId = MessageAndId.GetMessageAndId(json);
 
-                return new AddDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, messageAndId.Id);
-            }
+                return new AddDomainWhitelistResponse.Success(statusCode, phrase, json, messageAndId.Message, messageAndId.Id);
+            };
 
-            if (response.HasTokenExpired())
-            {
-                return new AddDomainWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+            Func<string, string, AddDomainWhitelistResponse> tokenExpired = (rp, b) => { return new AddDomainWhitelistResponse.TokenExpired(rp, b); };
+            Func<string, string, int, AddDomainWhitelistResponse> limitReached = (rp, b, r) => { return new AddDomainWhitelistResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, AddDomainWhitelistResponse> failed = (sc, rp, b) => { return new AddDomainWhitelistResponse.Failed(sc, rp, b); };
 
-            return new AddDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase,body);
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
         }
 
         public async  Task<RemoveDomainWhitelistResponse> Remove(RemoveDomainWhitelistRequest request)
@@ -62,7 +65,6 @@ namespace getAddress.Sdk.Api
             if (request == null) throw new ArgumentNullException(nameof(request));
             if (path == null) throw new ArgumentNullException(nameof(path));
 
-
             var fullPath = path + request.Id;
 
             api.SetAuthorizationKey(adminKey);
@@ -71,19 +73,24 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, RemoveDomainWhitelistResponse> success = (statusCode, phrase, json) =>
             {
-                var message = GetMessage(body);
+                var m = GetMessage(json);
 
-                return new RemoveDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,message);
-            }
+                return new RemoveDomainWhitelistResponse.Success(statusCode, phrase, json, m);
+            };
 
-            if (response.HasTokenExpired())
-            {
-                return new RemoveDomainWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+            Func<string, string, RemoveDomainWhitelistResponse> tokenExpired = (rp, b) => { return new RemoveDomainWhitelistResponse.TokenExpired(rp, b); };
+            Func<string, string, int, RemoveDomainWhitelistResponse> limitReached = (rp, b, r) => { return new RemoveDomainWhitelistResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, RemoveDomainWhitelistResponse> failed = (sc, rp, b) => { return new RemoveDomainWhitelistResponse.Failed(sc, rp, b); };
 
-            return new RemoveDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
+
         }
 
         public async  Task<ListDomainWhitelistResponse> List()
@@ -102,19 +109,25 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, ListDomainWhitelistResponse> success = (statusCode, phrase, json) =>
             {
-                var list = GetDomainWhitelists(body);
+                var list = GetDomainWhitelists(json);
 
-                return new ListDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,list);
-            }
+                return new ListDomainWhitelistResponse.Success(statusCode,phrase, json, list);
+            };
 
-            if (response.HasTokenExpired())
-            {
-                return new ListDomainWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+            Func<string, string, ListDomainWhitelistResponse> tokenExpired = (rp, b) => { return new ListDomainWhitelistResponse.TokenExpired(rp, b); };
+            Func<string, string, int, ListDomainWhitelistResponse> limitReached = (rp, b, r) => { return new ListDomainWhitelistResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, ListDomainWhitelistResponse> failed = (sc, rp, b) => { return new ListDomainWhitelistResponse.Failed(sc, rp, b); };
 
-            return new ListDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
+
+            
         }
 
 
@@ -161,19 +174,25 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, GetDomainWhitelistResponse> success = (statusCode, phrase, json) =>
             {
-                var nameAndId = GetDomainWhitelist(body);
+                var nameAndId = GetDomainWhitelist(json);
 
-                return new GetDomainWhitelistResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, nameAndId.Id, nameAndId.Name);
-            }
+                return new GetDomainWhitelistResponse.Success(statusCode, phrase, json, nameAndId.Id, nameAndId.Name);
+            };
 
-            if (response.HasTokenExpired())
-            {
-                return new GetDomainWhitelistResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+            Func<string, string, GetDomainWhitelistResponse> tokenExpired = (rp, b) => { return new GetDomainWhitelistResponse.TokenExpired(rp, b); };
+            Func<string, string, int, GetDomainWhitelistResponse> limitReached = (rp, b, r) => { return new GetDomainWhitelistResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, GetDomainWhitelistResponse> failed = (sc, rp, b) => { return new GetDomainWhitelistResponse.Failed(sc, rp, b); };
 
-            return new GetDomainWhitelistResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed
+                );
+
+           
         }
 
         protected static DomainWhitelist GetDomainWhitelist(string body)

@@ -1,7 +1,10 @@
 ﻿namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class RemoveIpAddressWhitelistResponse : ResponseBase<RemoveIpAddressWhitelistResponse.Success,
-        RemoveIpAddressWhitelistResponse.Failed,RemoveIpAddressWhitelistResponse.TokenExpired>
+    public abstract class RemoveIpAddressWhitelistResponse : ResponseBase<
+        RemoveIpAddressWhitelistResponse.Success,
+        RemoveIpAddressWhitelistResponse.Failed,
+        RemoveIpAddressWhitelistResponse.TokenExpired,
+        RemoveIpAddressWhitelistResponse.RateLimitedReached>
     {
 
         protected RemoveIpAddressWhitelistResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -27,6 +30,11 @@
             {
                    FailedResult = this;
             }
+
+            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
+            {
+                return new Failed(statusCode, reasonPhrase, raw);
+            }
         }
 
         public class TokenExpired : Failed
@@ -35,6 +43,26 @@
             {
                 TokenExpiredResult = this;
                 IsTokenExpired = true;
+            }
+
+            internal static TokenExpired NewTokenExpired(string reasonPhrase, string raw)
+            {
+                return new TokenExpired(reasonPhrase, raw);
+            }
+        }
+
+        public class RateLimitedReached : Failed
+        {
+            public int RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            {
+                RetryAfterSeconds = retryAfterSeconds;
+                RateLimitReachedResult = this;
+                IsRateLimitReached = true;
+            }
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            {
+                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
         }
     }

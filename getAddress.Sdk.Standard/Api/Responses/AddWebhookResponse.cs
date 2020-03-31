@@ -1,6 +1,9 @@
 ﻿namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class AddWebhookResponse : ResponseBase<AddWebhookResponse.Success, AddWebhookResponse.Failed,AddWebhookResponse.TokenExpired>
+    public abstract class AddWebhookResponse : ResponseBase<AddWebhookResponse.Success, 
+        AddWebhookResponse.Failed,
+        AddWebhookResponse.TokenExpired,
+        AddWebhookResponse.RateLimitedReached>
     {
 
         protected AddWebhookResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -12,11 +15,11 @@
         {
             if (IsSuccess)
             {
-                return new AddFirstLimitReachedWebhookResponse.Success(this.SuccessfulResult.StatusCode, SuccessfulResult.ReasonPhase,
+                return new AddFirstLimitReachedWebhookResponse.Success(this.SuccessfulResult.StatusCode, SuccessfulResult.ReasonPhrase,
                     SuccessfulResult.Raw, SuccessfulResult.Message, SuccessfulResult.Id.ToString());
             }
 
-            return new AddFirstLimitReachedWebhookResponse.Failed(this.FailedResult.StatusCode, FailedResult.ReasonPhase,
+            return new AddFirstLimitReachedWebhookResponse.Failed(this.FailedResult.StatusCode, FailedResult.ReasonPhrase,
                     FailedResult.Raw);
         }
 
@@ -24,11 +27,11 @@
         {
             if (IsSuccess)
             {
-                return new AddSecondLimitReachedWebhookResponse.Success(this.SuccessfulResult.StatusCode, SuccessfulResult.ReasonPhase,
+                return new AddSecondLimitReachedWebhookResponse.Success(this.SuccessfulResult.StatusCode, SuccessfulResult.ReasonPhrase,
                     SuccessfulResult.Raw, SuccessfulResult.Message, SuccessfulResult.Id.ToString());
             }
 
-            return new AddSecondLimitReachedWebhookResponse.Failed(this.FailedResult.StatusCode, FailedResult.ReasonPhase,
+            return new AddSecondLimitReachedWebhookResponse.Failed(this.FailedResult.StatusCode, FailedResult.ReasonPhrase,
                     FailedResult.Raw);
         }
 
@@ -52,6 +55,11 @@
             {
                 FailedResult = this;
             }
+
+            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
+            {
+                return new Failed(statusCode, reasonPhrase, raw);
+            }
         }
 
         public class TokenExpired : Failed
@@ -60,6 +68,26 @@
             {
                 TokenExpiredResult = this;
                 IsTokenExpired = true;
+            }
+
+            internal static TokenExpired NewTokenExpired(string reasonPhrase, string raw)
+            {
+                return new TokenExpired(reasonPhrase, raw);
+            }
+        }
+
+        public class RateLimitedReached : Failed
+        {
+            public int RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            {
+                RetryAfterSeconds = retryAfterSeconds;
+                RateLimitReachedResult = this;
+                IsRateLimitReached = true;
+            }
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            {
+                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
         }
 

@@ -42,18 +42,22 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, PermissionResponse> success = (statusCode, phrase, json) =>
             {
-                var permission = GetPermission(body);
+                var permission = GetPermission(json);
 
-                return new PermissionResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,permission);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new PermissionResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new PermissionResponse.Success(statusCode, phrase, json, permission);
+            };
 
-            return new PermissionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, PermissionResponse> tokenExpired = (rp, b) => { return new PermissionResponse.TokenExpired(rp, b); };
+            Func<string, string, int, PermissionResponse> limitReached = (rp, b, r) => { return new PermissionResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, PermissionResponse> failed = (sc, rp, b) => { return new PermissionResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
         }
 
         public async Task<ListPermissionResponse> List()
@@ -73,18 +77,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, ListPermissionResponse> success = (statusCode, phrase, json) =>
             {
-                var permissions = GetPermissions(body);
+                var permissions = GetPermissions(json);
 
-                return new ListPermissionResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, permissions);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new ListPermissionResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new ListPermissionResponse.Success(statusCode, phrase, json, permissions);
+            };
 
-            return new ListPermissionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, ListPermissionResponse> tokenExpired = (rp, b) => { return new ListPermissionResponse.TokenExpired(rp, b); };
+            Func<string, string, int, ListPermissionResponse> limitReached = (rp, b, r) => { return new ListPermissionResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, ListPermissionResponse> failed = (sc, rp, b) => { return new ListPermissionResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
         public async Task<UpdatePermissionResponse> Update(UpdatePermissionRequest request)
@@ -103,18 +112,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, UpdatePermissionResponse> success = (statusCode, phrase, json) =>
             {
-                var message = MessageResponse.GetMessageResponse(body);
+                var message = MessageResponse.GetMessageResponse(json);
 
-                return new UpdatePermissionResponse.Success((int)response.StatusCode, response.ReasonPhrase,body, message.Message);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new UpdatePermissionResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new UpdatePermissionResponse.Success(statusCode, phrase, json, message.Message);
+            };
 
-            return new UpdatePermissionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, UpdatePermissionResponse> tokenExpired = (rp, b) => { return new UpdatePermissionResponse.TokenExpired(rp, b); };
+            Func<string, string, int, UpdatePermissionResponse> limitReached = (rp, b, r) => { return new UpdatePermissionResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, UpdatePermissionResponse> failed = (sc, rp, b) => { return new UpdatePermissionResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
         public async Task<AddPermissionResponse> Add(AddPermissionRequest request)
@@ -133,18 +147,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, AddPermissionResponse> success = (statusCode, phrase, json) =>
             {
-                var message = MessageResponse.GetMessageResponse(body);
+                var message = MessageResponse.GetMessageResponse(json);
 
-                return new AddPermissionResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, message.Message);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new AddPermissionResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new AddPermissionResponse.Success(statusCode, phrase, json, message.Message);
+            };
 
-            return new AddPermissionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, AddPermissionResponse> tokenExpired = (rp, b) => { return new AddPermissionResponse.TokenExpired(rp, b); };
+            Func<string, string, int, AddPermissionResponse> limitReached = (rp, b, r) => { return new AddPermissionResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, AddPermissionResponse> failed = (sc, rp, b) => { return new AddPermissionResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
         public async Task<RemovePermissionResponse> Remove(RemovePermissionRequest request)
@@ -166,18 +185,23 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, RemovePermissionResponse> success = (statusCode, phrase, json) =>
             {
-                var message = MessageResponse.GetMessageResponse(body);
+                var message = MessageResponse.GetMessageResponse(json);
 
-                return new RemovePermissionResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, message.Message);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new RemovePermissionResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new RemovePermissionResponse.Success(statusCode, phrase, json, message.Message);
+            };
 
-            return new RemovePermissionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, RemovePermissionResponse> tokenExpired = (rp, b) => { return new RemovePermissionResponse.TokenExpired(rp, b); };
+            Func<string, string, int, RemovePermissionResponse> limitReached = (rp, b, r) => { return new RemovePermissionResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, RemovePermissionResponse> failed = (sc, rp, b) => { return new RemovePermissionResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
         private static Permission GetPermission(string body)
@@ -194,10 +218,6 @@ namespace getAddress.Sdk.Api
             return JsonConvert.DeserializeObject<IEnumerable<Permission>>(body);
 
         }
-
-        
-
-        
 
     }
 }

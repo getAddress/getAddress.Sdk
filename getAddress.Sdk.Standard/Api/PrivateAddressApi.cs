@@ -36,19 +36,19 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, AddPrivateAddressResponse> success = (statusCode, phrase, json) => 
             {
-                var messageAndId = MessageAndId.GetMessageAndId(body);
+                var messageAndId = MessageAndId.GetMessageAndId(json);
+                return new AddPrivateAddressResponse.Success(statusCode,phrase, json, messageAndId.Message, messageAndId.Id);
+            };
 
-                return new AddPrivateAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, messageAndId.Message, messageAndId.Id);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new AddPrivateAddressResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+            return response.GetResponse(body,
+                success,
+                AddPrivateAddressResponse.TokenExpired.NewTokenExpired,
+                AddPrivateAddressResponse.RateLimitedReached.NewRateLimitedReached,
+                AddPrivateAddressResponse.Failed.NewFailed
+                );
 
-            return new AddPrivateAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
         public async Task<RemovePrivateAddressResponse> Remove(RemovePrivateAddressRequest request)
@@ -72,16 +72,13 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
-            {
-                return new RemovePrivateAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new RemovePrivateAddressResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+            return response.GetResponse<RemovePrivateAddressResponse>(body,
+                RemovePrivateAddressResponse.Success.NewSuccess,
+                RemovePrivateAddressResponse.TokenExpired.NewTokenExpired,
+                RemovePrivateAddressResponse.RateLimitedReached.NewRateLimitedReached,
+                RemovePrivateAddressResponse.Failed.NewFailed
+                );
 
-            return new RemovePrivateAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
         }
 
         public async Task<ListPrivateAddressResponse> List(ListPrivateAddressRequest request)
@@ -104,18 +101,19 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, ListPrivateAddressResponse> success = (statusCode, phrase, json) =>
             {
-                var addresses = GetPrivateAddresses(body);
+                var addresses = GetPrivateAddresses(json);
 
-                return new ListPrivateAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body,addresses);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new ListPrivateAddressResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return ListPrivateAddressResponse.Success.NewSuccess (statusCode, phrase, json, addresses);
+            };
 
-            return new ListPrivateAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            return response.GetResponse<ListPrivateAddressResponse>(body,
+                success,
+                ListPrivateAddressResponse.TokenExpired.NewTokenExpired,
+                ListPrivateAddressResponse.RateLimitedReached.NewRateLimitedReached,
+                ListPrivateAddressResponse.Failed.NewFailed
+                );
         }
 
         public async Task<GetPrivateAddressResponse> Get(GetPrivateAddressRequest request)
@@ -138,18 +136,19 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, GetPrivateAddressResponse> success = (statusCode, phrase, json) =>
             {
-                var addressAndId = GetPrivateAddress(body);
-                return new GetPrivateAddressResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, addressAndId.Id,
-                    addressAndId.Line1, addressAndId.Line2, addressAndId.Line3, addressAndId.Line4, addressAndId.Locality, addressAndId.TownOrCity, addressAndId.County);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new GetPrivateAddressResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                var address = GetPrivateAddress(json);
 
-            return new GetPrivateAddressResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+                return GetPrivateAddressResponse.Success.NewSuccess(statusCode, phrase, json, address);
+            };
+
+            return response.GetResponse<GetPrivateAddressResponse>(body,
+                success,
+                GetPrivateAddressResponse.TokenExpired.NewTokenExpired,
+                GetPrivateAddressResponse.RateLimitedReached.NewRateLimitedReached,
+                GetPrivateAddressResponse.Failed.NewFailed
+                );
         }
 
 
@@ -181,6 +180,7 @@ namespace getAddress.Sdk.Api
             var jsons = JsonConvert.DeserializeObject<dynamic[]>(body);
 
             var addressList = new List<PrivateAddress>();
+
             foreach (var json in jsons)
             {
                 var addressAndId = new PrivateAddress

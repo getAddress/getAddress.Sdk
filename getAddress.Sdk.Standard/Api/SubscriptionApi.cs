@@ -36,16 +36,21 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, UnsubscribeResponse> success = (statusCode, phrase, json) =>
             {
-                return new UnsubscribeResponse.Success((int)response.StatusCode, response.ReasonPhrase, body);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new UnsubscribeResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new UnsubscribeResponse.Success(statusCode, phrase, json);
+            };
 
-            return new UnsubscribeResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, UnsubscribeResponse> tokenExpired = (rp, b) => { return new UnsubscribeResponse.TokenExpired(rp, b); };
+            Func<string, string, int, UnsubscribeResponse> limitReached = (rp, b, r) => { return new UnsubscribeResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, UnsubscribeResponse> failed = (sc, rp, b) => { return new UnsubscribeResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse( body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
         }
 
 
@@ -66,18 +71,25 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+            Func<int, string, string, SubscriptionResponse> success = (statusCode, phrase, json) =>
             {
-                var subscription = GetSubscription(body);
+                var subscription = GetSubscription(json);
 
-                return new SubscriptionResponse.Success((int)response.StatusCode, response.ReasonPhrase, body, subscription);
-            }
-            else if (response.HasTokenExpired())
-            {
-                return new SubscriptionResponse.TokenExpired(response.ReasonPhrase, body);
-            }
+                return new SubscriptionResponse.Success(statusCode, phrase, json, subscription);
+            };
 
-            return new SubscriptionResponse.Failed((int)response.StatusCode, response.ReasonPhrase, body);
+            Func<string, string, SubscriptionResponse> tokenExpired = (rp, b) => { return new SubscriptionResponse.TokenExpired(rp, b); };
+            Func<string, string, int, SubscriptionResponse> limitReached = (rp, b, r) => { return new SubscriptionResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, SubscriptionResponse> failed = (sc, rp, b) => { return new SubscriptionResponse.Failed(sc, rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed);
+
+
+           
         }
 
         private static Subscription GetSubscription(string body)
