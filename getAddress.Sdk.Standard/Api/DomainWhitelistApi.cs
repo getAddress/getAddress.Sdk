@@ -43,7 +43,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, AddDomainWhitelistResponse> tokenExpired = (rp, b) => { return new AddDomainWhitelistResponse.TokenExpired(rp, b); };
-            Func<string, string, int, AddDomainWhitelistResponse> limitReached = (rp, b, r) => { return new AddDomainWhitelistResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, AddDomainWhitelistResponse> limitReached = (rp, b, r) => { return new AddDomainWhitelistResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, AddDomainWhitelistResponse> failed = (sc, rp, b) => { return new AddDomainWhitelistResponse.Failed(sc, rp, b); };
 
             return response.GetResponse( body,
@@ -81,7 +81,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, RemoveDomainWhitelistResponse> tokenExpired = (rp, b) => { return new RemoveDomainWhitelistResponse.TokenExpired(rp, b); };
-            Func<string, string, int, RemoveDomainWhitelistResponse> limitReached = (rp, b, r) => { return new RemoveDomainWhitelistResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, RemoveDomainWhitelistResponse> limitReached = (rp, b, r) => { return new RemoveDomainWhitelistResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, RemoveDomainWhitelistResponse> failed = (sc, rp, b) => { return new RemoveDomainWhitelistResponse.Failed(sc, rp, b); };
 
             return response.GetResponse( body,
@@ -117,7 +117,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, ListDomainWhitelistResponse> tokenExpired = (rp, b) => { return new ListDomainWhitelistResponse.TokenExpired(rp, b); };
-            Func<string, string, int, ListDomainWhitelistResponse> limitReached = (rp, b, r) => { return new ListDomainWhitelistResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, ListDomainWhitelistResponse> limitReached = (rp, b, r) => { return new ListDomainWhitelistResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, ListDomainWhitelistResponse> failed = (sc, rp, b) => { return new ListDomainWhitelistResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,
@@ -182,7 +182,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, GetDomainWhitelistResponse> tokenExpired = (rp, b) => { return new GetDomainWhitelistResponse.TokenExpired(rp, b); };
-            Func<string, string, int, GetDomainWhitelistResponse> limitReached = (rp, b, r) => { return new GetDomainWhitelistResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, GetDomainWhitelistResponse> limitReached = (rp, b, r) => { return new GetDomainWhitelistResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, GetDomainWhitelistResponse> failed = (sc, rp, b) => { return new GetDomainWhitelistResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,

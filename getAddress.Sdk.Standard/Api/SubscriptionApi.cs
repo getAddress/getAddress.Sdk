@@ -42,7 +42,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, UnsubscribeResponse> tokenExpired = (rp, b) => { return new UnsubscribeResponse.TokenExpired(rp, b); };
-            Func<string, string, int, UnsubscribeResponse> limitReached = (rp, b, r) => { return new UnsubscribeResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, UnsubscribeResponse> limitReached = (rp, b, r) => { return new UnsubscribeResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, UnsubscribeResponse> failed = (sc, rp, b) => { return new UnsubscribeResponse.Failed(sc, rp, b); };
 
             return response.GetResponse( body,
@@ -79,7 +79,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, SubscriptionResponse> tokenExpired = (rp, b) => { return new SubscriptionResponse.TokenExpired(rp, b); };
-            Func<string, string, int, SubscriptionResponse> limitReached = (rp, b, r) => { return new SubscriptionResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, SubscriptionResponse> limitReached = (rp, b, r) => { return new SubscriptionResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, SubscriptionResponse> failed = (sc, rp, b) => { return new SubscriptionResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,

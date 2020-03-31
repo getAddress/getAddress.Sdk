@@ -59,7 +59,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, AddExpiredCCResponse> tokenExpired = (rp, b) => { return new AddExpiredCCResponse.TokenExpired(rp, b); };
-            Func<string, string, int, AddExpiredCCResponse> limitReached = (rp, b, r) => { return new AddExpiredCCResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, AddExpiredCCResponse> limitReached = (rp, b, r) => { return new AddExpiredCCResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, AddExpiredCCResponse> failed = (sc, rp, b) => { return new AddExpiredCCResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,
@@ -97,7 +97,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, RemoveExpiredCCResponse> tokenExpired = (rp, b) => { return new RemoveExpiredCCResponse.TokenExpired(rp, b); };
-            Func<string, string, int, RemoveExpiredCCResponse> limitReached = (rp, b, r) => { return new RemoveExpiredCCResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, RemoveExpiredCCResponse> limitReached = (rp, b, r) => { return new RemoveExpiredCCResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, RemoveExpiredCCResponse> failed = (sc, rp, b) => { return new RemoveExpiredCCResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,
@@ -132,7 +132,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, ListExpiredCCResponse> tokenExpired = (rp, b) => { return new ListExpiredCCResponse.TokenExpired(rp, b); };
-            Func<string, string, int, ListExpiredCCResponse> limitReached = (rp, b, r) => { return new ListExpiredCCResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, ListExpiredCCResponse> limitReached = (rp, b, r) => { return new ListExpiredCCResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, ListExpiredCCResponse> failed = (sc, rp, b) => { return new ListExpiredCCResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,
@@ -162,7 +162,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, GetExpiredCCResponse> tokenExpired = (rp, b) => { return new GetExpiredCCResponse.TokenExpired(rp, b); };
-            Func<string, string, int, GetExpiredCCResponse> limitReached = (rp, b, r) => { return new GetExpiredCCResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, GetExpiredCCResponse> limitReached = (rp, b, r) => { return new GetExpiredCCResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, GetExpiredCCResponse> failed = (sc, rp, b) => { return new GetExpiredCCResponse.Failed(sc, rp, b); };
 
             return response.GetResponse( body,

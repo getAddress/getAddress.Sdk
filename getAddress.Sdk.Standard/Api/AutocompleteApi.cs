@@ -62,7 +62,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, AutocompletePostcodeResponse> tokenExpired = (rp, b) => { return new AutocompletePostcodeResponse.TokenExpired(rp, b); };
-            Func<string, string, int, AutocompletePostcodeResponse> limitReached = (rp, b, r) => { return new AutocompletePostcodeResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, AutocompletePostcodeResponse> limitReached = (rp, b, r) => { return new AutocompletePostcodeResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, AutocompletePostcodeResponse> failed = (sc, rp, b) => { return new AutocompletePostcodeResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,
@@ -100,7 +100,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, AutocompleteResponse> tokenExpired = (rp, b) => { return new AutocompleteResponse.TokenExpired(rp, b); };
-            Func<string, string, int, AutocompleteResponse> limitReached = (rp, b, r) => { return new AutocompleteResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, AutocompleteResponse> limitReached = (rp, b, r) => { return new AutocompleteResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, AutocompleteResponse> failed = (sc, rp, b) => { return new AutocompleteResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,

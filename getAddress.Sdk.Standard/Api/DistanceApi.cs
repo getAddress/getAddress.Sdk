@@ -41,7 +41,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, DistanceResponse> tokenExpired = (rp, b) => { return new DistanceResponse.TokenExpired(rp, b); };
-            Func<string, string, int, DistanceResponse> limitReached = (rp, b, r) => { return new DistanceResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, DistanceResponse> limitReached = (rp, b, r) => { return new DistanceResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, DistanceResponse> failed = (sc, rp, b) => { return new DistanceResponse.Failed(sc, rp, b); };
 
             return response.GetResponse( body,

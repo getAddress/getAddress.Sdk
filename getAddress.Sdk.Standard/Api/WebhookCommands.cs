@@ -33,7 +33,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, RemoveWebhookResponse> tokenExpired = (rp, b) => { return new RemoveWebhookResponse.TokenExpired(rp, b); };
-            Func<string, string, int, RemoveWebhookResponse> limitReached = (rp, b, r) => { return new RemoveWebhookResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, RemoveWebhookResponse> limitReached = (rp, b, r) => { return new RemoveWebhookResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, RemoveWebhookResponse> failed = (sc, rp, b) => { return new RemoveWebhookResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,
@@ -66,7 +66,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, GetWebhookResponse> tokenExpired = (rp, b) => { return new GetWebhookResponse.TokenExpired(rp, b); };
-            Func<string, string, int, GetWebhookResponse> limitReached = (rp, b, r) => { return new GetWebhookResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, GetWebhookResponse> limitReached = (rp, b, r) => { return new GetWebhookResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, GetWebhookResponse> failed = (sc, rp, b) => { return new GetWebhookResponse.Failed(sc, rp, b); };
 
             return response.GetResponse( body,
@@ -97,7 +97,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, ListWebhookResponse> tokenExpired = (rp, b) => { return new ListWebhookResponse.TokenExpired(rp, b); };
-            Func<string, string, int, ListWebhookResponse> limitReached = (rp, b, r) => { return new ListWebhookResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, ListWebhookResponse> limitReached = (rp, b, r) => { return new ListWebhookResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, ListWebhookResponse> failed = (sc, rp, b) => { return new ListWebhookResponse.Failed(sc, rp, b); };
 
             return response.GetResponse( body,
@@ -127,7 +127,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, AddWebhookResponse> tokenExpired = (rp, b) => { return new AddWebhookResponse.TokenExpired(rp, b); };
-            Func<string, string, int, AddWebhookResponse> limitReached = (rp, b, r) => { return new AddWebhookResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, AddWebhookResponse> limitReached = (rp, b, r) => { return new AddWebhookResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, AddWebhookResponse> failed = (sc, rp, b) => { return new AddWebhookResponse.Failed(sc, rp, b); };
 
             return response.GetResponse( body,
@@ -156,7 +156,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, TestWebhookResponse> tokenExpired = (rp, b) => { return new TestWebhookResponse.TokenExpired(rp, b); };
-            Func<string, string, int, TestWebhookResponse> limitReached = (rp, b, r) => { return new TestWebhookResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, TestWebhookResponse> limitReached = (rp, b, r) => { return new TestWebhookResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, TestWebhookResponse> failed = (sc, rp, b) => { return new TestWebhookResponse.Failed(sc, rp, b); };
 
             return response.GetResponse( body,

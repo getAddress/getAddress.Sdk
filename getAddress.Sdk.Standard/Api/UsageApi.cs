@@ -109,7 +109,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, GetUsageResponse> tokenExpired = (rp, b) => { return new GetUsageResponse.TokenExpired(rp, b); };
-            Func<string, string, int, GetUsageResponse> limitReached = (rp, b, r) => { return new GetUsageResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, GetUsageResponse> limitReached = (rp, b, r) => { return new GetUsageResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, GetUsageResponse> failed = (sc, rp, b) => { return new GetUsageResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,
@@ -140,7 +140,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, GetUsageV3Response> tokenExpired = (rp, b) => { return new GetUsageV3Response.TokenExpired(rp, b); };
-            Func<string, string, int, GetUsageV3Response> limitReached = (rp, b, r) => { return new GetUsageV3Response.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, GetUsageV3Response> limitReached = (rp, b, r) => { return new GetUsageV3Response.RateLimitedReached(rp, b, r); };
             Func<int, string, string, GetUsageV3Response> failed = (sc, rp, b) => { return new GetUsageV3Response.Failed(sc, rp, b); };
 
             return response.GetResponse(body,
@@ -169,7 +169,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, ListUsageResponse> tokenExpired = (rp, b) => { return new ListUsageResponse.TokenExpired(rp, b); };
-            Func<string, string, int, ListUsageResponse> limitReached = (rp, b, r) => { return new ListUsageResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, ListUsageResponse> limitReached = (rp, b, r) => { return new ListUsageResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, ListUsageResponse> failed = (sc, rp, b) => { return new ListUsageResponse.Failed(sc, rp, b); };
 
             return response.GetResponse( body,

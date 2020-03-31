@@ -71,7 +71,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, ListInvoicesResponse> tokenExpired = (rp, b) => { return new ListInvoicesResponse.TokenExpired(rp, b); };
-            Func<string, string, int, ListInvoicesResponse> limitReached = (rp, b, r) => { return new ListInvoicesResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, ListInvoicesResponse> limitReached = (rp, b, r) => { return new ListInvoicesResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, ListInvoicesResponse> failed = (sc, rp, b) => { return new ListInvoicesResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,
@@ -104,7 +104,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, GetInvoiceResponse> tokenExpired = (rp, b) => { return new GetInvoiceResponse.TokenExpired(rp, b); };
-            Func<string, string, int, GetInvoiceResponse> limitReached = (rp, b, r) => { return new GetInvoiceResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, GetInvoiceResponse> limitReached = (rp, b, r) => { return new GetInvoiceResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, GetInvoiceResponse> failed = (sc, rp, b) => { return new GetInvoiceResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,

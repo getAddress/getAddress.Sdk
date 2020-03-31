@@ -39,7 +39,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, GetTokenResponse> tokenExpired = (rp, b) => { return new GetTokenResponse.TokenExpired(rp, b); };
-            Func<string, string, int, GetTokenResponse> limitReached = (rp, b, r) => { return new GetTokenResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, GetTokenResponse> limitReached = (rp, b, r) => { return new GetTokenResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, GetTokenResponse> failed = (sc, rp, b) => { return new GetTokenResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,
@@ -81,7 +81,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, RefreshTokenResponse> tokenExpired = (rp, b) => { return new RefreshTokenResponse.TokenExpired(rp, b); };
-            Func<string, string, int, RefreshTokenResponse> limitReached = (rp, b, r) => { return new RefreshTokenResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, RefreshTokenResponse> limitReached = (rp, b, r) => { return new RefreshTokenResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, RefreshTokenResponse> failed = (sc, rp, b) => { return new RefreshTokenResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,
@@ -116,7 +116,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, RevokeTokenResponse> tokenExpired = (rp, b) => { return new RevokeTokenResponse.TokenExpired(rp, b); };
-            Func<string, string, int, RevokeTokenResponse> limitReached = (rp, b, r) => { return new RevokeTokenResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, RevokeTokenResponse> limitReached = (rp, b, r) => { return new RevokeTokenResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, RevokeTokenResponse> failed = (sc, rp, b) => { return new RevokeTokenResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,

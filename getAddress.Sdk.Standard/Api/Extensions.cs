@@ -13,7 +13,7 @@ namespace getAddress.Sdk.Api
         internal static R GetResponse<R>(this HttpResponseMessage response, string body,
             Func<int, string, string, R> success,
             Func<string, string, R> tokenExpired,
-            Func<string, string, int, R> rateLimitReached,
+            Func<string, string, double, R> rateLimitReached,
             Func<int, string, string, R> failed,
             Func<string, string, R> notFound = null,
             Func<string, string, R> invalidPostcode = null,
@@ -29,7 +29,7 @@ namespace getAddress.Sdk.Api
             {
                 return tokenExpired(response.ReasonPhrase, body);
             }
-            if (response.IsRateLimitReached(out int retrySeconds))
+            if (response.IsRateLimitReached(out double retrySeconds))
             {
                 return rateLimitReached(response.ReasonPhrase, body, retrySeconds);
             }
@@ -75,11 +75,11 @@ namespace getAddress.Sdk.Api
             return httpResponseMessage.Headers.Contains("Retry-After") && (int)httpResponseMessage.StatusCode == 429;
         }
 
-        public static bool IsRateLimitReached(this HttpResponseMessage httpResponseMessage, out int retryAfter)
+        public static bool IsRateLimitReached(this HttpResponseMessage httpResponseMessage, out double retryAfter)
         {
             if (IsRateLimitReached(httpResponseMessage))
             {
-                retryAfter = int.Parse(httpResponseMessage.Headers.GetValues("Retry-After").First());
+                retryAfter = double.Parse(httpResponseMessage.Headers.GetValues("Retry-After").First());
                 return true;
             }
                 retryAfter = 0;

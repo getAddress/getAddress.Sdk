@@ -53,14 +53,14 @@ namespace getAddress.Sdk.Api.Responses
 
         public class RateLimitedReached : Failed
         {
-            public int RetryAfterSeconds { get; }
-            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            public double RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds) : base(429, reasonPhrase, raw)
             {
                 RetryAfterSeconds = retryAfterSeconds;
                 RateLimitReachedResult = this;
                 IsRateLimitReached = true;
             }
-            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
             {
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
@@ -111,14 +111,14 @@ namespace getAddress.Sdk.Api.Responses
 
         public class RateLimitedReached : Failed
         {
-            public int RetryAfterSeconds { get; }
-            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            public double RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds) : base(429, reasonPhrase, raw)
             {
                 RetryAfterSeconds = retryAfterSeconds;
                 RateLimitReachedResult = this;
                 IsRateLimitReached = true;
             }
-            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
             {
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
@@ -171,14 +171,14 @@ namespace getAddress.Sdk.Api.Responses
 
         public class RateLimitedReached : Failed
         {
-            public int RetryAfterSeconds { get; }
-            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            public double RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds) : base(429, reasonPhrase, raw)
             {
                 RetryAfterSeconds = retryAfterSeconds;
                 RateLimitReachedResult = this;
                 IsRateLimitReached = true;
             }
-            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
             {
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
@@ -230,14 +230,14 @@ namespace getAddress.Sdk.Api.Responses
 
         public class RateLimitedReached : Failed
         {
-            public int RetryAfterSeconds { get; }
-            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            public double RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds) : base(429, reasonPhrase, raw)
             {
                 RetryAfterSeconds = retryAfterSeconds;
                 RateLimitReachedResult = this;
                 IsRateLimitReached = true;
             }
-            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
             {
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
@@ -290,14 +290,14 @@ namespace getAddress.Sdk.Api.Responses
 
         public class RateLimitedReached : Failed
         {
-            public int RetryAfterSeconds { get; }
-            public RateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds) : base(429, reasonPhrase, raw)
+            public double RetryAfterSeconds { get; }
+            public RateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds) : base(429, reasonPhrase, raw)
             {
                 RetryAfterSeconds = retryAfterSeconds;
                 RateLimitReachedResult = this;
                 IsRateLimitReached = true;
             }
-            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, int retryAfterSeconds)
+            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
             {
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }

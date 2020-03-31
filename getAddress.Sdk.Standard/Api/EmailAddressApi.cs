@@ -40,7 +40,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, EmailAddressResponse> tokenExpired = (rp, b) => { return new EmailAddressResponse.TokenExpired(rp, b); };
-            Func<string, string, int, EmailAddressResponse> limitReached = (rp, b, r) => { return new EmailAddressResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, EmailAddressResponse> limitReached = (rp, b, r) => { return new EmailAddressResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, EmailAddressResponse> failed = (sc, rp, b) => { return new EmailAddressResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,
@@ -73,7 +73,7 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, EmailAddressResponse> tokenExpired = (rp, b) => { return new EmailAddressResponse.TokenExpired(rp, b); };
-            Func<string, string, int, EmailAddressResponse> limitReached = (rp, b, r) => { return new EmailAddressResponse.RateLimitedReached(rp, b, r); };
+            Func<string, string, double, EmailAddressResponse> limitReached = (rp, b, r) => { return new EmailAddressResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, EmailAddressResponse> failed = (sc, rp, b) => { return new EmailAddressResponse.Failed(sc, rp, b); };
 
             return response.GetResponse(body,
