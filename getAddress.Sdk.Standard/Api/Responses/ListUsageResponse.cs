@@ -12,7 +12,8 @@ public abstract class ListUsageResponse : ResponseBase<
     ListUsageResponse.Success, 
     ListUsageResponse.Failed, 
     ListUsageResponse.TokenExpired,
-    ListUsageResponse.RateLimitedReached>
+    ListUsageResponse.RateLimitedReached,
+    ListUsageResponse.Forbidden>
 {
 
     protected ListUsageResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -72,4 +73,14 @@ public abstract class ListUsageResponse : ResponseBase<
             return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
         }
     }
+
+    public class Forbidden : Failed
+    {
+        public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+        {
+            ForbiddenResult = this;
+            IsForbidden = true;
+        }
+    }
+
 }

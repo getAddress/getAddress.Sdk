@@ -5,7 +5,8 @@ namespace getAddress.Sdk.Api.Responses
         DistanceResponse.Success, 
         DistanceResponse.Failed, 
         DistanceResponse.TokenExpired,
-        DistanceResponse.RateLimitedReached>
+        DistanceResponse.RateLimitedReached,
+        DistanceResponse.Forbidden>
     {
         internal DistanceResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -61,6 +62,15 @@ namespace getAddress.Sdk.Api.Responses
             internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
             {
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
+            }
+        }
+
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
             }
         }
     }

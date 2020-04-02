@@ -3,7 +3,8 @@
     public abstract class AddWebhookResponse : ResponseBase<AddWebhookResponse.Success, 
         AddWebhookResponse.Failed,
         AddWebhookResponse.TokenExpired,
-        AddWebhookResponse.RateLimitedReached>
+        AddWebhookResponse.RateLimitedReached,
+        AddWebhookResponse.Forbidden>
     {
 
         protected AddWebhookResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -88,6 +89,15 @@
             internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
             {
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
+            }
+        }
+
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
             }
         }
 

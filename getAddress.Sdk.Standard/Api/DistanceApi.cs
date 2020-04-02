@@ -43,12 +43,14 @@ namespace getAddress.Sdk.Api
             Func<string, string, DistanceResponse> tokenExpired = (rp, b) => { return new DistanceResponse.TokenExpired(rp, b); };
             Func<string, string, double, DistanceResponse> limitReached = (rp, b, r) => { return new DistanceResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, DistanceResponse> failed = (sc, rp, b) => { return new DistanceResponse.Failed(sc, rp, b); };
+            Func<string, string, DistanceResponse> forbidden = (rp, b) => { return new DistanceResponse.Forbidden(rp, b); };
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed
+                failed,
+                forbidden
                 );
 
         }

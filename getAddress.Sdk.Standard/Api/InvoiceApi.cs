@@ -73,12 +73,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, ListInvoicesResponse> tokenExpired = (rp, b) => { return new ListInvoicesResponse.TokenExpired(rp, b); };
             Func<string, string, double, ListInvoicesResponse> limitReached = (rp, b, r) => { return new ListInvoicesResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, ListInvoicesResponse> failed = (sc, rp, b) => { return new ListInvoicesResponse.Failed(sc, rp, b); };
+            Func<string, string, ListInvoicesResponse> forbidden = (rp, b) => { return new ListInvoicesResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse(body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
 
         }
 
@@ -106,12 +109,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, GetInvoiceResponse> tokenExpired = (rp, b) => { return new GetInvoiceResponse.TokenExpired(rp, b); };
             Func<string, string, double, GetInvoiceResponse> limitReached = (rp, b, r) => { return new GetInvoiceResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, GetInvoiceResponse> failed = (sc, rp, b) => { return new GetInvoiceResponse.Failed(sc, rp, b); };
+            Func<string, string, GetInvoiceResponse> forbidden = (rp, b) => { return new GetInvoiceResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse(body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
         }
 
         private static IEnumerable<Invoice> GetInvoiceList(string body)

@@ -109,15 +109,14 @@ namespace getAddress.Sdk.Tests
 
             Assert.IsTrue(result.IsInvalidPostcode);
 
-            if (result.TryGetInvalidPostcodeResult(out GetAddressResponse.InvalidPostcode invalid))
+            if (result.TryGetInvalidPostcode(out GetAddressResponse.InvalidPostcode invalid))
             {
                 Assert.IsNotNull(invalid);
             }
         }
 
-
         [TestMethod]
-        public async Task GivenTooManyRequests_GetReturnsRateLimitReachedResult()
+        public async Task GivenLimitReachedPostcode_GetReturnsLimitReachedResult()
         {
             var apiKey = KeyHelper.GetApiKey();
 
@@ -129,14 +128,37 @@ namespace getAddress.Sdk.Tests
 
             var result = await addressService.Get(new GetAddressRequest("XX4 29X"));
 
-            //Assert.IsTrue(result.IsInvalidPostcode);
+            Assert.IsTrue(result.IsLimitReached);
 
-            //if (result.TryGetInvalidPostcodeResult(out GetAddressResponse.InvalidPostcode invalid))
-            //{
-            //    Assert.IsNotNull(invalid);
-            //}
+            if (result.TryGetLimitReached(out GetAddressResponse.LimitReached limitReach))
+            {
+                Assert.IsNotNull(limitReach);
+            }
         }
 
+        [TestMethod]
+        public async Task GivenForbiddenPostcode_GetReturnsForbiddenResult()
+        {
+            var apiKey = KeyHelper.GetApiKey();
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            var addressService = new AddressService(apiKey, httpClient);
+
+            var result = await addressService.Get(new GetAddressRequest("XX4 03X"));
+
+            Assert.IsTrue(result.IsForbidden);
+
+            if (result.TryGetForbidden(out GetAddressResponse.Forbidden forbidden))
+            {
+                Assert.IsNotNull(forbidden);
+            }
+        }
+
+
+      
         [TestMethod]
         public async Task GivenUnknownPostcode_GetReturnsNotFound()
         {
@@ -152,7 +174,7 @@ namespace getAddress.Sdk.Tests
 
             Assert.IsTrue(result.IsNotFound);
 
-            if (result.TryGetNotFoundResult(out GetAddressResponse.NotFound notFound))
+            if (result.TryGetNotFound(out GetAddressResponse.NotFound notFound))
             {
                 Assert.IsNotNull(notFound);
             }
@@ -174,7 +196,7 @@ namespace getAddress.Sdk.Tests
            
             Assert.IsTrue(result.IsExpired);
 
-            if (result.TryGetExpiredResult(out GetAddressResponse.AccountExpired accountExpired))
+            if (result.TryGetExpired(out GetAddressResponse.AccountExpired accountExpired))
             {
                 Assert.IsNotNull(accountExpired);
             }

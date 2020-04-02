@@ -1,7 +1,9 @@
 ﻿namespace getAddress.Sdk.Api.Responses
 {
     public abstract class AddInvoiceCCResponse : ResponseBase<AddInvoiceCCResponse.Success, 
-        AddInvoiceCCResponse.Failed,AddInvoiceCCResponse.TokenExpired, AddInvoiceCCResponse.RateLimitedReached>
+        AddInvoiceCCResponse.Failed,AddInvoiceCCResponse.TokenExpired, 
+        AddInvoiceCCResponse.RateLimitedReached,
+        AddInvoiceCCResponse.Forbidden>
     {
         protected AddInvoiceCCResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -58,6 +60,15 @@
             internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
             {
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
+            }
+        }
+
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
             }
         }
     }

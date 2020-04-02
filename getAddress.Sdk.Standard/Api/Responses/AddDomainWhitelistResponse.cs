@@ -3,7 +3,9 @@
 namespace getAddress.Sdk.Api.Responses
 {
     public abstract class AddDomainWhitelistResponse: ResponseBase<AddDomainWhitelistResponse.Success,
-        AddDomainWhitelistResponse.Failed,AddDomainWhitelistResponse.TokenExpired, AddDomainWhitelistResponse.RateLimitedReached>
+        AddDomainWhitelistResponse.Failed,AddDomainWhitelistResponse.TokenExpired, 
+        AddDomainWhitelistResponse.RateLimitedReached,
+        AddDomainWhitelistResponse.Forbidden>
     {
 
         protected AddDomainWhitelistResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
@@ -65,6 +67,15 @@ namespace getAddress.Sdk.Api.Responses
             internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
             {
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
+            }
+        }
+
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
             }
         }
     }

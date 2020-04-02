@@ -6,12 +6,29 @@ namespace getAddress.Sdk.Api.Responses
         GetExpandedAddressResponse.Success, 
         GetExpandedAddressResponse.Failed, 
         GetExpandedAddressResponse.TokenExpired,
-        GetExpandedAddressResponse.RateLimitedReached>
+        GetExpandedAddressResponse.RateLimitedReached,
+        GetExpandedAddressResponse.Forbidden>
     {
 
         protected GetExpandedAddressResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
+        }
+
+
+        public bool IsLimitReached { get; private set; }
+        public LimitReached LimitReachedResult { get; private set; }
+
+        public bool TryGetLimitReachedResult(out LimitReached limitReachedResult)
+        {
+            if (IsLimitReached)
+            {
+                limitReachedResult = LimitReachedResult;
+                return true;
+            }
+
+            limitReachedResult = default;
+            return false;
         }
 
         public bool IsNotFound { get; private set; }
@@ -132,6 +149,23 @@ namespace getAddress.Sdk.Api.Responses
             {
                 AccountExpiredResult = this;
                 IsExpired = true;
+            }
+        }
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
+            }
+        }
+
+        public class LimitReached : Failed
+        {
+            public LimitReached(string reasonPhrase, string raw) : base(429, reasonPhrase, raw)
+            {
+                LimitReachedResult = this;
+                IsLimitReached = true;
             }
         }
 

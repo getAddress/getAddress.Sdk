@@ -1,254 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public class RemovePermissionResponse : ResponseBase<RemovePermissionResponse.Success,
-        RemovePermissionResponse.Failed, 
-        RemovePermissionResponse.TokenExpired,
-        RemovePermissionResponse.RateLimitedReached>
-    {
-        internal RemovePermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
-        {
-        }
-
-        public class Success : RemovePermissionResponse
-        {
-            public string Message { get; }
-
-            public Success(int statusCode, string reasonPhrase, string raw, string message) : base(statusCode, reasonPhrase, raw, true)
-            {
-                SuccessfulResult = this;
-                Message = message;
-            }
-        }
-
-        public class Failed : RemovePermissionResponse
-        {
-            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
-            {
-                FailedResult = this;
-            }
-
-            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
-            {
-                return new Failed(statusCode, reasonPhrase, raw);
-            }
-        }
-
-        public class TokenExpired : Failed
-        {
-            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
-            {
-                TokenExpiredResult = this;
-                IsTokenExpired = true;
-            }
-
-            internal static TokenExpired NewTokenExpired(string reasonPhrase, string raw)
-            {
-                return new TokenExpired(reasonPhrase, raw);
-            }
-        }
-
-        public class RateLimitedReached : Failed
-        {
-            public double RetryAfterSeconds { get; }
-            public RateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds) : base(429, reasonPhrase, raw)
-            {
-                RetryAfterSeconds = retryAfterSeconds;
-                RateLimitReachedResult = this;
-                IsRateLimitReached = true;
-            }
-            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
-            {
-                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
-            }
-        }
-    }
-
-    public class AddPermissionResponse : ResponseBase<
-        AddPermissionResponse.Success, 
-        AddPermissionResponse.Failed, 
-        AddPermissionResponse.TokenExpired,
-        AddPermissionResponse.RateLimitedReached>
-    {
-        internal AddPermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
-        {
-        }
-
-        public class Success : AddPermissionResponse
-        {
-            public string Message { get; }
-
-            internal Success(int statusCode, string reasonPhrase, string raw, string message) : base(statusCode, reasonPhrase, raw, true)
-            {
-                SuccessfulResult = this;
-                Message = message;
-            }
-        }
-
-
-        public class Failed : AddPermissionResponse
-        {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
-            {
-                FailedResult = this;
-            }
-            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
-            {
-                return new Failed(statusCode, reasonPhrase, raw);
-            }
-        }
-        public class TokenExpired : Failed
-        {
-            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
-            {
-                TokenExpiredResult = this;
-                IsTokenExpired = true;
-            }
-        }
-
-        public class RateLimitedReached : Failed
-        {
-            public double RetryAfterSeconds { get; }
-            public RateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds) : base(429, reasonPhrase, raw)
-            {
-                RetryAfterSeconds = retryAfterSeconds;
-                RateLimitReachedResult = this;
-                IsRateLimitReached = true;
-            }
-            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
-            {
-                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
-            }
-        }
-    }
-
-    public class UpdatePermissionResponse : ResponseBase<
-        UpdatePermissionResponse.Success, 
-        UpdatePermissionResponse.Failed, 
-        UpdatePermissionResponse.TokenExpired,
-        UpdatePermissionResponse.RateLimitedReached>
-    {
-        internal UpdatePermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
-        {
-        }
-
-        public class Success : UpdatePermissionResponse
-        {
-            public string Message { get; }
-
-            internal Success(int statusCode, string reasonPhrase, string raw, string message) : base(statusCode, reasonPhrase, raw, true)
-            {
-                SuccessfulResult = this;
-                Message = message;
-            }
-        }
-
-
-        public class Failed : UpdatePermissionResponse
-        {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
-            {
-                FailedResult = this;
-            }
-
-            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
-            {
-                return new Failed(statusCode, reasonPhrase, raw);
-            }
-        }
-
-        public class TokenExpired : Failed
-        {
-            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
-            {
-                TokenExpiredResult = this;
-                IsTokenExpired = true;
-            }
-        }
-
-        public class RateLimitedReached : Failed
-        {
-            public double RetryAfterSeconds { get; }
-            public RateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds) : base(429, reasonPhrase, raw)
-            {
-                RetryAfterSeconds = retryAfterSeconds;
-                RateLimitReachedResult = this;
-                IsRateLimitReached = true;
-            }
-            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
-            {
-                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
-            }
-        }
-    }
-
-    public class ListPermissionResponse : ResponseBase<
-        ListPermissionResponse.Success, 
-        ListPermissionResponse.Failed, 
-        ListPermissionResponse.TokenExpired,
-        ListPermissionResponse.RateLimitedReached>
-    {
-        internal ListPermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
-        {
-        }
-
-        public class Success : ListPermissionResponse
-        {
-            public IEnumerable<Permission> Permissions { get; }
-
-            internal Success(int statusCode, string reasonPhrase, string raw, IEnumerable<Permission> permissions) : base(statusCode, reasonPhrase, raw, true)
-            {
-                SuccessfulResult = this;
-                Permissions = permissions;
-            }
-        }
-
-        public class Failed : ListPermissionResponse
-        {
-            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
-            {
-                FailedResult = this;
-            }
-
-            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
-            {
-                return new Failed(statusCode, reasonPhrase, raw);
-            }
-        }
-
-        public class TokenExpired : Failed
-        {
-            public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
-            {
-                TokenExpiredResult = this;
-                IsTokenExpired = true;
-            }
-        }
-
-        public class RateLimitedReached : Failed
-        {
-            public double RetryAfterSeconds { get; }
-            public RateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds) : base(429, reasonPhrase, raw)
-            {
-                RetryAfterSeconds = retryAfterSeconds;
-                RateLimitReachedResult = this;
-                IsRateLimitReached = true;
-            }
-            internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
-            {
-                return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
-            }
-        }
-    }
 
     public class PermissionResponse : ResponseBase<
         PermissionResponse.Success, 
         PermissionResponse.Failed, 
         PermissionResponse.TokenExpired,
-        PermissionResponse.RateLimitedReached>
+        PermissionResponse.RateLimitedReached,
+        PermissionResponse.Forbidden>
     {
         internal PermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -302,6 +63,16 @@ namespace getAddress.Sdk.Api.Responses
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
         }
+
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
+            }
+        }
+
     }
 
     public class Permissions

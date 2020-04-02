@@ -42,11 +42,15 @@ namespace getAddress.Sdk.Api
                 return new AddPrivateAddressResponse.Success(statusCode,phrase, json, messageAndId.Message, messageAndId.Id);
             };
 
+            Func<string, string, AddPrivateAddressResponse> forbidden = (rp, b) => { return new AddPrivateAddressResponse.Forbidden(rp, b); };
+
+
             return response.GetResponse(body,
                 success,
                 AddPrivateAddressResponse.TokenExpired.NewTokenExpired,
                 AddPrivateAddressResponse.RateLimitedReached.NewRateLimitedReached,
-                AddPrivateAddressResponse.Failed.NewFailed
+                AddPrivateAddressResponse.Failed.NewFailed,
+                forbidden
                 );
 
         }
@@ -72,11 +76,15 @@ namespace getAddress.Sdk.Api
 
             var body = await response.Content.ReadAsStringAsync();
 
+            Func<string, string, RemovePrivateAddressResponse> forbidden = (rp, b) => { return new RemovePrivateAddressResponse.Forbidden(rp, b); };
+
+
             return response.GetResponse<RemovePrivateAddressResponse>(body,
                 RemovePrivateAddressResponse.Success.NewSuccess,
                 RemovePrivateAddressResponse.TokenExpired.NewTokenExpired,
                 RemovePrivateAddressResponse.RateLimitedReached.NewRateLimitedReached,
-                RemovePrivateAddressResponse.Failed.NewFailed
+                RemovePrivateAddressResponse.Failed.NewFailed,
+                forbidden
                 );
 
         }
@@ -108,11 +116,16 @@ namespace getAddress.Sdk.Api
                 return ListPrivateAddressResponse.Success.NewSuccess (statusCode, phrase, json, addresses);
             };
 
+
+            Func<string, string, ListPrivateAddressResponse> forbidden = (rp, b) => { return new ListPrivateAddressResponse.Forbidden(rp, b); };
+
+
             return response.GetResponse<ListPrivateAddressResponse>(body,
                 success,
                 ListPrivateAddressResponse.TokenExpired.NewTokenExpired,
                 ListPrivateAddressResponse.RateLimitedReached.NewRateLimitedReached,
-                ListPrivateAddressResponse.Failed.NewFailed
+                ListPrivateAddressResponse.Failed.NewFailed,
+                forbidden
                 );
         }
 
@@ -143,11 +156,15 @@ namespace getAddress.Sdk.Api
                 return GetPrivateAddressResponse.Success.NewSuccess(statusCode, phrase, json, address);
             };
 
+            Func<string, string, GetPrivateAddressResponse> forbidden = (rp, b) => { return new GetPrivateAddressResponse.Forbidden(rp, b); };
+
+
             return response.GetResponse<GetPrivateAddressResponse>(body,
                 success,
                 GetPrivateAddressResponse.TokenExpired.NewTokenExpired,
                 GetPrivateAddressResponse.RateLimitedReached.NewRateLimitedReached,
-                GetPrivateAddressResponse.Failed.NewFailed
+                GetPrivateAddressResponse.Failed.NewFailed,
+                forbidden
                 );
         }
 

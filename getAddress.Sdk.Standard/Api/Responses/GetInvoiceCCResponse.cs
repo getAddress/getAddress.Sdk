@@ -6,7 +6,8 @@ namespace getAddress.Sdk.Api.Responses
         GetInvoiceCCResponse.Success, 
         GetInvoiceCCResponse.Failed, 
         GetInvoiceCCResponse.TokenExpired,
-        GetInvoiceCCResponse.RateLimitedReached>
+        GetInvoiceCCResponse.RateLimitedReached,
+        GetInvoiceCCResponse.Forbidden>
     {
 
         protected GetInvoiceCCResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess)
@@ -69,6 +70,16 @@ namespace getAddress.Sdk.Api.Responses
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
         }
+
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
+            }
+        }
+
     }
 }
 

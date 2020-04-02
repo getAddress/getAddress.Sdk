@@ -1,36 +1,43 @@
-﻿
-
-namespace getAddress.Sdk.Api.Responses
+﻿namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class AddIpAddressWhitelistResponse: ResponseBase<AddIpAddressWhitelistResponse.Success,
-        AddIpAddressWhitelistResponse.Failed,
-        AddIpAddressWhitelistResponse.TokenExpired, 
-        AddIpAddressWhitelistResponse.RateLimitedReached,
-        AddIpAddressWhitelistResponse.Forbidden>
+    public abstract class GetUsageResponse : ResponseBase<
+        GetUsageResponse.Success,
+        GetUsageResponse.Failed, 
+        GetUsageResponse.TokenExpired,
+        GetUsageResponse.RateLimitedReached,
+        GetUsageResponse.Forbidden>
     {
 
-        protected AddIpAddressWhitelistResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
+        protected GetUsageResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
+
         }
 
-
-        public class Success : AddIpAddressWhitelistResponse
+        public class Success : GetUsageResponse
         {
-            public string Message { get; }
+            public Usage Usage { get; set; }
 
-            public string Id { get; }
-
-            public Success(int statusCode, string reasonPhrase, string raw, string message, string id):base(statusCode, reasonPhrase, raw,true)
+            public Success(int statusCode, string reasonPhrase, string raw, Usage usage) : base(statusCode, reasonPhrase, raw, true)
             {
-                Message = message;
-                Id = id;
+                Usage = usage;
                 SuccessfulResult = this;
+            }
+
+
+            public Success(int statusCode, string reasonPhrase, string raw, int counter, int limit1, int limit2) : this(statusCode, reasonPhrase, raw, 
+                new Usage
+            {
+                Count = counter,
+                Limit1 = limit1,
+                Limit2 = limit2
+            })
+            { 
             }
         }
 
-        public class Failed : AddIpAddressWhitelistResponse
+        public class Failed : GetUsageResponse
         {
-            public Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
+            public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                    FailedResult = this;
             }
@@ -40,12 +47,12 @@ namespace getAddress.Sdk.Api.Responses
                 return new Failed(statusCode, reasonPhrase, raw);
             }
         }
+
         public class TokenExpired : Failed
         {
             public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
             {
-                TokenExpiredResult = this;
-                IsTokenExpired = true;
+                FailedResult = this;
             }
 
             internal static TokenExpired NewTokenExpired(string reasonPhrase, string raw)
@@ -77,5 +84,7 @@ namespace getAddress.Sdk.Api.Responses
                 IsForbidden = true;
             }
         }
+
     }
+
 }

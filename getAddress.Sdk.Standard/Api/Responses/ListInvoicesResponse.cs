@@ -6,7 +6,8 @@ namespace getAddress.Sdk.Api.Responses
         ListInvoicesResponse.Success,
         ListInvoicesResponse.Failed, 
         ListInvoicesResponse.TokenExpired,
-        ListInvoicesResponse.RateLimitedReached>
+        ListInvoicesResponse.RateLimitedReached,
+        ListInvoicesResponse.Forbidden>
     {
         protected ListInvoicesResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
         {
@@ -62,5 +63,15 @@ namespace getAddress.Sdk.Api.Responses
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
         }
+
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
+            }
+        }
+
     }
 }

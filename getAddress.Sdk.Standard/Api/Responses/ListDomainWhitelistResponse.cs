@@ -6,7 +6,8 @@ namespace getAddress.Sdk.Api.Responses
         ListDomainWhitelistResponse.Success,
         ListDomainWhitelistResponse.Failed, 
         ListDomainWhitelistResponse.TokenExpired,
-        ListDomainWhitelistResponse.RateLimitedReached>
+        ListDomainWhitelistResponse.RateLimitedReached,
+        ListDomainWhitelistResponse.Forbidden>
     {
         protected ListDomainWhitelistResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
         {
@@ -60,5 +61,15 @@ namespace getAddress.Sdk.Api.Responses
                 IsRateLimitReached = true;
             }
         }
+
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
+            }
+        }
+
     }
 }

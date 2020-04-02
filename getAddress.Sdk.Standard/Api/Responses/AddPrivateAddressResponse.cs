@@ -6,7 +6,8 @@ namespace getAddress.Sdk.Api.Responses
         AddPrivateAddressResponse.Success,
         AddPrivateAddressResponse.Failed, 
         AddPrivateAddressResponse.TokenExpired,
-        AddPrivateAddressResponse.RateLimitedReached>
+        AddPrivateAddressResponse.RateLimitedReached,
+        AddPrivateAddressResponse.Forbidden>
     {
         protected AddPrivateAddressResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
         {
@@ -66,6 +67,15 @@ namespace getAddress.Sdk.Api.Responses
             internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
             {
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
+            }
+        }
+
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
             }
         }
     }

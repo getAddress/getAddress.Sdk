@@ -52,12 +52,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, PermissionResponse> tokenExpired = (rp, b) => { return new PermissionResponse.TokenExpired(rp, b); };
             Func<string, string, double, PermissionResponse> limitReached = (rp, b, r) => { return new PermissionResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, PermissionResponse> failed = (sc, rp, b) => { return new PermissionResponse.Failed(sc, rp, b); };
+            Func<string, string, PermissionResponse> forbidden = (rp, b) => { return new PermissionResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
         }
 
         public async Task<ListPermissionResponse> List()
@@ -88,11 +91,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, double, ListPermissionResponse> limitReached = (rp, b, r) => { return new ListPermissionResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, ListPermissionResponse> failed = (sc, rp, b) => { return new ListPermissionResponse.Failed(sc, rp, b); };
 
+            Func<string, string, ListPermissionResponse> forbidden = (rp, b) => { return new ListPermissionResponse.Forbidden(rp, b); };
+
+
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
 
         }
 
@@ -122,12 +129,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, UpdatePermissionResponse> tokenExpired = (rp, b) => { return new UpdatePermissionResponse.TokenExpired(rp, b); };
             Func<string, string, double, UpdatePermissionResponse> limitReached = (rp, b, r) => { return new UpdatePermissionResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, UpdatePermissionResponse> failed = (sc, rp, b) => { return new UpdatePermissionResponse.Failed(sc, rp, b); };
+            Func<string, string, UpdatePermissionResponse> forbidden = (rp, b) => { return new UpdatePermissionResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse(body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
 
         }
 
@@ -157,12 +167,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, AddPermissionResponse> tokenExpired = (rp, b) => { return new AddPermissionResponse.TokenExpired(rp, b); };
             Func<string, string, double, AddPermissionResponse> limitReached = (rp, b, r) => { return new AddPermissionResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, AddPermissionResponse> failed = (sc, rp, b) => { return new AddPermissionResponse.Failed(sc, rp, b); };
+            Func<string, string, AddPermissionResponse> forbidden = (rp, b) => { return new AddPermissionResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
 
         }
 
@@ -195,12 +208,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, RemovePermissionResponse> tokenExpired = (rp, b) => { return new RemovePermissionResponse.TokenExpired(rp, b); };
             Func<string, string, double, RemovePermissionResponse> limitReached = (rp, b, r) => { return new RemovePermissionResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, RemovePermissionResponse> failed = (sc, rp, b) => { return new RemovePermissionResponse.Failed(sc, rp, b); };
+            Func<string, string, RemovePermissionResponse> forbidden = (rp, b) => { return new RemovePermissionResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
 
         }
 

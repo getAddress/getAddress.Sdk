@@ -12,7 +12,8 @@ namespace getAddress.Sdk.Api.Responses
         GetDomainWhitelistResponse.Success,
         GetDomainWhitelistResponse.Failed, 
         GetDomainWhitelistResponse.TokenExpired,
-        GetDomainWhitelistResponse.RateLimitedReached>
+        GetDomainWhitelistResponse.RateLimitedReached,
+        GetDomainWhitelistResponse.Forbidden>
     {
 
         protected GetDomainWhitelistResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
@@ -76,6 +77,13 @@ namespace getAddress.Sdk.Api.Responses
             }
         }
 
-
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
+            }
+        }
     }
 }

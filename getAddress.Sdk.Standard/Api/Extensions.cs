@@ -15,9 +15,11 @@ namespace getAddress.Sdk.Api
             Func<string, string, R> tokenExpired,
             Func<string, string, double, R> rateLimitReached,
             Func<int, string, string, R> failed,
+            Func<string, string, R> forbidden,
             Func<string, string, R> notFound = null,
             Func<string, string, R> invalidPostcode = null,
-            Func<string, string, R> accountExpired = null
+            Func<string, string, R> accountExpired = null,
+            Func<string, string, R> limitReached = null
             )
         {
 
@@ -33,6 +35,10 @@ namespace getAddress.Sdk.Api
             {
                 return rateLimitReached(response.ReasonPhrase, body, retrySeconds);
             }
+            if (response.IsForbidden())
+            {
+                return forbidden(response.ReasonPhrase, body);
+            }
             if (notFound != null && response.IsNotFound())
             {
                 return notFound(response.ReasonPhrase, body);
@@ -44,6 +50,10 @@ namespace getAddress.Sdk.Api
             if (accountExpired != null && response.HasAccountExpired())
             {
                 return accountExpired(response.ReasonPhrase, body);
+            }
+            if (limitReached != null && response.IsLimitReached())
+            {
+                return limitReached(response.ReasonPhrase, body);
             }
 
             return failed((int)response.StatusCode, response.ReasonPhrase, body);
@@ -65,6 +75,11 @@ namespace getAddress.Sdk.Api
             return httpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound;
         }
 
+        public static bool IsForbidden(this HttpResponseMessage httpResponseMessage)
+        {
+            return httpResponseMessage.StatusCode == System.Net.HttpStatusCode.Forbidden;
+        }
+
         public static bool IsInvalidPostcode(this HttpResponseMessage httpResponseMessage)
         {
             return httpResponseMessage.Headers.Contains("Invalid-Postcode") && httpResponseMessage.StatusCode == System.Net.HttpStatusCode.BadRequest;
@@ -73,6 +88,12 @@ namespace getAddress.Sdk.Api
         public static bool IsRateLimitReached(this HttpResponseMessage httpResponseMessage)
         {
             return httpResponseMessage.Headers.Contains("Retry-After") && (int)httpResponseMessage.StatusCode == 429;
+        }
+
+       
+        public static bool IsLimitReached(this HttpResponseMessage httpResponseMessage)
+        {
+            return httpResponseMessage.Headers.Contains("Limit-Reached") && (int)httpResponseMessage.StatusCode == 429;
         }
 
         public static bool IsRateLimitReached(this HttpResponseMessage httpResponseMessage, out double retryAfter)

@@ -1,42 +1,55 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class RefreshTokenResponse : ResponseBase<
-        RefreshTokenResponse.Success, 
-        RefreshTokenResponse.Failed, 
-        RefreshTokenResponse.TokenExpired,
-        RefreshTokenResponse.RateLimitedReached,
-        RefreshTokenResponse.Forbidden>
+    public abstract class ListWebhookResponse : ResponseBase<
+        ListWebhookResponse.Success, 
+        ListWebhookResponse.Failed, 
+        ListWebhookResponse.TokenExpired,
+        ListWebhookResponse.RateLimitedReached,
+        ListWebhookResponse.Forbidden>
     {
-        protected RefreshTokenResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
+
+        protected ListWebhookResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
         }
 
-        public class Success : RefreshTokenResponse
+        public ListFirstLimitReachedWebhookResponse FormerResult()
         {
-
-            public Success(int statusCode, string reasonPhrase, string raw, AccessToken accessToken, RefreshToken refreshToken) : base(statusCode, reasonPhrase, raw, true)
+            if (this.IsSuccess)
             {
-                SuccessfulResult = this;
-                Access = accessToken ?? throw new ArgumentNullException(nameof(accessToken));
-                RefreshToken = refreshToken ?? throw new ArgumentNullException(nameof(refreshToken));
+                return new ListFirstLimitReachedWebhookResponse.Success(SuccessfulResult.StatusCode,
+                    SuccessfulResult.ReasonPhrase, SuccessfulResult.Raw, this.SuccessfulResult.Webhooks.Select(w => new FirstLimitReachedWebhook {
+                        Id = w.Id,
+                        Url = w.Url
+                    }));
             }
-
-            public AccessToken Access { get; }
-            public RefreshToken RefreshToken { get; }
+            else
+            {
+                return new ListFirstLimitReachedWebhookResponse.Failed(SuccessfulResult.StatusCode,
+                    SuccessfulResult.ReasonPhrase, SuccessfulResult.Raw);
+            }
         }
 
-        public class Failed : RefreshTokenResponse
+
+        public class Success : ListWebhookResponse
+        {
+            public IEnumerable<Webhook> Webhooks { get; }
+
+            public Success(int statusCode, string reasonPhrase, string raw, IEnumerable<Webhook> webhooks) : base(statusCode, reasonPhrase, raw, true)
+            {
+                Webhooks = webhooks;
+                SuccessfulResult = this;
+            }
+        }
+
+        public class Failed : ListWebhookResponse
         {
             public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
-            }
-            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
-            {
-                return new Failed(statusCode, reasonPhrase, raw);
             }
         }
 
@@ -46,10 +59,6 @@ namespace getAddress.Sdk.Api.Responses
             {
                 TokenExpiredResult = this;
                 IsTokenExpired = true;
-            }
-            internal static TokenExpired NewTokenExpired(string reasonPhrase, string raw)
-            {
-                return new TokenExpired(reasonPhrase, raw);
             }
         }
 

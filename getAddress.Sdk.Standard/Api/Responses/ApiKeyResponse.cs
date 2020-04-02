@@ -6,7 +6,8 @@ namespace getAddress.Sdk.Api.Responses
         ApiKeyResponse.Success,
         ApiKeyResponse.Failed,
         ApiKeyResponse.TokenExpired,
-        ApiKeyResponse.RateLimitedReached>
+        ApiKeyResponse.RateLimitedReached,
+        ApiKeyResponse.Forbidden>
     {
         internal ApiKeyResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -59,6 +60,15 @@ namespace getAddress.Sdk.Api.Responses
                 RetryAfterSeconds = retryAfterSeconds;
                 RateLimitReachedResult = this;
                 IsRateLimitReached = true;
+            }
+        }
+
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
             }
         }
     }

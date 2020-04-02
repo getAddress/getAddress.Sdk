@@ -3,7 +3,8 @@
     public abstract class AddFirstLimitReachedWebhookResponse : ResponseBase<AddFirstLimitReachedWebhookResponse.Success,
         AddFirstLimitReachedWebhookResponse.Failed, 
         AddFirstLimitReachedWebhookResponse.TokenExpired,
-        AddFirstLimitReachedWebhookResponse.RateLimitedReached>
+        AddFirstLimitReachedWebhookResponse.RateLimitedReached,
+        AddFirstLimitReachedWebhookResponse.Forbidden>
     {
 
         protected AddFirstLimitReachedWebhookResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -65,6 +66,16 @@
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
         }
+
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
+            }
+        }
+
 
         private int ToInt(string id) {
 

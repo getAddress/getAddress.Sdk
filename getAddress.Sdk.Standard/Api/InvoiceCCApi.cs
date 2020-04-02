@@ -64,12 +64,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, AddInvoiceCCResponse> tokenExpired = (rp, b) => { return new AddInvoiceCCResponse.TokenExpired(rp, b); };
             Func<string, string, double, AddInvoiceCCResponse> limitReached = (rp, b, r) => { return new AddInvoiceCCResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, AddInvoiceCCResponse> failed = (sc, rp, b) => { return new AddInvoiceCCResponse.Failed(sc, rp, b); };
+            Func<string, string, AddInvoiceCCResponse> forbidden = (rp, b) => { return new AddInvoiceCCResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
 
         }
 
@@ -102,12 +105,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, RemoveInvoiceCCResponse> tokenExpired = (rp, b) => { return new RemoveInvoiceCCResponse.TokenExpired(rp, b); };
             Func<string, string, double, RemoveInvoiceCCResponse> limitReached = (rp, b, r) => { return new RemoveInvoiceCCResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, RemoveInvoiceCCResponse> failed = (sc, rp, b) => { return new RemoveInvoiceCCResponse.Failed(sc, rp, b); };
+            Func<string, string, RemoveInvoiceCCResponse> forbidden = (rp, b) => { return new RemoveInvoiceCCResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse(body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed
+                failed,
+                forbidden
                 );
 
         }
@@ -138,12 +144,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, ListInvoiceCCResponse> tokenExpired = (rp, b) => { return new ListInvoiceCCResponse.TokenExpired(rp, b); };
             Func<string, string, double, ListInvoiceCCResponse> limitReached = (rp, b, r) => { return new ListInvoiceCCResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, ListInvoiceCCResponse> failed = (sc, rp, b) => { return new ListInvoiceCCResponse.Failed(sc, rp, b); };
+            Func<string, string, ListInvoiceCCResponse> forbidden = (rp, b) => { return new ListInvoiceCCResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse(body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
         }
 
         private async static Task<GetInvoiceCCResponse> GetCCInternal(GetAddesssApi api, string path, AdminKey adminKey, long id)
@@ -169,12 +178,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, GetInvoiceCCResponse> tokenExpired = (rp, b) => { return new GetInvoiceCCResponse.TokenExpired(rp, b); };
             Func<string, string, double, GetInvoiceCCResponse> limitReached = (rp, b, r) => { return new GetInvoiceCCResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, GetInvoiceCCResponse> failed = (sc, rp, b) => { return new GetInvoiceCCResponse.Failed(sc, rp, b); };
+            Func<string, string, GetInvoiceCCResponse> forbidden = (rp, b) => { return new GetInvoiceCCResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
 
         }
        

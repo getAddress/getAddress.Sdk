@@ -52,15 +52,19 @@ namespace getAddress.Sdk.Api
             Func<string, string,GetAddressResponse> notFound =  (rp,b) => { return new GetAddressResponse.NotFound(rp, b); };
             Func<string, string, GetAddressResponse> invalidPostcode = (rp, b) => { return new GetAddressResponse.InvalidPostcode(rp, b); };
             Func<string, string, GetAddressResponse> accountExpired = (rp, b) => { return new GetAddressResponse.AccountExpired(rp, b); };
+            Func<string, string, GetAddressResponse> forbidden = (rp, b) => { return new GetAddressResponse.Forbidden(rp, b); };
+            Func<string, string, GetAddressResponse> limitReached = (rp, b) => { return new GetAddressResponse.LimitReached(rp, b); };
 
             return response.GetResponse(body,
                 success,
                 tokenExpired,
                 GetAddressResponse.RateLimitedReached.NewRateLimitedReached,
                 GetAddressResponse.Failed.NewFailed,
+                forbidden,
                 notFound:notFound,
                 invalidPostcode: invalidPostcode,
-                accountExpired: accountExpired
+                accountExpired: accountExpired,
+                limitReached:limitReached
                 );
 
 
@@ -126,15 +130,19 @@ namespace getAddress.Sdk.Api
             Func<string, string, GetExpandedAddressResponse> notFound = (rp, b) => { return new GetExpandedAddressResponse.NotFound(rp, b); };
             Func<string, string, GetExpandedAddressResponse> invalidPostcode = (rp, b) => { return new GetExpandedAddressResponse.InvalidPostcode(rp, b); };
             Func<string, string, GetExpandedAddressResponse> accountExpired = (rp, b) => { return new GetExpandedAddressResponse.AccountExpired(rp, b); };
+            Func<string, string, GetExpandedAddressResponse> forbidden = (rp, b) => { return new GetExpandedAddressResponse.Forbidden(rp, b); };
+            Func<string, string, GetExpandedAddressResponse> limitReached = (rp, b) => { return new GetExpandedAddressResponse.LimitReached(rp, b); };
 
             return response.GetResponse(body,
                 success,
                 tokenExpired,
                 GetExpandedAddressResponse.RateLimitedReached.NewRateLimitedReached,
                 GetExpandedAddressResponse.Failed.NewFailed,
+                forbidden,
                 notFound: notFound,
                 invalidPostcode: invalidPostcode,
-                accountExpired: accountExpired
+                accountExpired: accountExpired,
+                limitReached: limitReached
                 );
 
         }
@@ -175,13 +183,17 @@ namespace getAddress.Sdk.Api
             };
 
             Func<string, string, PlaceDetailsResponse> tokenExpired = (rp, b) => { return new PlaceDetailsResponse.TokenExpired(rp, b); };
+            Func<string, string, PlaceDetailsResponse> forbidden = (rp, b) => { return new PlaceDetailsResponse.Forbidden(rp, b); };
+            Func<string, string, PlaceDetailsResponse> limitReached = (rp, b) => { return new PlaceDetailsResponse.LimitReached(rp, b); };
 
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 PlaceDetailsResponse.RateLimitedReached.NewRateLimitedReached,
-                PlaceDetailsResponse.Failed.NewFailed
+                PlaceDetailsResponse.Failed.NewFailed,
+                forbidden,
+                limitReached:limitReached
                 );
 
         }

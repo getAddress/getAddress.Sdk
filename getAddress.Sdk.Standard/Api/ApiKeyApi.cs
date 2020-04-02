@@ -41,12 +41,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, ApiKeyResponse> tokenExpired = (rp, b) => { return new ApiKeyResponse.TokenExpired(rp, b); };
             Func<string, string,double, ApiKeyResponse> limitReached = (rp, b,r) => { return new ApiKeyResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, ApiKeyResponse> failed = (sc,rp, b) => { return new ApiKeyResponse.Failed(sc,rp, b); };
+            Func<string, string, ApiKeyResponse> forbidden = (rp, b) => { return new ApiKeyResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse(body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed
+                failed,
+                forbidden
                 );
         }
 
@@ -76,12 +79,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, ApiKeyResponse> tokenExpired = (rp, b) => { return new ApiKeyResponse.TokenExpired(rp, b); };
             Func<string, string, double, ApiKeyResponse> limitReached = (rp, b, r) => { return new ApiKeyResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, ApiKeyResponse> failed = (sc, rp, b) => { return new ApiKeyResponse.Failed(sc, rp, b); };
+            Func<string, string, ApiKeyResponse> forbidden = (rp, b) => { return new ApiKeyResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed
+                failed,
+                forbidden
                 );
 
         }

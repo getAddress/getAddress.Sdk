@@ -44,12 +44,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, BillingAddressResponse> tokenExpired = (rp, b) => { return new BillingAddressResponse.TokenExpired(rp, b); };
             Func<string, string, double, BillingAddressResponse> limitReached = (rp, b, r) => { return new BillingAddressResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, BillingAddressResponse> failed = (sc, rp, b) => { return new BillingAddressResponse.Failed(sc, rp, b); };
+            Func<string, string, BillingAddressResponse> forbidden = (rp, b) => { return new BillingAddressResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed
+                failed,
+                forbidden
                 );
 
         }
@@ -82,12 +85,14 @@ namespace getAddress.Sdk.Api
             Func<string, string, BillingAddressResponse> tokenExpired = (rp, b) => { return new BillingAddressResponse.TokenExpired(rp, b); };
             Func<string, string, double, BillingAddressResponse> limitReached = (rp, b, r) => { return new BillingAddressResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, BillingAddressResponse> failed = (sc, rp, b) => { return new BillingAddressResponse.Failed(sc, rp, b); };
+            Func<string, string, BillingAddressResponse> forbidden = (rp, b) => { return new BillingAddressResponse.Forbidden(rp, b); };
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed
+                failed,
+                forbidden
                 );
 
         }

@@ -2,7 +2,7 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class ResponseBase<S, F, X,R>
+    public abstract class ResponseBase<S, F, X,R,FO>
     {
         protected ResponseBase(int statusCode, string reasonPhrase, string raw, bool isSuccess)
         {
@@ -17,6 +17,10 @@ namespace getAddress.Sdk.Api.Responses
         public F FailedResult { get; protected set; }
         public X TokenExpiredResult { get; protected set; }
         public R RateLimitReachedResult { get; protected set; }
+
+        public FO ForbiddenResult { get; protected set; }
+
+        public bool IsForbidden { get; protected set; }
 
         public bool IsSuccess { get; }
 
@@ -57,6 +61,18 @@ namespace getAddress.Sdk.Api.Responses
             }
 
             tokenExpiredResult = default;
+            return false;
+        }
+
+        public bool TryGetForbidden(out FO forbiddenResult)
+        {
+            if (IsForbidden)
+            {
+                forbiddenResult = ForbiddenResult;
+                return true;
+            }
+
+            forbiddenResult = default;
             return false;
         }
 

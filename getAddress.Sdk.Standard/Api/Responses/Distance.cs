@@ -4,7 +4,6 @@ namespace getAddress.Sdk.Api.Responses
 {
     public class Distance
     {
-       
 
         [JsonProperty("metres")]
         public double Metres { get; set; }
@@ -26,8 +25,6 @@ namespace getAddress.Sdk.Api.Responses
 
             return JsonConvert.DeserializeObject<Distance>(body);
         }
-
-
 
     }
 

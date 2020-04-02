@@ -6,7 +6,8 @@ namespace getAddress.Sdk.Api.Responses
         GetAddressResponse.Success,
         GetAddressResponse.Failed,
         GetAddressResponse.TokenExpired,
-        GetAddressResponse.RateLimitedReached>
+        GetAddressResponse.RateLimitedReached,
+        GetAddressResponse.Forbidden>
     {
         protected GetAddressResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -20,7 +21,7 @@ namespace getAddress.Sdk.Api.Responses
 
         public InvalidPostcode InvalidPostcodeResult { get; private set; }
 
-        public bool TryGetExpiredResult(out AccountExpired accountExpiredResult)
+        public bool TryGetExpired(out AccountExpired accountExpiredResult)
         {
             if (IsExpired)
             {
@@ -32,7 +33,7 @@ namespace getAddress.Sdk.Api.Responses
             return false;
         }
 
-        public bool TryGetNotFoundResult(out NotFound notFoundResult)
+        public bool TryGetNotFound(out NotFound notFoundResult)
         {
             if (IsNotFound)
             {
@@ -44,7 +45,7 @@ namespace getAddress.Sdk.Api.Responses
             return false;
         }
 
-        public bool TryGetInvalidPostcodeResult(out InvalidPostcode invalidPostcode)
+        public bool TryGetInvalidPostcode(out InvalidPostcode invalidPostcode)
         {
             if (IsInvalidPostcode)
             {
@@ -56,9 +57,24 @@ namespace getAddress.Sdk.Api.Responses
             return false;
         }
 
+        public bool TryGetLimitReached(out LimitReached limitReachedResult)
+        {
+            if (IsLimitReached)
+            {
+                limitReachedResult = LimitReachedResult;
+                return true;
+            }
+
+            limitReachedResult = default;
+            return false;
+        }
+
         public bool IsExpired { get; private set; }
 
         public bool IsNotFound { get; private set; }
+
+        public bool IsLimitReached { get; private set; }
+        public LimitReached LimitReachedResult { get; private set; }
 
         public bool IsInvalidPostcode { get; private set; }
 
@@ -146,5 +162,22 @@ namespace getAddress.Sdk.Api.Responses
             }
         }
 
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
+            }
+        }
+
+        public class LimitReached : Failed
+        {
+            public LimitReached(string reasonPhrase, string raw) : base(429, reasonPhrase, raw)
+            {
+                LimitReachedResult = this;
+                IsLimitReached = true;
+            }
+        }
     }
 }

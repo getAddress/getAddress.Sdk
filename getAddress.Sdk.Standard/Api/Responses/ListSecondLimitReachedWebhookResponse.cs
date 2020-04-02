@@ -6,7 +6,8 @@ namespace getAddress.Sdk.Api.Responses
         ListSecondLimitReachedWebhookResponse.Success,
         ListSecondLimitReachedWebhookResponse.Failed, 
         ListSecondLimitReachedWebhookResponse.TokenExpired,
-        ListSecondLimitReachedWebhookResponse.RateLimitedReached>
+        ListSecondLimitReachedWebhookResponse.RateLimitedReached,
+        ListSecondLimitReachedWebhookResponse.Forbidden>
     {
         protected ListSecondLimitReachedWebhookResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
         {
@@ -64,5 +65,15 @@ namespace getAddress.Sdk.Api.Responses
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
         }
+
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
+            }
+        }
+
     }
 }

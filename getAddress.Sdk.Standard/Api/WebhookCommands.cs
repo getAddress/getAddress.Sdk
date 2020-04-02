@@ -35,12 +35,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, RemoveWebhookResponse> tokenExpired = (rp, b) => { return new RemoveWebhookResponse.TokenExpired(rp, b); };
             Func<string, string, double, RemoveWebhookResponse> limitReached = (rp, b, r) => { return new RemoveWebhookResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, RemoveWebhookResponse> failed = (sc, rp, b) => { return new RemoveWebhookResponse.Failed(sc, rp, b); };
+            Func<string, string, RemoveWebhookResponse> forbidden = (rp, b) => { return new RemoveWebhookResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse(body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
         }
 
         internal async static Task<GetWebhookResponse> Get(GetAddesssApi api, string path, AdminKey adminKey, GetWebhookRequest request)
@@ -68,12 +71,14 @@ namespace getAddress.Sdk.Api
             Func<string, string, GetWebhookResponse> tokenExpired = (rp, b) => { return new GetWebhookResponse.TokenExpired(rp, b); };
             Func<string, string, double, GetWebhookResponse> limitReached = (rp, b, r) => { return new GetWebhookResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, GetWebhookResponse> failed = (sc, rp, b) => { return new GetWebhookResponse.Failed(sc, rp, b); };
+            Func<string, string, GetWebhookResponse> forbidden = (rp, b) => { return new GetWebhookResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,forbidden);
 
         }
 
@@ -99,12 +104,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, ListWebhookResponse> tokenExpired = (rp, b) => { return new ListWebhookResponse.TokenExpired(rp, b); };
             Func<string, string, double, ListWebhookResponse> limitReached = (rp, b, r) => { return new ListWebhookResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, ListWebhookResponse> failed = (sc, rp, b) => { return new ListWebhookResponse.Failed(sc, rp, b); };
+            Func<string, string, ListWebhookResponse> forbidden = (rp, b) => { return new ListWebhookResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
 
         }
 
@@ -129,12 +137,14 @@ namespace getAddress.Sdk.Api
             Func<string, string, AddWebhookResponse> tokenExpired = (rp, b) => { return new AddWebhookResponse.TokenExpired(rp, b); };
             Func<string, string, double, AddWebhookResponse> limitReached = (rp, b, r) => { return new AddWebhookResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, AddWebhookResponse> failed = (sc, rp, b) => { return new AddWebhookResponse.Failed(sc, rp, b); };
+            Func<string, string, AddWebhookResponse> forbidden = (rp, b) => { return new AddWebhookResponse.Forbidden(rp, b); };
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
 
         }
 
@@ -158,12 +168,15 @@ namespace getAddress.Sdk.Api
             Func<string, string, TestWebhookResponse> tokenExpired = (rp, b) => { return new TestWebhookResponse.TokenExpired(rp, b); };
             Func<string, string, double, TestWebhookResponse> limitReached = (rp, b, r) => { return new TestWebhookResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, TestWebhookResponse> failed = (sc, rp, b) => { return new TestWebhookResponse.Failed(sc, rp, b); };
+            Func<string, string, TestWebhookResponse> forbidden = (rp, b) => { return new TestWebhookResponse.Forbidden(rp, b); };
+
 
             return response.GetResponse( body,
                 success,
                 tokenExpired,
                 limitReached,
-                failed);
+                failed,
+                forbidden);
         }
 
         private static Webhook GetWebhook(string body)

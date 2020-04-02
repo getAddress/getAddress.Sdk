@@ -4,7 +4,8 @@
         RemoveFirstLimitReachedWebhookResponse.Success,
         RemoveFirstLimitReachedWebhookResponse.Failed,
         RemoveFirstLimitReachedWebhookResponse.TokenExpired,
-        RemoveFirstLimitReachedWebhookResponse.RateLimitedReached>
+        RemoveFirstLimitReachedWebhookResponse.RateLimitedReached,
+        RemoveFirstLimitReachedWebhookResponse.Forbidden>
     {
 
         protected RemoveFirstLimitReachedWebhookResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
@@ -62,5 +63,14 @@
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
             }
         }
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
+            }
+        }
+
     }
 }

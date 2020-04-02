@@ -1,40 +1,34 @@
-﻿
-
-namespace getAddress.Sdk.Api.Responses
+﻿namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class AddIpAddressWhitelistResponse: ResponseBase<AddIpAddressWhitelistResponse.Success,
-        AddIpAddressWhitelistResponse.Failed,
-        AddIpAddressWhitelistResponse.TokenExpired, 
-        AddIpAddressWhitelistResponse.RateLimitedReached,
-        AddIpAddressWhitelistResponse.Forbidden>
+    public class AddPermissionResponse : ResponseBase<
+        AddPermissionResponse.Success, 
+        AddPermissionResponse.Failed, 
+        AddPermissionResponse.TokenExpired,
+        AddPermissionResponse.RateLimitedReached,
+        AddPermissionResponse.Forbidden>
     {
-
-        protected AddIpAddressWhitelistResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess):base(statusCode,reasonPhrase,raw,isSuccess)
+        internal AddPermissionResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
         }
 
-
-        public class Success : AddIpAddressWhitelistResponse
+        public class Success : AddPermissionResponse
         {
             public string Message { get; }
 
-            public string Id { get; }
-
-            public Success(int statusCode, string reasonPhrase, string raw, string message, string id):base(statusCode, reasonPhrase, raw,true)
+            internal Success(int statusCode, string reasonPhrase, string raw, string message) : base(statusCode, reasonPhrase, raw, true)
             {
-                Message = message;
-                Id = id;
                 SuccessfulResult = this;
+                Message = message;
             }
         }
 
-        public class Failed : AddIpAddressWhitelistResponse
-        {
-            public Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
-            {
-                   FailedResult = this;
-            }
 
+        public class Failed : AddPermissionResponse
+        {
+            internal Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
+            {
+                FailedResult = this;
+            }
             internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
             {
                 return new Failed(statusCode, reasonPhrase, raw);
@@ -46,11 +40,6 @@ namespace getAddress.Sdk.Api.Responses
             {
                 TokenExpiredResult = this;
                 IsTokenExpired = true;
-            }
-
-            internal static TokenExpired NewTokenExpired(string reasonPhrase, string raw)
-            {
-                return new TokenExpired(reasonPhrase, raw);
             }
         }
 
@@ -77,5 +66,7 @@ namespace getAddress.Sdk.Api.Responses
                 IsForbidden = true;
             }
         }
+
     }
+
 }

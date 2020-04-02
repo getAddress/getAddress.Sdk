@@ -1,7 +1,9 @@
 ﻿namespace getAddress.Sdk.Api.Responses
 {
     public abstract class AddExpiredCCResponse : ResponseBase<AddExpiredCCResponse.Success, 
-        AddExpiredCCResponse.Failed, AddExpiredCCResponse.TokenExpired, AddExpiredCCResponse.RateLimitedReached>
+        AddExpiredCCResponse.Failed, AddExpiredCCResponse.TokenExpired, 
+        AddExpiredCCResponse.RateLimitedReached,
+        AddExpiredCCResponse.Forbidden>
     {
         protected AddExpiredCCResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
@@ -59,6 +61,14 @@
             internal static RateLimitedReached NewRateLimitedReached(string reasonPhrase, string raw, double retryAfterSeconds)
             {
                 return new RateLimitedReached(reasonPhrase, raw, retryAfterSeconds);
+            }
+        }
+        public class Forbidden : Failed
+        {
+            public Forbidden(string reasonPhrase, string raw) : base(403, reasonPhrase, raw)
+            {
+                ForbiddenResult = this;
+                IsForbidden = true;
             }
         }
     }
