@@ -18,10 +18,8 @@ IAddressService addressService = new AddressService(apiKey);
 
 var result = await addressService.Get(new GetAddressRequest("POSTCODE", "OPTIONAL HOUSE NAME"));
 
-if (result.IsSuccess)
+if(result.TryGetSuccess(out GetAddressResponse.Success successfulResult))
 {
-    var successfulResult = result.SuccessfulResult;
-
     var latitude = successfulResult.Latitude;
 
     var Longitude = successfulResult.Longitude;
