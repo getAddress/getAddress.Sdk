@@ -8,8 +8,11 @@ namespace getAddress.Sdk.Api
 
     public class UsageService : ServiceBase, IUsageService
     {
+        public UsageService(HttpClient httpClient) : base(httpClient)
+        {
 
-        public UsageService(HttpClient httpClient = null) : base(httpClient)
+        }
+        public UsageService() : base(null)
         {
             
         }
