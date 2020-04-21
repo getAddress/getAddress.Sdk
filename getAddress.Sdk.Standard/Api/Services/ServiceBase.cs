@@ -14,6 +14,9 @@ namespace getAddress.Sdk.Api
             AccessToken = accessToken ?? throw new System.ArgumentNullException(nameof(accessToken));
         }
 
+
+        
+
         protected GetAddesssApi GetAddesssApi(AdminKey adminKey = null, HttpClient httpClient = null)
         {
             if (AccessToken != null && adminKey == null)

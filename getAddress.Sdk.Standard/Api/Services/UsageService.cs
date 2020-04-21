@@ -9,6 +9,11 @@ namespace getAddress.Sdk.Api
     public class UsageService : ServiceBase, IUsageService
     {
 
+        public UsageService(HttpClient httpClient = null) : base(httpClient)
+        {
+            
+        }
+
         public UsageService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
@@ -17,6 +22,13 @@ namespace getAddress.Sdk.Api
         public UsageService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken,httpClient)
         {
 
+        }
+
+        public async Task<GetUsageV3Response> GetV3(AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api =  new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+
+            return await api.Usage.GetV3();
         }
 
         public async Task<GetUsageV3Response> GetV3(AdminKey adminKey = null, HttpClient httpClient = null)
