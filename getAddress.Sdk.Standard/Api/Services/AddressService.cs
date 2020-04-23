@@ -7,6 +7,14 @@ namespace getAddress.Sdk.Api
 {
     public class AddressService : ServiceBase, IAddressService
     {
+        public AddressService(HttpClient httpClient) : base(httpClient)
+        {
+
+        }
+        public AddressService() : base(null)
+        {
+
+        }
         public AddressService(ApiKey apiKey, HttpClient httpClient = null):base(httpClient)
         {
             ApiKey = apiKey ?? throw new System.ArgumentNullException(nameof(apiKey));

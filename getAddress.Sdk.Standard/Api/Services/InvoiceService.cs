@@ -7,7 +7,14 @@ namespace getAddress.Sdk.Api
 {
     public class InvoiceService : ServiceBase, IInvoiceService
     {
+        public InvoiceService(HttpClient httpClient) : base(httpClient)
+        {
 
+        }
+        public InvoiceService() : base(null)
+        {
+
+        }
         public InvoiceService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));

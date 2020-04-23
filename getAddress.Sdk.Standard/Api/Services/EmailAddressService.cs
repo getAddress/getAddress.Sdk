@@ -7,7 +7,14 @@ namespace getAddress.Sdk.Api
 {
     public class EmailAddressService : ServiceBase, IEmailAddressService
     {
+        public EmailAddressService(HttpClient httpClient) : base(httpClient)
+        {
 
+        }
+        public EmailAddressService() : base(null)
+        {
+
+        }
         public EmailAddressService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));

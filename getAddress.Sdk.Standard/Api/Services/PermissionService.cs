@@ -15,7 +15,14 @@ namespace getAddress.Sdk.Api
 
     public class PermissionService :ServiceBase, IPermissionService
     {
+        public PermissionService(HttpClient httpClient) : base(httpClient)
+        {
 
+        }
+        public PermissionService() : base(null)
+        {
+
+        }
         public PermissionService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));

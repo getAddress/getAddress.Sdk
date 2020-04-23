@@ -7,7 +7,14 @@ namespace getAddress.Sdk.Api
 {
     public class InvoiceEmailCcService :ServiceBase, IInvoiceEmailCcService
     {
+        public InvoiceEmailCcService(HttpClient httpClient) : base(httpClient)
+        {
 
+        }
+        public InvoiceEmailCcService() : base(null)
+        {
+
+        }
         public InvoiceEmailCcService(AdminKey adminKey = null, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));

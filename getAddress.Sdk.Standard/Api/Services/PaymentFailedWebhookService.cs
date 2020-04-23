@@ -7,7 +7,14 @@ namespace getAddress.Sdk.Api
 {
     public class PaymentFailedWebhookService : ServiceBase, IPaymentFailedWebhookService
     {
+        public PaymentFailedWebhookService(HttpClient httpClient) : base(httpClient)
+        {
 
+        }
+        public PaymentFailedWebhookService() : base(null)
+        {
+
+        }
         public PaymentFailedWebhookService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));

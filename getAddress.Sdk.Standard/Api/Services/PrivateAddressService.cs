@@ -7,7 +7,14 @@ namespace getAddress.Sdk.Api
 {
     public class PrivateAddressService : ServiceBase, IPrivateAddressService
     {
+        public PrivateAddressService(HttpClient httpClient) : base(httpClient)
+        {
 
+        }
+        public PrivateAddressService() : base(null)
+        {
+
+        }
         public PrivateAddressService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));

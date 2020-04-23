@@ -7,7 +7,14 @@ namespace getAddress.Sdk.Api
 {
     public class TrackWebhookService : ServiceBase, ITrackWebhookService
     {
+        public TrackWebhookService(HttpClient httpClient) : base(httpClient)
+        {
 
+        }
+        public TrackWebhookService() : base(null)
+        {
+
+        }
         public TrackWebhookService(AdminKey adminKey, HttpClient httpClient = null) : base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));

@@ -15,8 +15,6 @@ namespace getAddress.Sdk.Api
         }
 
 
-        
-
         protected GetAddesssApi GetAddesssApi(AdminKey adminKey = null, HttpClient httpClient = null)
         {
             if (AccessToken != null && adminKey == null)

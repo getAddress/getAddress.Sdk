@@ -7,7 +7,14 @@ namespace getAddress.Sdk.Api
 {
     public class IpAddressWhitelistService : ServiceBase, IIpAddressWhitelistService
     {
+        public IpAddressWhitelistService(HttpClient httpClient) : base(httpClient)
+        {
 
+        }
+        public IpAddressWhitelistService() : base(null)
+        {
+
+        }
         public IpAddressWhitelistService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));

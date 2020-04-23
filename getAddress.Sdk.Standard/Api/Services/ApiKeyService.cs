@@ -6,7 +6,14 @@ namespace getAddress.Sdk.Api
 {
     public class ApiKeyService : ServiceBase, IApiKeyService
     {
+        public ApiKeyService(HttpClient httpClient) : base(httpClient)
+        {
 
+        }
+        public ApiKeyService() : base(null)
+        {
+
+        }
         public ApiKeyService(AdminKey adminKey,HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));

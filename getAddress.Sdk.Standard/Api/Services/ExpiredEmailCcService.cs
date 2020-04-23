@@ -7,7 +7,14 @@ namespace getAddress.Sdk.Api
 {
     public class ExpiredEmailCcService : ServiceBase, IExpiredEmailCcService
     {
+        public ExpiredEmailCcService(HttpClient httpClient) : base(httpClient)
+        {
 
+        }
+        public ExpiredEmailCcService() : base(null)
+        {
+
+        }
         public ExpiredEmailCcService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));

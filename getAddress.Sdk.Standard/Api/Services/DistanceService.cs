@@ -7,6 +7,15 @@ namespace getAddress.Sdk.Api
 {
     public class DistanceService : ServiceBase, IDistanceService
     {
+        public DistanceService(HttpClient httpClient) : base(httpClient)
+        {
+
+        }
+        public DistanceService() : base(null)
+        {
+
+        }
+
         public DistanceService(ApiKey apiKey, HttpClient httpClient = null):base(httpClient)
         {
             ApiKey = apiKey ?? throw new System.ArgumentNullException(nameof(apiKey));

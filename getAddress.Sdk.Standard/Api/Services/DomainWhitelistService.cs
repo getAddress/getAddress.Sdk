@@ -7,7 +7,14 @@ namespace getAddress.Sdk.Api
 {
     public class DomainWhitelistService :ServiceBase, IDomainWhitelistService
     {
+        public DomainWhitelistService(HttpClient httpClient) : base(httpClient)
+        {
 
+        }
+        public DomainWhitelistService() : base(null)
+        {
+
+        }
         public DomainWhitelistService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));

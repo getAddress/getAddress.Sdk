@@ -6,6 +6,15 @@ namespace getAddress.Sdk.Api
 {
     public class SubscriptionService : ServiceBase, ISubscriptionService
     {
+        public SubscriptionService(HttpClient httpClient) : base(httpClient)
+        {
+
+        }
+        public SubscriptionService() : base(null)
+        {
+
+        }
+
         public SubscriptionService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));

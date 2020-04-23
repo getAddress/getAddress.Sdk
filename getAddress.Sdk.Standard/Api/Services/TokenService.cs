@@ -6,12 +6,20 @@ namespace getAddress.Sdk.Api
 {
     public class TokenService : ServiceBase, ITokenService
     {
+        public TokenService(HttpClient httpClient) : base(httpClient)
+        {
+
+        }
+        public TokenService() : base(null)
+        {
+
+        }
+
         public TokenService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
         }
 
-        
 
         public async Task<GetTokenResponse> Get(AdminKey adminKey = null, HttpClient httpClient = null)
         {

@@ -13,6 +13,15 @@ namespace getAddress.Sdk.Api
 
     public class AutocompleteService : ServiceBase, IAutocompleteService
     {
+        public AutocompleteService(HttpClient httpClient) : base(httpClient)
+        {
+
+        }
+        public AutocompleteService() : base(null)
+        {
+
+        }
+
         public AutocompleteService(ApiKey apiKey, HttpClient httpClient = null) : base(httpClient)
         {
             ApiKey = apiKey ?? throw new System.ArgumentNullException(nameof(apiKey));

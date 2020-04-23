@@ -7,7 +7,14 @@ namespace getAddress.Sdk.Api
 {
     public class FirstLimitReachedWebhookService :ServiceBase, IFirstLimitReachedWebhookService
     {
+        public FirstLimitReachedWebhookService(HttpClient httpClient) : base(httpClient)
+        {
 
+        }
+        public FirstLimitReachedWebhookService() : base(null)
+        {
+
+        }
         public FirstLimitReachedWebhookService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));

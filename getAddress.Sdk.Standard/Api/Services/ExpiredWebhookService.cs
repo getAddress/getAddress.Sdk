@@ -7,6 +7,14 @@ namespace getAddress.Sdk.Api
 {
     public class ExpiredWebhookService : ServiceBase, IExpiredWebhookService
     {
+        public ExpiredWebhookService(HttpClient httpClient) : base(httpClient)
+        {
+
+        }
+        public ExpiredWebhookService() : base(null)
+        {
+
+        }
 
         public ExpiredWebhookService(AdminKey adminKey, HttpClient httpClient = null):base(httpClient)
         {
