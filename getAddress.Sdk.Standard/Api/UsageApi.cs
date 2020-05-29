@@ -66,6 +66,11 @@ namespace getAddress.Sdk.Api
             return await List(Api, "usage", AdminKey, request);
         }
 
+        public async Task<ListUsageResponseV3> ListV3(ListUsageRequest request)
+        {
+            return await ListV3(Api, "v3/usage", AdminKey, request);
+        }
+
         public async static Task<ListUsageResponse> List(GetAddesssApi api, string path,
             AdminKey adminKey, ListUsageRequest request)
         {
@@ -78,6 +83,20 @@ namespace getAddress.Sdk.Api
 
             return await List(api, fullPath, adminKey);
         }
+
+        public async static Task<ListUsageResponseV3> ListV3(GetAddesssApi api, string path,
+            AdminKey adminKey, ListUsageRequest request)
+        {
+            if (request is null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            var fullPath = $"{path}/from/{request.From.Day}/{request.From.Month}/{request.From.Year}/To/{request.To.Day}/{request.To.Month}/{request.To.Year}";
+
+            return await ListV3(api, fullPath, adminKey);
+        }
+
 
         public async Task<GetUsageResponse> Get()
         {
@@ -191,6 +210,39 @@ namespace getAddress.Sdk.Api
         }
 
 
+        public async static Task<ListUsageResponseV3> ListV3(GetAddesssApi api, string path, AdminKey adminKey)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+            if (path == null) throw new ArgumentNullException(nameof(path));
+
+            api.SetAuthorizationKey(adminKey);
+
+            var response = await api.Get(path);
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            Func<int, string, string, ListUsageResponseV3> success = (statusCode, phrase, json) =>
+            {
+                var usages = ListUsagesV3(json);
+
+                return new ListUsageResponseV3.Success(statusCode, phrase, json, usages);
+            };
+
+            Func<string, string, ListUsageResponseV3> tokenExpired = (rp, b) => { return new ListUsageResponseV3.TokenExpired(rp, b); };
+            Func<string, string, double, ListUsageResponseV3> limitReached = (rp, b, r) => { return new ListUsageResponseV3.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, ListUsageResponseV3> failed = (sc, rp, b) => { return new ListUsageResponseV3.Failed(sc, rp, b); };
+            Func<string, string, ListUsageResponseV3> forbidden = (rp, b) => { return new ListUsageResponseV3.Forbidden(rp, b); };
+
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed,
+                forbidden);
+
+        }
+
         private static Usage GetUsage(string body)
         {
             if (string.IsNullOrWhiteSpace(body)) return new Usage();
@@ -241,5 +293,30 @@ namespace getAddress.Sdk.Api
 
             return list;
         }
+
+
+        private static IEnumerable<ListUsageV3> ListUsagesV3(string body)
+        {
+            var list = new List<ListUsageV3>();
+
+            if (string.IsNullOrWhiteSpace(body)) return list;
+
+            var jsonArr = JArray.Parse(body);
+
+            foreach (var jsonToken in jsonArr)
+            {
+                var usage = new ListUsageV3
+                {
+                    Count = jsonToken.Value<int>("count"),
+                    Date = jsonToken.Value<DateTime>("date"),
+                    Limit = jsonToken.Value<int>("limit")
+                };
+
+                list.Add(usage);
+            }
+
+            return list;
+        }
+
     }
 }

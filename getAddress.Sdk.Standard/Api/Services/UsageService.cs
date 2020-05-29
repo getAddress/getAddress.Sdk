@@ -71,5 +71,26 @@ namespace getAddress.Sdk.Api
            
             return await api.Usage.List(request);
         }
+
+        public async Task<ListUsageResponse> List(AccessToken accessToken, ListUsageRequest request, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+
+            return await api.Usage.List(request);
+        }
+
+        public async Task<ListUsageResponseV3> ListV3(AccessToken accessToken, ListUsageRequest request, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+
+            return await api.Usage.ListV3(request);
+        }
+
+        public async Task<ListUsageResponseV3> ListV3(ListUsageRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
+        {
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.Usage.ListV3(request);
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace getAddress.Sdk.Api
         Task<GetUsageV3Response> GetV3(GetUsageRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
         Task<GetUsageV3Response> GetV3(AccessToken accessToken, HttpClient httpClient = null);
         Task<ListUsageResponse> List(ListUsageRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
+        Task<ListUsageResponse> List(AccessToken accessToken, ListUsageRequest request, HttpClient httpClient = null);
     }
 
 }
