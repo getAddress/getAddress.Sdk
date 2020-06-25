@@ -20,7 +20,15 @@
     <RepositoryUrl>https://github.com/getAddress/getAddress.Sdk</RepositoryUrl>
     <PackageIconUrl>https://avatars2.githubusercontent.com/u/8994465?s=400&amp;u=389cd7704dda5dd51a9aed58b755e9441938c7ea&amp;v=4</PackageIconUrl>
     <Product>getAddress.Sdk.Standard.1.9.4</Product>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
