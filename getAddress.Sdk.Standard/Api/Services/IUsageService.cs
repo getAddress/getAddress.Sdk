@@ -14,6 +14,9 @@ namespace getAddress.Sdk.Api
         Task<GetUsageV3Response> GetV3(AccessToken accessToken, HttpClient httpClient = null);
         Task<ListUsageResponse> List(ListUsageRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
         Task<ListUsageResponse> List(AccessToken accessToken, ListUsageRequest request, HttpClient httpClient = null);
+        Task<ListUsageResponseV3> ListV3(AccessToken accessToken, ListUsageRequest request, HttpClient httpClient = null);
+        Task<ListUsageResponseV3> ListV3(ListUsageRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
+       
     }
 
 }

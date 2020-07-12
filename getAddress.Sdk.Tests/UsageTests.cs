@@ -16,7 +16,7 @@ namespace getAddress.Sdk.Tests
         {
             var httpClient = HttpClientHelper.ForStagingServer();
 
-            var service = new UsageService(httpClient);
+            IUsageService service = new UsageService(httpClient);
 
             var accessToken = await TokenHelper.GetAccessToken();
 
