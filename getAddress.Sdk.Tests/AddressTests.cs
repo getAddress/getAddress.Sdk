@@ -15,35 +15,6 @@ namespace getAddress.Sdk.Tests
     {
 
         [TestMethod]
-        public async Task RateLimitTest()
-        {
-            return;
-            var accessToken = await TokenHelper.GetAccessToken(KeyHelper.GetApiKey);
-
-            var httpClient = new HttpClient();
-
-            httpClient.BaseAddress = UrlHelper.GetStagingUri();
-
-            var addressService = new AddressService(accessToken, httpClient);
-
-            var result = await addressService.Get(new GetAddressRequest("XX2 00X"));
-            var counter = 0;
-            while(!(result is GetAddressResponse.RateLimitedReached))
-            {
-                
-                if (counter > 1000)
-                {
-                    Assert.Fail();
-                }
-
-                result = await addressService.Get(new GetAddressRequest("XX2 00X"));
-                counter++;
-            }
-
-            Assert.IsTrue(result.IsRateLimitReached);
-        }
-
-        [TestMethod]
         public async Task GetAddressWithTokenViaService()
         {
             var accessToken = await TokenHelper.GetAccessToken(KeyHelper.GetApiKey);

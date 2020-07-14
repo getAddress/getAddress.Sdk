@@ -96,6 +96,8 @@ namespace getAddress.Sdk
             autocomplete = new Lazy<AutocompleteApi>(() =>new AutocompleteApi(apiKey, this));
 
             token = new Lazy<TokenApi>(() => new TokenApi(adminKey, this));
+
+            typeahead = new Lazy<TypeaheadApi>(() => new TypeaheadApi(apiKey, this));
         }
 
         private Lazy<AutocompleteApi> autocomplete;
@@ -119,6 +121,7 @@ namespace getAddress.Sdk
         private Lazy<DomainWhitelistApi> domainWhitelist;
         private Lazy<BillingAddressApi> billingAddress;
         private Lazy<TokenApi> token;
+        private Lazy<TypeaheadApi> typeahead;
         
 
 
@@ -138,6 +141,11 @@ namespace getAddress.Sdk
                     _client.BaseAddress = _baseAddress;
                 }
             }
+        }
+
+        public TypeaheadApi TypeaheadApi
+        {
+            get { return typeahead.Value; }
         }
 
         public AutocompleteApi Autocomplete

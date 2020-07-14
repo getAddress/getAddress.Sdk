@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="HttpClientExtensions.cs" />
     <Compile Include="TokenServiceTests.cs" />
+    <Compile Include="TypeaheadTests.cs" />
     <Compile Include="UsageTests.cs" />
     <Compile Include="TrackWebhookTests.cs" />
     <Compile Include="FirstLimitReachedWebhookTests.cs" />

@@ -72,7 +72,7 @@ namespace getAddress.Sdk.Tests
 
             Assert.IsTrue(getResult.IsSuccess);
 
-            var listResult = await usageService.List(new ListUsageRequest(01,01,2020,01,03,2020));
+            var listResult = await usageService.List(new ListUsageRequest(01,03,2020,20,03,2020));
 
             Assert.IsTrue(listResult.IsSuccess);
         }

@@ -7,24 +7,28 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>getAddress.Sdk</PackageId>
     <Authors>Lee Smith</Authors>
-    <AssemblyVersion>1.9.5.0</AssemblyVersion>
-    <FileVersion>1.9.5.0</FileVersion>
+    <AssemblyVersion>1.9.7.0</AssemblyVersion>
+    <FileVersion>1.9.7.0</FileVersion>
     <Company>Codeberry Ltd</Company>
-    <Version>1.9.5</Version>
+    <Version>1.9.7</Version>
     <PackageProjectUrl>https://github.com/getAddress/getAddress.Sdk</PackageProjectUrl>
     <Description>SDK for https://getAddress.io</Description>
-    <PackageReleaseNotes>Usage interface</PackageReleaseNotes>
+    <PackageReleaseNotes>Typeahead</PackageReleaseNotes>
     <Copyright>Codeberry Ltd</Copyright>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <PackageTags>getAddress SDK https://getaddress.io getaddress.io postcode address UK</PackageTags>
     <RepositoryUrl>https://github.com/getAddress/getAddress.Sdk</RepositoryUrl>
     <PackageIconUrl>https://avatars2.githubusercontent.com/u/8994465?s=400&amp;u=389cd7704dda5dd51a9aed58b755e9441938c7ea&amp;v=4</PackageIconUrl>
-    <Product>getAddress.Sdk.Standard.1.9.5</Product>
+    <Product>getAddress.Sdk.Standard.1.9.7</Product>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>

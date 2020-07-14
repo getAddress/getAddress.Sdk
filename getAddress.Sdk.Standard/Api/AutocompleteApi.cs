@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-
     public class AutocompleteApi:ApiKeyBase
     {
         public const string Path = "google/autocomplete/";
