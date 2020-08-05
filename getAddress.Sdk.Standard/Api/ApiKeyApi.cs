@@ -27,7 +27,7 @@ namespace getAddress.Sdk.Api
 
             api.SetAuthorizationKey(apiKey);
 
-            var response = await api.Get(path);
+            var response = await api.HttpGet(path);
 
             var body = await response.Content.ReadAsStringAsync();
 

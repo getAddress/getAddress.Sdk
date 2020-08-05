@@ -101,6 +101,8 @@ namespace getAddress.Sdk
             typeahead = new Lazy<TypeaheadApi>(() => new TypeaheadApi(apiKey, this));
 
             suggest = new Lazy<SuggestApi>(() => new SuggestApi(apiKey, this));
+
+            get = new Lazy<GetApi>(() => new GetApi(apiKey, this));
         }
 
         private Lazy<AutocompleteApi> autocomplete;
@@ -126,7 +128,7 @@ namespace getAddress.Sdk
         private Lazy<TokenApi> token;
         private Lazy<TypeaheadApi> typeahead;
         private Lazy<SuggestApi> suggest;
-
+        private Lazy<GetApi> get;
         public Uri BaseAddress
         {
             get
@@ -142,6 +144,11 @@ namespace getAddress.Sdk
                     _client.BaseAddress = _baseAddress;
                 }
             }
+        }
+
+        public GetApi Get
+        {
+            get { return get.Value; }
         }
 
         public SuggestApi Suggest
@@ -315,7 +322,8 @@ namespace getAddress.Sdk
         {
             return await Post(_client, path, entity, cancellationToken: cancellationToken);
         }
-        internal static async Task<HttpResponseMessage> Post(HttpClient client, string path, object entity, CancellationToken cancellationToken = default)
+        internal static async Task<HttpResponseMessage> Post(HttpClient client, string path, object entity, 
+            CancellationToken cancellationToken = default)
         {
             if (client == null) throw new ArgumentNullException(nameof(client));
             if (path == null) throw new ArgumentNullException(nameof(path));
@@ -364,17 +372,17 @@ namespace getAddress.Sdk
             return await client.DeleteAsync(path);
         }
 
-        internal async Task<HttpResponseMessage> Get(string path, int loop = 0)
+        internal async Task<HttpResponseMessage> HttpGet(string path, CancellationToken cancellationToken = default)
         {
-            return await Get(_client, path); 
+            return await HttpGet(_client, path, cancellationToken:cancellationToken); 
         }
 
-        private static async Task<HttpResponseMessage> Get(HttpClient client, string path)
+        private static async Task<HttpResponseMessage> HttpGet(HttpClient client, string path, CancellationToken cancellationToken = default)
         {
             if (client == null) throw new ArgumentNullException(nameof(client));
             if (path == null) throw new ArgumentNullException(nameof(path));
 
-            return await client.GetAsync(path);
+            return await client.GetAsync(path, cancellationToken: cancellationToken);
         }
 
         internal T Deserialize<T>(string json)

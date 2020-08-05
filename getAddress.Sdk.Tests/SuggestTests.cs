@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using getAddress.Sdk.Api.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,7 +23,14 @@ namespace getAddress.Sdk.Tests
                 var result = await api.Suggest.Get(new SuggestRequest { Term = "codeberry" });
 
                 Assert.IsTrue(result.IsSuccess);
+
+                var addressResult = await api.Get.Address(result.SuccessfulResult.Suggestions.First());
+
+                Assert.IsTrue(addressResult.IsSuccess);
             }
         }
+
+        //todo: filter
+        //todo: top 
     }
 }

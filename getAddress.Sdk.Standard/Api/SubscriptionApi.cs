@@ -71,7 +71,7 @@ namespace getAddress.Sdk.Api
 
             var fullPath = path;
 
-            var response = await api.Get(fullPath);
+            var response = await api.HttpGet(fullPath);
 
             var body = await response.Content.ReadAsStringAsync();
 

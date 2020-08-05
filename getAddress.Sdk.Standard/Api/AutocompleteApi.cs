@@ -49,7 +49,7 @@ namespace getAddress.Sdk.Api
 
             api.SetAuthorizationKey(apiKey);
 
-            var response = await api.Get(fullPath);
+            var response = await api.HttpGet(fullPath);
 
             var body = await response.Content.ReadAsStringAsync();
 
@@ -90,7 +90,7 @@ namespace getAddress.Sdk.Api
 
             api.SetAuthorizationKey(apiKey);
 
-            var response = await api.Get(fullPath);
+            var response = await api.HttpGet(fullPath);
 
             var body = await response.Content.ReadAsStringAsync();
 

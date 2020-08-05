@@ -29,7 +29,7 @@ namespace getAddress.Sdk.Api
 
             var fullPath = $"{path}{request.PostcodeFrom}/{request.PostcodeTo}";
 
-            var response = await api.Get(fullPath);
+            var response = await api.HttpGet(fullPath);
 
             var body = await response.Content.ReadAsStringAsync();
 

@@ -2,12 +2,12 @@
 using getAddress.Sdk.Api.Responses;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
+
     public class SuggestApi: ApiKeyBase 
     {
         public const string Path = "suggest/";

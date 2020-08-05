@@ -125,7 +125,7 @@ namespace getAddress.Sdk.Api
 
             api.SetAuthorizationKey(adminKey);
 
-            var response = await api.Get(path);
+            var response = await api.HttpGet(path);
 
             var body = await response.Content.ReadAsStringAsync();
 
@@ -157,7 +157,7 @@ namespace getAddress.Sdk.Api
 
             api.SetAuthorizationKey(adminKey);
 
-            var response = await api.Get(path);
+            var response = await api.HttpGet(path);
 
             var body = await response.Content.ReadAsStringAsync();
 

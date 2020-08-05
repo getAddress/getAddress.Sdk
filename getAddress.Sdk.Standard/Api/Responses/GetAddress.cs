@@ -4,9 +4,20 @@ using Newtonsoft.Json;
 
 namespace getAddress.Sdk.Api.Responses
 {
-
-    public class ExpandedAddress 
+    public class GetAddress 
     {
+        [JsonProperty("longitude")]
+        public double Longitude { get; set; }
+
+        [JsonProperty("latitude")]
+        public double Latitude { get; set; }
+
+        [JsonProperty("postcode")]
+        public string Postcode { get; set; }
+
+        [JsonProperty("residential")]
+        public bool Residential { get; set; }
+
         [JsonProperty("line_1")]
         public string Line1 { get; set; }
 
