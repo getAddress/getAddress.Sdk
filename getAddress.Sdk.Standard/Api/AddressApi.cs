@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
+
     public class AddressApi: ApiKeyBase
     {
         public const string Path = "find/";

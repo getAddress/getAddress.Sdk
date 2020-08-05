@@ -22,42 +22,44 @@ namespace getAddress.Sdk.Api
 
         public async static Task<TypeaheadResponse> List(GetAddesssApi api, string term, string path, ApiKey apiKey, TypeaheadOptions options = null)
         {
-            if (api is null)
-            {
-                throw new System.ArgumentNullException(nameof(api));
-            }
+            
+                if (api is null)
+                {
+                    throw new System.ArgumentNullException(nameof(api));
+                }
 
-            if (apiKey is null)
-            {
-                throw new System.ArgumentNullException(nameof(apiKey));
-            }
+                if (apiKey is null)
+                {
+                    throw new System.ArgumentNullException(nameof(apiKey));
+                }
 
-            var fullPath = path + term;
+                var fullPath = path + term;
 
-            api.SetAuthorizationKey(apiKey);
+                api.SetAuthorizationKey(apiKey);
 
-            var response = await api.Post(fullPath, options);
+                var response = await api.Post(fullPath, options);
 
-            var body = await response.Content.ReadAsStringAsync();
+                var body = await response.Content.ReadAsStringAsync();
 
-            Func<int, string, string, TypeaheadResponse> success = (statusCode, phrase, json) =>
-            {
-                var predictions = GetPredictions(json);
+                Func<int, string, string, TypeaheadResponse> success = (statusCode, phrase, json) =>
+                {
+                    var predictions = GetPredictions(json);
 
-                return new TypeaheadResponse.Success(statusCode, phrase, json, predictions);
-            };
-
-
-            Func<string, string, TypeaheadResponse> forbidden = (rp, b) => { return new TypeaheadResponse.Forbidden(rp, b); };
+                    return new TypeaheadResponse.Success(statusCode, phrase, json, predictions);
+                };
 
 
-            return response.GetResponse(body,
-                success,
-                TypeaheadResponse.TokenExpired.NewTokenExpired,
-                TypeaheadResponse.RateLimitedReached.NewRateLimitedReached,
-                TypeaheadResponse.Failed.NewFailed,
-                forbidden
-                );
+                Func<string, string, TypeaheadResponse> forbidden = (rp, b) => { return new TypeaheadResponse.Forbidden(rp, b); };
+
+
+                return response.GetResponse(body,
+                    success,
+                    TypeaheadResponse.TokenExpired.NewTokenExpired,
+                    TypeaheadResponse.RateLimitedReached.NewRateLimitedReached,
+                    TypeaheadResponse.Failed.NewFailed,
+                    forbidden
+                    );
+            
         }
 
 

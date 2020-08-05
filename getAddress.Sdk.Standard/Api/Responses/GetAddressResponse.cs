@@ -12,7 +12,6 @@ namespace getAddress.Sdk.Api.Responses
         protected GetAddressResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
-            
         }
 
         public AccountExpired AccountExpiredResult { get; private set; }

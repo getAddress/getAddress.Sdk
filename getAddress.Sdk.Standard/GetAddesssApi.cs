@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace getAddress.Sdk
@@ -98,6 +99,8 @@ namespace getAddress.Sdk
             token = new Lazy<TokenApi>(() => new TokenApi(adminKey, this));
 
             typeahead = new Lazy<TypeaheadApi>(() => new TypeaheadApi(apiKey, this));
+
+            suggest = new Lazy<SuggestApi>(() => new SuggestApi(apiKey, this));
         }
 
         private Lazy<AutocompleteApi> autocomplete;
@@ -122,9 +125,7 @@ namespace getAddress.Sdk
         private Lazy<BillingAddressApi> billingAddress;
         private Lazy<TokenApi> token;
         private Lazy<TypeaheadApi> typeahead;
-        
-
-
+        private Lazy<SuggestApi> suggest;
 
         public Uri BaseAddress
         {
@@ -141,6 +142,11 @@ namespace getAddress.Sdk
                     _client.BaseAddress = _baseAddress;
                 }
             }
+        }
+
+        public SuggestApi Suggest
+        {
+            get { return suggest.Value; }
         }
 
         public TypeaheadApi TypeaheadApi
@@ -301,19 +307,22 @@ namespace getAddress.Sdk
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("api-key", key.Value); 
         }
 
-        internal  async Task<HttpResponseMessage> Post(string path, object entity = null)
+        internal  async Task<HttpResponseMessage> Post(string path)
         {
-            return await Post(_client, path, entity);
+            return await Post(_client, path, entity:null);
         }
-
-        internal static async Task<HttpResponseMessage> Post(HttpClient client, string path, object entity = null)
+        internal async Task<HttpResponseMessage> Post(string path, object entity, CancellationToken cancellationToken = default)
+        {
+            return await Post(_client, path, entity, cancellationToken: cancellationToken);
+        }
+        internal static async Task<HttpResponseMessage> Post(HttpClient client, string path, object entity, CancellationToken cancellationToken = default)
         {
             if (client == null) throw new ArgumentNullException(nameof(client));
             if (path == null) throw new ArgumentNullException(nameof(path));
 
             HttpContent httpContent = GetHttpContent(client, entity);
 
-            return await client.PostAsync(path, httpContent);
+            return await client.PostAsync(path, httpContent, cancellationToken:cancellationToken);
         }
 
         internal async Task<HttpResponseMessage> Put(string path, object entity = null)

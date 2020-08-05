@@ -3,6 +3,7 @@
 
 namespace getAddress.Sdk.Api.Requests
 {
+
     public class GetAddressRequest
     {
         [JsonProperty("postcode")]
