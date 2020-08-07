@@ -30,7 +30,115 @@ namespace getAddress.Sdk.Tests
             }
         }
 
-        //todo: filter
-        //todo: top 
+        [TestMethod]
+        public async Task Given_Top_Equals_2_Get_Returns_6_Suggestions()
+        {
+            var apiKey = KeyHelper.GetApiKey();
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey), httpClient))
+            {
+                const int top = 2;
+
+                var result = await api.Suggest.Get(new SuggestRequest { Term = "nn1 3er" });
+
+                Assert.IsTrue(result.IsSuccess);
+
+                Assert.IsTrue(result.SuccessfulResult.Suggestions.Count() > top);
+
+                var result2 = await api.Suggest.Get(new SuggestRequest { Term = "nn1 3er", Top = top });
+
+                Assert.IsTrue(result2.IsSuccess);
+
+                Assert.IsTrue(result2.SuccessfulResult.Suggestions.Count() == top);
+            }
+        }
+
+        [TestMethod]
+        public async Task Given_Northamptonshire_County_Filter_Get_Returns_Only_Suggestions_From_Northampton()
+        {
+            var apiKey = KeyHelper.GetApiKey();
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey), httpClient))
+            {
+                var request = new  SuggestRequest
+                {
+                    Term = "nn1 3er"
+                };
+
+                request.Filter.County = "Cambridgeshire";
+
+                var result = await api.Suggest.Get(request);
+
+                Assert.IsTrue(result.IsSuccess);
+
+                Assert.IsTrue(!result.SuccessfulResult.Suggestions.Any());
+
+                var request2 = new SuggestRequest
+                {
+                    Term = "nn1 3er"
+                };
+
+                request2.Filter.County = "Northamptonshire";
+
+                var result2 = await api.Suggest.Get(request2);
+
+                Assert.IsTrue(result2.IsSuccess);
+
+                Assert.IsTrue(result2.SuccessfulResult.Suggestions.Any());
+
+            }
+        }
+
+
+        [TestMethod]
+        public async Task Given_Westminster_District_County_Filter_Get_Returns_Only_Suggestions_From_Westminster()
+        {
+            var apiKey = KeyHelper.GetApiKey();
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey), httpClient))
+            {
+                var term = "W1H 2LJ";
+                var request = new SuggestRequest
+                {
+                    Term = term
+                };
+
+                request.Filter.District = "Warminster";
+
+                var result = await api.Suggest.Get(request);
+
+                Assert.IsTrue(result.IsSuccess);
+
+                Assert.IsTrue(!result.SuccessfulResult.Suggestions.Any());
+
+                var request2 = new SuggestRequest
+                {
+                    Term = term
+                };
+
+                request2.Filter.District = "Westminster";
+
+                var result2 = await api.Suggest.Get(request2);
+
+                Assert.IsTrue(result2.IsSuccess);
+
+                Assert.IsTrue(result2.SuccessfulResult.Suggestions.Any());
+
+            }
+        }
+
+
     }
 }
