@@ -139,6 +139,48 @@ namespace getAddress.Sdk.Tests
             }
         }
 
+        [TestMethod]
+        public async Task Given_Radius_Filter_Get_Returns_Only_Suggestions_WithIn_Radius()
+        {
+            var apiKey = KeyHelper.GetApiKey();
 
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey), httpClient))
+            {
+                var request = new SuggestRequest
+                {
+                    Term = "codeberry"
+                };
+
+                request.Filter.Radius.Km = 2;
+                request.Filter.Radius.Latitude = 52.24092483520508;
+                request.Filter.Radius.Longitude = -0.8780822157859801;
+
+                var result = await api.Suggest.Get(request);
+
+                Assert.IsTrue(result.IsSuccess);
+
+                Assert.IsTrue(!result.SuccessfulResult.Suggestions.Any());
+
+                var request2 = new SuggestRequest
+                {
+                    Term = "codeberry"
+                };
+
+                request2.Filter.Radius.Km = 2;
+                request2.Filter.Radius.Latitude = 52.493823;
+                request2.Filter.Radius.Longitude = 0.054798;
+
+                var result2 = await api.Suggest.Get(request2);
+
+                Assert.IsTrue(result2.IsSuccess);
+
+                Assert.IsTrue(result2.SuccessfulResult.Suggestions.Any());
+
+            }
+        }
     }
 }

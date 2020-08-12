@@ -56,7 +56,32 @@ namespace getAddress.Sdk.Api.Requests
         [JsonProperty("residential")]
         public bool? Residential { get; set; }
 
-        
+        [JsonProperty("radius")]
+        public Radius Radius { get; set; } = new Radius();
+    }
+
+
+    public class Radius
+    {
+
+        [JsonProperty("km")]
+        public int? Km
+        {
+            get;set;
+        }
+
+        [JsonProperty("latitude")]
+        public double? Latitude
+        {
+            get;set;
+        }
+
+        [JsonProperty("longitude")]
+        public double? Longitude
+        {
+            get;set;
+        }
+
     }
 
 }
