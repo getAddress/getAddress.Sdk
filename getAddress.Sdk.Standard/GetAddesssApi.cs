@@ -52,6 +52,11 @@ namespace getAddress.Sdk
                 _client.BaseAddress = _baseAddress;
             }
 
+            if (!_client.DefaultRequestHeaders.Contains("api-version"))
+            {
+                _client.DefaultRequestHeaders.TryAddWithoutValidation("api-version", "2020-07-01");
+            }
+
             AdminKey = adminKey;
 
             ApiKey = apiKey;
@@ -103,6 +108,8 @@ namespace getAddress.Sdk
             suggest = new Lazy<SuggestApi>(() => new SuggestApi(apiKey, this));
 
             get = new Lazy<GetApi>(() => new GetApi(apiKey, this));
+
+            suggestLimitReachedWebhook = new Lazy<SuggestLimitReachedWebhookApi>(() => new SuggestLimitReachedWebhookApi(adminKey, this));
         }
 
         private Lazy<AutocompleteApi> autocomplete;
@@ -129,6 +136,8 @@ namespace getAddress.Sdk
         private Lazy<TypeaheadApi> typeahead;
         private Lazy<SuggestApi> suggest;
         private Lazy<GetApi> get;
+        private Lazy<SuggestLimitReachedWebhookApi> suggestLimitReachedWebhook;
+
         public Uri BaseAddress
         {
             get
@@ -154,6 +163,11 @@ namespace getAddress.Sdk
         public SuggestApi Suggest
         {
             get { return suggest.Value; }
+        }
+
+        public SuggestLimitReachedWebhookApi SuggestLimitReachedWebhook
+        {
+            get { return suggestLimitReachedWebhook.Value; }
         }
 
         public TypeaheadApi TypeaheadApi

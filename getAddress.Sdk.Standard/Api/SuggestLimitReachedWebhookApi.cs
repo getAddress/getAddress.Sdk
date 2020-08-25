@@ -4,12 +4,11 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-
-    public class TrackWebhookApi : AdminApiBase
+    public class SuggestLimitReachedWebhookApi : AdminApiBase
     {
-        public const string Path = "webhook/track/";
+        public const string Path = "webhook/suggest-limit-reached/";
 
-        internal TrackWebhookApi(AdminKey adminKey, GetAddesssApi api) : base(adminKey, api)
+        internal SuggestLimitReachedWebhookApi(AdminKey adminKey, GetAddesssApi api) : base(adminKey, api)
         {
 
         }

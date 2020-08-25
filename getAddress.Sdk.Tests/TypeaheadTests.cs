@@ -136,14 +136,7 @@ namespace getAddress.Sdk.Tests
                 Assert.IsTrue(result.SuccessfulResult.Predictions.Any());
 
 
-                var result2 = await api.TypeaheadApi.List("nw", new TypeaheadOptions
-                {
-                    Search = new string[1] { "postcode" }
-                });
-
-                Assert.IsTrue(result2.IsSuccess);
-
-                Assert.IsTrue(result2.SuccessfulResult.Predictions.Count() == 0);
+              
 
             }
         }
