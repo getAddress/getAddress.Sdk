@@ -39,5 +39,12 @@ namespace getAddress.Sdk.Api
 
             return await api.Subscription.Get();
         }
+
+        public async Task<SubscriptionV2Response> Get(AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+
+            return await api.Subscription.GetV2();
+        }
     }
 }

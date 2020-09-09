@@ -134,10 +134,6 @@ namespace getAddress.Sdk.Tests
                 Assert.IsTrue(result.IsSuccess);
 
                 Assert.IsTrue(result.SuccessfulResult.Predictions.Any());
-
-
-              
-
             }
         }
     }

@@ -25,6 +25,25 @@ namespace getAddress.Sdk.Tests
         }
 
         [TestMethod]
+        public async Task GivenAValidToken_GetReturnsSuccessfulResult()
+        {
+            var accessToken = await TokenHelper.GetAccessToken();
+
+            var httpClient = HttpClientHelper.ForStagingServer();
+
+            var service = new SubscriptionService(httpClient);
+
+            var response = await service.Get(accessToken);
+
+            Assert.IsTrue(response.IsSuccess);
+
+            var success = response.SuccessfulResult;
+
+
+        }
+
+
+        [TestMethod]
         public async Task Unsubscribe_Fails_Without_code()
         {
             var apiKey = KeyHelper.GetAdminKey();

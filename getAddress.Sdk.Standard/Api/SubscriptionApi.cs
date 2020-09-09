@@ -8,6 +8,7 @@ namespace getAddress.Sdk.Api
     public class SubscriptionApi: AdminApiBase
     {
         public const string Path = "subscription/";
+        public const string PathV2 = "v2/subscription/";
 
         internal SubscriptionApi(AdminKey adminKey, GetAddesssApi api) : base(adminKey,api)
         {
@@ -94,6 +95,61 @@ namespace getAddress.Sdk.Api
                 failed,
                 forbidden);
 
+        }
+
+        public async Task<SubscriptionV2Response> GetV2()
+        {
+            return await GetV2(Api, PathV2, AdminKey);
+        }
+
+        public async static Task<SubscriptionV2Response> GetV2(GetAddesssApi api, string path, AdminKey adminKey)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+
+            api.SetAuthorizationKey(adminKey);
+
+            var fullPath = path;
+
+            var response = await api.HttpGet(fullPath);
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            Func<int, string, string, SubscriptionV2Response> success = (statusCode, phrase, json) =>
+            {
+                var subscription = GetSubscriptionV2(json);
+
+                return new SubscriptionV2Response.Success(statusCode, phrase, json, subscription);
+            };
+
+            Func<string, string, SubscriptionV2Response> tokenExpired = (rp, b) => { return new SubscriptionV2Response.TokenExpired(rp, b); };
+            Func<string, string, double, SubscriptionV2Response> limitReached = (rp, b, r) => { return new SubscriptionV2Response.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, SubscriptionV2Response> failed = (sc, rp, b) => { return new SubscriptionV2Response.Failed(sc, rp, b); };
+            Func<string, string, SubscriptionV2Response> forbidden = (rp, b) => { return new SubscriptionV2Response.Forbidden(rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed,
+                forbidden);
+
+        }
+
+
+        private static SubscriptionV2 GetSubscriptionV2(string body)
+        {
+            if (string.IsNullOrWhiteSpace(body)) return new SubscriptionV2();
+
+            var json = JsonConvert.DeserializeObject<dynamic>(body);
+
+            return new SubscriptionV2
+            {
+                Amount = json.amount,
+                Billed = json.billed,
+                NextBillingDate = json.next_billing_date,
+                PaymentMethod = json.payment_method,
+                Status = json.status
+            };
         }
 
         private static Subscription GetSubscription(string body)
