@@ -33,13 +33,18 @@ namespace getAddress.Sdk.Api
                 fullPath += $"?code={code}";
             }
 
+            api.HttpClient.DefaultRequestHeaders.TryAddWithoutValidation("api-version", "2020-09-09");
+
             var response = await api.Put(fullPath);
 
             var body = await response.Content.ReadAsStringAsync();
 
             Func<int, string, string, UnsubscribeResponse> success = (statusCode, phrase, json) =>
             {
-                return new UnsubscribeResponse.Success(statusCode, phrase, json);
+                var responseId = GetResponseId(body);
+                var successResult =  new UnsubscribeResponse.Success(statusCode, phrase, json);
+                successResult.ResponseId = responseId;
+                return successResult;
             };
 
             Func<string, string, UnsubscribeResponse> tokenExpired = (rp, b) => { return new UnsubscribeResponse.TokenExpired(rp, b); };
@@ -48,8 +53,7 @@ namespace getAddress.Sdk.Api
             Func<string, string, UnsubscribeResponse> forbidden = (rp, b) => { return new UnsubscribeResponse.Forbidden(rp, b); };
 
 
-
-            return response.GetResponse( body,
+            return response.GetResponse(body,
                 success,
                 tokenExpired,
                 limitReached,
@@ -150,6 +154,18 @@ namespace getAddress.Sdk.Api
                 PaymentMethod = json.payment_method,
                 Status = json.status
             };
+        }
+
+        private static string GetResponseId(string body)
+        {
+
+            if (string.IsNullOrWhiteSpace(body)) return string.Empty;
+
+            var json = JsonConvert.DeserializeObject<dynamic>(body);
+
+            string responseId = json.response_id;
+
+            return responseId; ;
         }
 
         private static Subscription GetSubscription(string body)

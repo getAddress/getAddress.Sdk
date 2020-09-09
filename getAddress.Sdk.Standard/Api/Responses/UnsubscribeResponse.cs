@@ -14,7 +14,7 @@
 
         public class Success : UnsubscribeResponse
         {
-          
+            public string ResponseId { get; set; }
 
             public Success(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, true)
             {

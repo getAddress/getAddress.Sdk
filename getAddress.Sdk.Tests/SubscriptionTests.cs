@@ -56,7 +56,7 @@ namespace getAddress.Sdk.Tests
             {
                 var result = await api.Subscription.Unsubscribe(code: "testing");
 
-                Assert.IsTrue(!result.IsSuccess);
+                Assert.IsTrue(result.IsSuccess);
             }
         }
 

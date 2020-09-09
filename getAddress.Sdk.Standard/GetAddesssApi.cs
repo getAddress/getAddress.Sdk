@@ -138,6 +138,8 @@ namespace getAddress.Sdk
         private Lazy<GetApi> get;
         private Lazy<SuggestLimitReachedWebhookApi> suggestLimitReachedWebhook;
 
+
+        public HttpClient HttpClient { get { return _client; } }
         public Uri BaseAddress
         {
             get
