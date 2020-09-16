@@ -33,6 +33,10 @@ namespace getAddress.Sdk.Api
                 fullPath += $"?code={code}";
             }
 
+            if (api.HttpClient.DefaultRequestHeaders.Contains("api-version"))
+            {
+                api.HttpClient.DefaultRequestHeaders.Remove("api-version");
+            }
             api.HttpClient.DefaultRequestHeaders.TryAddWithoutValidation("api-version", "2020-09-09");
 
             var response = await api.Put(fullPath);
