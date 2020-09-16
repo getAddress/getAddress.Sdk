@@ -11,5 +11,7 @@ namespace getAddress.Sdk.Api
         Task<SubscriptionResponse> Subscription(AdminKey adminKey = null, HttpClient httpClient = null);
 
         Task<SubscriptionV2Response> Get(AccessToken accessToken, HttpClient httpClient = null);
+
+        Task<UnsubscribeResponse> Unsubscribe(AccessToken accessToken, HttpClient httpClient = null);
     }
 }
