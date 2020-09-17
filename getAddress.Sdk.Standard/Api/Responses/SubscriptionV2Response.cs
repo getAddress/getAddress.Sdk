@@ -3,13 +3,23 @@
 
 namespace getAddress.Sdk.Api.Responses
 {
+    public class Plan
+    {
+        public decimal Amount { get; set; }
+
+        public string Term { get; set; }
+
+        public int DailyLookupLimit1 { get; set; }
+
+        public int DailyLookupLimit2 { get; set; }
+
+    }
+
     public class SubscriptionV2
     {
         public DateTime NextBillingDate { get; set; }
 
-        public decimal Amount { get; set; }
-
-        public string Billed { get; set; }
+        public Plan Plan { get; set; }
 
         public string PaymentMethod { get; set; }
 

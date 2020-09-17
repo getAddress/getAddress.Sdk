@@ -152,8 +152,13 @@ namespace getAddress.Sdk.Api
 
             return new SubscriptionV2
             {
-                Amount = json.amount,
-                Billed = json.billed,
+                Plan = new Plan 
+                { 
+                    Amount = json.plan.amount,
+                    Term = json.plan.term,
+                    DailyLookupLimit1 = json.plan.daily_lookup_limit_1,
+                    DailyLookupLimit2 = json.plan.daily_lookup_limit_2,
+                },
                 NextBillingDate = json.next_billing_date,
                 PaymentMethod = json.payment_method,
                 Status = json.status
