@@ -1,58 +1,29 @@
-﻿using System;
-
-
+﻿
 namespace getAddress.Sdk.Api.Responses
 {
-    public class Plan
+
+    public abstract class SubscriptionUpdatedResponse : ResponseBase<
+        SubscriptionUpdatedResponse.Success,
+        SubscriptionUpdatedResponse.Failed,
+        SubscriptionUpdatedResponse.TokenExpired,
+        SubscriptionUpdatedResponse.RateLimitedReached,
+        SubscriptionUpdatedResponse.Forbidden>
     {
-        public decimal Amount { get; set; }
-
-        public string Term { get; set; }
-
-        public int DailyLookupLimit1 { get; set; }
-
-        public int DailyLookupLimit2 { get; set; }
-
-    }
-
-    public class SubscriptionV2
-    {
-        public DateTime NextBillingDate { get; set; }
-
-        public Plan Plan { get; set; }
-
-        public string PaymentMethod { get; set; }
-
-        public string Status { get; set; }
-
-        public string Name { get; set; }
-    }
-
-    public abstract class SubscriptionV2Response : ResponseBase<
-        SubscriptionV2Response.Success,
-        SubscriptionV2Response.Failed,
-        SubscriptionV2Response.TokenExpired,
-        SubscriptionV2Response.RateLimitedReached,
-        SubscriptionV2Response.Forbidden>
-    {
-        protected SubscriptionV2Response(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
+        protected SubscriptionUpdatedResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
         }
 
-        public class Success : SubscriptionV2Response
+        public class Success : SubscriptionUpdatedResponse
         {
-            public SubscriptionV2 Subscription { get; set; }
-
-            public Success(int statusCode, string reasonPhrase, string raw, SubscriptionV2 subscription) : base(statusCode, reasonPhrase, raw, true)
+            
+            public Success(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, true)
             {
-                Subscription = subscription;
-
                 SuccessfulResult = this;
             }
         }
 
-        public class Failed : SubscriptionV2Response
+        public class Failed : SubscriptionUpdatedResponse
         {
             public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {
@@ -104,7 +75,4 @@ namespace getAddress.Sdk.Api.Responses
         }
 
     }
-
-
-
 }

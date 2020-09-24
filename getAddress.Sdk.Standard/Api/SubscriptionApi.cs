@@ -1,4 +1,5 @@
-﻿using getAddress.Sdk.Api.Responses;
+﻿using getAddress.Sdk.Api.Requests;
+using getAddress.Sdk.Api.Responses;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
@@ -66,6 +67,43 @@ namespace getAddress.Sdk.Api
 
         }
 
+        public async Task<SubscriptionUpdatedResponse> Update(UpdateSubscriptionRequest request)
+        {
+            return await Update(Api, request, Path, AdminKey);
+        }
+
+        public async static Task<SubscriptionUpdatedResponse> Update(GetAddesssApi api, UpdateSubscriptionRequest request, string path, AdminKey adminKey)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+
+            api.SetAuthorizationKey(adminKey);
+
+            var fullPath = path;
+
+            var response = await api.Put(fullPath, request);
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            Func<int, string, string, SubscriptionUpdatedResponse> success = (statusCode, phrase, json) =>
+            {
+                var successResult = new SubscriptionUpdatedResponse.Success(statusCode, phrase, json);
+                return successResult;
+            };
+
+            Func<string, string, SubscriptionUpdatedResponse> tokenExpired = (rp, b) => { return new SubscriptionUpdatedResponse.TokenExpired(rp, b); };
+            Func<string, string, double, SubscriptionUpdatedResponse> limitReached = (rp, b, r) => { return new SubscriptionUpdatedResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, SubscriptionUpdatedResponse> failed = (sc, rp, b) => { return new SubscriptionUpdatedResponse.Failed(sc, rp, b); };
+            Func<string, string, SubscriptionUpdatedResponse> forbidden = (rp, b) => { return new SubscriptionUpdatedResponse.Forbidden(rp, b); };
+
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed,
+                forbidden);
+
+        }
 
         public async Task<SubscriptionResponse> Get()
         {
@@ -143,6 +181,8 @@ namespace getAddress.Sdk.Api
 
         }
 
+
+        
 
         private static SubscriptionV2 GetSubscriptionV2(string body)
         {

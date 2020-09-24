@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using getAddress.Sdk.Api;
+using getAddress.Sdk.Api.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace getAddress.Sdk.Tests
@@ -38,7 +39,27 @@ namespace getAddress.Sdk.Tests
             Assert.IsTrue(response.IsSuccess);
 
             var success = response.SuccessfulResult;
+        }
 
+        [TestMethod]
+        public async Task GivenAValidToken_UpdateReturnsSuccessfulResult()
+        {
+            var accessToken = await TokenHelper.GetAccessToken();
+
+            var httpClient = HttpClientHelper.ForStagingServer();
+
+            var service = new SubscriptionService(httpClient);
+
+            var request = new UpdateSubscriptionRequest
+            {
+                Name = Guid.NewGuid().ToString()
+            };
+
+            var response = await service.Update(request, accessToken);
+
+            Assert.IsTrue(response.IsSuccess);
+
+            var success = response.SuccessfulResult;
         }
 
 

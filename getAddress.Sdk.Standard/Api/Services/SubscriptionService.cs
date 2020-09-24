@@ -1,4 +1,5 @@
-﻿using getAddress.Sdk.Api.Responses;
+﻿using getAddress.Sdk.Api.Requests;
+using getAddress.Sdk.Api.Responses;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -38,6 +39,20 @@ namespace getAddress.Sdk.Api
             var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
 
             return await api.Subscription.Unsubscribe();
+        }
+
+        public async Task<SubscriptionUpdatedResponse> Update(UpdateSubscriptionRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+
+            return await api.Subscription.Update(request);
+        }
+
+        public async Task<SubscriptionUpdatedResponse> Update(UpdateSubscriptionRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
+        {
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.Subscription.Update(request);
         }
 
         public async Task<SubscriptionResponse> Subscription(AdminKey adminKey = null, HttpClient httpClient = null)
