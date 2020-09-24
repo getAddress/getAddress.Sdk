@@ -39,7 +39,6 @@ namespace getAddress.Sdk.Tests
 
             var success = response.SuccessfulResult;
 
-
         }
 
 

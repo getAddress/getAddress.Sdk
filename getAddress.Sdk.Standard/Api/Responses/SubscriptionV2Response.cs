@@ -24,6 +24,8 @@ namespace getAddress.Sdk.Api.Responses
         public string PaymentMethod { get; set; }
 
         public string Status { get; set; }
+
+        public string Name { get; set; }
     }
 
     public abstract class SubscriptionV2Response : ResponseBase<
