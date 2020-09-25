@@ -13,6 +13,8 @@ namespace getAddress.Sdk.Api.Responses
 
         public int DailyLookupLimit2 { get; set; }
 
+        public bool MultiApplication { get; set; }
+
     }
 
     public class SubscriptionV2

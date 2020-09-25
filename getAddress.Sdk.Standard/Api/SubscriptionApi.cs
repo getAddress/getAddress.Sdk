@@ -198,6 +198,7 @@ namespace getAddress.Sdk.Api
                     Term = json.plan.term,
                     DailyLookupLimit1 = json.plan.daily_lookup_limit_1,
                     DailyLookupLimit2 = json.plan.daily_lookup_limit_2,
+                    MultiApplication = json.plan.multi_application
                 },
                 NextBillingDate = json.next_billing_date,
                 PaymentMethod = json.payment_method,
