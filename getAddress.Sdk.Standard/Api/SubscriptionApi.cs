@@ -182,8 +182,6 @@ namespace getAddress.Sdk.Api
         }
 
 
-        
-
         private static SubscriptionV2 GetSubscriptionV2(string body)
         {
             if (string.IsNullOrWhiteSpace(body)) return new SubscriptionV2();

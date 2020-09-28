@@ -67,6 +67,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BillingAddressTests.cs" />
     <Compile Include="HttpClientExtensions.cs" />
     <Compile Include="SuggestLimitReachedWebhookTests.cs" />
     <Compile Include="SuggestTests.cs" />

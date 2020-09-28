@@ -19,6 +19,7 @@ namespace getAddress.Sdk.Api
         {
             AdminKey = adminKey ?? throw new System.ArgumentNullException(nameof(adminKey));
         }
+
         public BillingAddressService(AccessToken accessToken, HttpClient httpClient = null) : base(accessToken, httpClient)
         {
 
@@ -37,6 +38,19 @@ namespace getAddress.Sdk.Api
 
             return await api.BillingAddress.Get();
         }
-    
+
+        public async Task<BillingAddressResponse> Get(AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+
+            return await api.BillingAddress.Get();
+        }
+
+        public async Task<BillingAddressResponse> Update(BillingAddressRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+
+            return await api.BillingAddress.Update(request);
+        }
     }
 }
