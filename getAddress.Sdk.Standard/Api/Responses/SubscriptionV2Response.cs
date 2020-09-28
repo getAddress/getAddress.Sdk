@@ -28,6 +28,8 @@ namespace getAddress.Sdk.Api.Responses
         public string Status { get; set; }
 
         public string Name { get; set; }
+
+        public DateTime StartDate { get; set; }
     }
 
     public abstract class SubscriptionV2Response : ResponseBase<

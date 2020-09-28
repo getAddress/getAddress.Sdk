@@ -203,7 +203,8 @@ namespace getAddress.Sdk.Api
                 NextBillingDate = json.next_billing_date,
                 PaymentMethod = json.payment_method,
                 Status = json.status,
-                Name = json.name
+                Name = json.name,
+                StartDate = json.start_date
             };
         }
 
