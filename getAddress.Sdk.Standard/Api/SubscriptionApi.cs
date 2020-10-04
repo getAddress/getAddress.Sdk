@@ -80,6 +80,12 @@ namespace getAddress.Sdk.Api
 
             var fullPath = path;
 
+            if (api.HttpClient.DefaultRequestHeaders.Contains("api-version"))
+            {
+                api.HttpClient.DefaultRequestHeaders.Remove("api-version");
+            }
+            api.HttpClient.DefaultRequestHeaders.TryAddWithoutValidation("api-version", "2020-09-09");
+
             var response = await api.Put(fullPath, request);
 
             var body = await response.Content.ReadAsStringAsync();
@@ -87,6 +93,8 @@ namespace getAddress.Sdk.Api
             Func<int, string, string, SubscriptionUpdatedResponse> success = (statusCode, phrase, json) =>
             {
                 var successResult = new SubscriptionUpdatedResponse.Success(statusCode, phrase, json);
+                var responseId = GetResponseId(body);
+                successResult.ResponseId = responseId;
                 return successResult;
             };
 

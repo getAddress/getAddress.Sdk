@@ -26,7 +26,6 @@ namespace getAddress.Sdk.Api
             if (path == null) throw new ArgumentNullException(nameof(path));
             if (adminKey == null) throw new ArgumentNullException(nameof(adminKey));
 
-
             api.SetAuthorizationKey(adminKey);
 
             var response = await api.HttpGet(path);
@@ -37,8 +36,11 @@ namespace getAddress.Sdk.Api
             {
                 var address = GetBillingAddress(json);
 
-                return new BillingAddressResponse.Success(statusCode, phrase, json,
+                var successResult =  new BillingAddressResponse.Success(statusCode, phrase, json,
                     address.Line1, address.Line2, address.Line3, address.TownOrCity, address.County, address.Postcode);
+                
+
+                return successResult;
             };
 
             Func<string, string, BillingAddressResponse> tokenExpired = (rp, b) => { return new BillingAddressResponse.TokenExpired(rp, b); };
@@ -53,41 +55,50 @@ namespace getAddress.Sdk.Api
                 limitReached,
                 failed,
                 forbidden
-                );
+              );
 
         }
 
-        public async Task<BillingAddressResponse> Update(BillingAddressRequest request)
+        public async Task<BillingAddressUpdatedResponse> Update(BillingAddressRequest request)
         {
             return await Update(Api, request, Path, AdminKey);
         }
 
-        public async static Task<BillingAddressResponse> Update(GetAddesssApi api, BillingAddressRequest request, string path, AdminKey adminKey)
+        public async static Task<BillingAddressUpdatedResponse> Update(GetAddesssApi api, BillingAddressRequest request, string path, AdminKey adminKey)
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
             if (request == null) throw new ArgumentNullException(nameof(request));
 
             api.SetAuthorizationKey(adminKey);
 
+            if (api.HttpClient.DefaultRequestHeaders.Contains("api-version"))
+            {
+                api.HttpClient.DefaultRequestHeaders.Remove("api-version");
+            }
+            api.HttpClient.DefaultRequestHeaders.TryAddWithoutValidation("api-version", "2020-09-09");
+
             var response = await api.Put(path, request);
 
             var body = await response.Content.ReadAsStringAsync();
 
 
-            Func<int, string, string, BillingAddressResponse> success = (statusCode, phrase, json) =>
+            Func<int, string, string, BillingAddressUpdatedResponse> success = (statusCode, phrase, json) =>
             {
-                var address = GetBillingAddress(json);
+                var responseId = GetResponseId(json);
 
-                return new BillingAddressResponse.Success(statusCode, phrase, json,
-                   address.Line1, address.Line2, address.Line3, address.TownOrCity, address.County, address.Postcode);
+                var billingAddressResponse = new BillingAddressUpdatedResponse.Success(statusCode, phrase, json);
+
+                billingAddressResponse.ResponseId = responseId;
+
+                return billingAddressResponse;
             };
 
-            Func<string, string, BillingAddressResponse> tokenExpired = (rp, b) => { return new BillingAddressResponse.TokenExpired(rp, b); };
-            Func<string, string, double, BillingAddressResponse> limitReached = (rp, b, r) => { return new BillingAddressResponse.RateLimitedReached(rp, b, r); };
-            Func<int, string, string, BillingAddressResponse> failed = (sc, rp, b) => { return new BillingAddressResponse.Failed(sc, rp, b); };
-            Func<string, string, BillingAddressResponse> forbidden = (rp, b) => { return new BillingAddressResponse.Forbidden(rp, b); };
+            Func<string, string, BillingAddressUpdatedResponse> tokenExpired = (rp, b) => { return new BillingAddressUpdatedResponse.TokenExpired(rp, b); };
+            Func<string, string, double, BillingAddressUpdatedResponse> limitReached = (rp, b, r) => { return new BillingAddressUpdatedResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, BillingAddressUpdatedResponse> failed = (sc, rp, b) => { return new BillingAddressUpdatedResponse.Failed(sc, rp, b); };
+            Func<string, string, BillingAddressUpdatedResponse> forbidden = (rp, b) => { return new BillingAddressUpdatedResponse.Forbidden(rp, b); };
 
-            return response.GetResponse( body,
+            return response.GetResponse(body,
                 success,
                 tokenExpired,
                 limitReached,
@@ -95,6 +106,18 @@ namespace getAddress.Sdk.Api
                 forbidden
                 );
 
+        }
+
+        private static string GetResponseId(string body)
+        {
+
+            if (string.IsNullOrWhiteSpace(body)) return string.Empty;
+
+            var json = JsonConvert.DeserializeObject<dynamic>(body);
+
+            string responseId = json.response_id;
+
+            return responseId; ;
         }
 
         private static BillingAddress GetBillingAddress(string body)
@@ -117,6 +140,7 @@ namespace getAddress.Sdk.Api
             public string County { get; set; }
 
             public string Postcode { get; set; }
+
         }
 
     }

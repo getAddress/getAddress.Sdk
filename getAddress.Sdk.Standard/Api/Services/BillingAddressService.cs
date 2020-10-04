@@ -25,7 +25,7 @@ namespace getAddress.Sdk.Api
 
         }
 
-        public async Task<BillingAddressResponse> Update(BillingAddressRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
+        public async Task<BillingAddressUpdatedResponse> Update(BillingAddressRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
             var api = GetAddesssApi(adminKey, httpClient);
 
@@ -46,7 +46,7 @@ namespace getAddress.Sdk.Api
             return await api.BillingAddress.Get();
         }
 
-        public async Task<BillingAddressResponse> Update(BillingAddressRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        public async Task<BillingAddressUpdatedResponse> Update(BillingAddressRequest request, AccessToken accessToken, HttpClient httpClient = null)
         {
             var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
 

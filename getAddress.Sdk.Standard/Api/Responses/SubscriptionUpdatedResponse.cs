@@ -16,7 +16,8 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Success : SubscriptionUpdatedResponse
         {
-            
+            public string ResponseId { get; set; }
+
             public Success(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, true)
             {
                 SuccessfulResult = this;
