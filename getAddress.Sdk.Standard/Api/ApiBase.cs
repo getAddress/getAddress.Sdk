@@ -1,8 +1,5 @@
-﻿using getAddress.Sdk.Api.Responses;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Net.Http;
 
 namespace getAddress.Sdk.Api
 {

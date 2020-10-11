@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="BillingAddressTests.cs" />
     <Compile Include="HttpClientExtensions.cs" />
+    <Compile Include="PaymentCardTests.cs" />
     <Compile Include="SuggestLimitReachedWebhookTests.cs" />
     <Compile Include="SuggestTests.cs" />
     <Compile Include="TokenServiceTests.cs" />

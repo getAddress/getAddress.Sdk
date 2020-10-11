@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
+
     public class SubscriptionService : ServiceBase, ISubscriptionService
     {
         public SubscriptionService(HttpClient httpClient) : base(httpClient)
