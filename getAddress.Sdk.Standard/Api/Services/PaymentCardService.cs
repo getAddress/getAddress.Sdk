@@ -1,4 +1,5 @@
-﻿using getAddress.Sdk.Api.Responses;
+﻿using getAddress.Sdk.Api.Requests;
+using getAddress.Sdk.Api.Responses;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -38,6 +39,20 @@ namespace getAddress.Sdk.Api
             var api = GetAddesssApi(adminKey, httpClient);
 
             return await api.PaymentCard.List();
+        }
+
+        public async Task<AddPaymentCardResponse> Add(AddPaymentCardRequest request, AdminKey adminKey, HttpClient httpClient = null)
+        {
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.PaymentCard.Add(request);
+        }
+
+        public async Task<AddPaymentCardResponse> Add(AddPaymentCardRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+
+            return await api.PaymentCard.Add(request);
         }
     }
 }

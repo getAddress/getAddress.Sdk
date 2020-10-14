@@ -1,4 +1,5 @@
-﻿using getAddress.Sdk.Api.Responses;
+﻿using getAddress.Sdk.Api.Requests;
+using getAddress.Sdk.Api.Responses;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
@@ -52,11 +53,48 @@ namespace getAddress.Sdk.Api
 
         }
 
+
         private static PaymentCardList GetPaymentCardList(string body)
         {
             if (string.IsNullOrWhiteSpace(body)) return new PaymentCardList();
 
             return JsonConvert.DeserializeObject<PaymentCardList>(body);
+
+        }
+
+        public async Task<AddPaymentCardResponse> Add(AddPaymentCardRequest request)
+        {
+            return await Add(Api,request, Path, AdminKey);
+        }
+
+        public async static Task<AddPaymentCardResponse> Add(GetAddesssApi api, AddPaymentCardRequest request, string path, AdminKey adminKey)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+            if (request == null) throw new ArgumentNullException(nameof(request));
+
+            api.SetAuthorizationKey(adminKey);
+
+            var response = await api.Post(path, request);
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            Func<int, string, string, AddPaymentCardResponse> success = (statusCode, phrase, json) =>
+            {
+                return new AddPaymentCardResponse.Success(statusCode, phrase, json,"");
+            };
+
+            Func<string, string, AddPaymentCardResponse> tokenExpired = (rp, b) => { return new AddPaymentCardResponse.TokenExpired(rp, b); };
+            Func<string, string, double, AddPaymentCardResponse> limitReached = (rp, b, r) => { return new AddPaymentCardResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, AddPaymentCardResponse> failed = (sc, rp, b) => { return new AddPaymentCardResponse.Failed(sc, rp, b); };
+            Func<string, string, AddPaymentCardResponse> forbidden = (rp, b) => { return new AddPaymentCardResponse.Forbidden(rp, b); };
+
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed,
+                forbidden);
 
         }
 
