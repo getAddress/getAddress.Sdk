@@ -95,8 +95,45 @@ namespace getAddress.Sdk.Api
                 limitReached,
                 failed,
                 forbidden);
-
         }
+
+        public async Task<RemovePaymentCardResponse> Remove(RemovePaymentCardRequest request)
+        {
+            return await Remove(Api, request, Path, AdminKey);
+        }
+
+        public async static Task<RemovePaymentCardResponse> Remove(GetAddesssApi api, RemovePaymentCardRequest request, string path, AdminKey adminKey)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (path == null) throw new ArgumentNullException(nameof(path));
+
+            api.SetAuthorizationKey(adminKey);
+
+            var response = await api.Delete(path);
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            Func<int, string, string, RemovePaymentCardResponse> success = (statusCode, phrase, json) =>
+            {
+                return new RemovePaymentCardResponse.Success(statusCode, phrase, json, string.Empty);
+            };
+
+            Func<string, string, RemovePaymentCardResponse> tokenExpired = (rp, b) => { return new RemovePaymentCardResponse.TokenExpired(rp, b); };
+            Func<string, string, double, RemovePaymentCardResponse> limitReached = (rp, b, r) => { return new RemovePaymentCardResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, RemovePaymentCardResponse> failed = (sc, rp, b) => { return new RemovePaymentCardResponse.Failed(sc, rp, b); };
+            Func<string, string, RemovePaymentCardResponse> forbidden = (rp, b) => { return new RemovePaymentCardResponse.Forbidden(rp, b); };
+
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed,
+                forbidden);
+        }
+
+
 
     }
 }
