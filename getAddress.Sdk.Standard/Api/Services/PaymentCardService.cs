@@ -75,11 +75,11 @@ namespace getAddress.Sdk.Api
             return await api.PaymentCard.UpdateDefault(request);
         }
 
-        public async Task<RemovePaymentCardResponse> UpdateDefault(RemovePaymentCardRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        public async Task<UpdateDefaultPaymentCardResponse> UpdateDefault(UpdateDefaultPaymentCardRequest request, AccessToken accessToken, HttpClient httpClient = null)
         {
             var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
 
-            return await api.PaymentCard.Remove(request);
+            return await api.PaymentCard.UpdateDefault(request);
         }
 
     }

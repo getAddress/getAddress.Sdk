@@ -21,7 +21,7 @@ namespace getAddress.Sdk.Api
 
         Task<UpdateDefaultPaymentCardResponse> UpdateDefault(UpdateDefaultPaymentCardRequest request, AdminKey adminKey, HttpClient httpClient = null);
 
-        Task<RemovePaymentCardResponse> UpdateDefault(RemovePaymentCardRequest request, AccessToken accessToken, HttpClient httpClient = null);
+        Task<UpdateDefaultPaymentCardResponse> UpdateDefault(UpdateDefaultPaymentCardRequest request, AccessToken accessToken, HttpClient httpClient = null);
         
     }
 }
