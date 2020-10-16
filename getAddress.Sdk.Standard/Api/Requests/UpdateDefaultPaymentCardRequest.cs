@@ -3,7 +3,7 @@
 
 namespace getAddress.Sdk.Api.Requests
 {
-    public class RemovePaymentCardRequest
+    public class UpdateDefaultPaymentCardRequest
     {
         [JsonProperty("id")]
         public string Id
@@ -11,7 +11,7 @@ namespace getAddress.Sdk.Api.Requests
             get;
             set;
         }
-        public RemovePaymentCardRequest(string id)
+        public UpdateDefaultPaymentCardRequest(string id)
         {
             Id = id;
         }

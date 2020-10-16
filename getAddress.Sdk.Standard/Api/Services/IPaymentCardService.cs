@@ -18,5 +18,10 @@ namespace getAddress.Sdk.Api
         Task<RemovePaymentCardResponse> Remove(RemovePaymentCardRequest request, AdminKey adminKey, HttpClient httpClient = null);
 
         Task<RemovePaymentCardResponse> Remove(RemovePaymentCardRequest request, AccessToken accessToken, HttpClient httpClient = null);
+
+        Task<UpdateDefaultPaymentCardResponse> UpdateDefault(UpdateDefaultPaymentCardRequest request, AdminKey adminKey, HttpClient httpClient = null);
+
+        Task<RemovePaymentCardResponse> UpdateDefault(RemovePaymentCardRequest request, AccessToken accessToken, HttpClient httpClient = null);
+        
     }
 }

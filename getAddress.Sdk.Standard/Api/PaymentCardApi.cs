@@ -110,7 +110,9 @@ namespace getAddress.Sdk.Api
 
             api.SetAuthorizationKey(adminKey);
 
-            var response = await api.Delete(path);
+            var fullPath = path + request.Id;
+
+            var response = await api.Delete(fullPath);
 
             var body = await response.Content.ReadAsStringAsync();
 
@@ -134,6 +136,42 @@ namespace getAddress.Sdk.Api
         }
 
 
+        public async Task<UpdateDefaultPaymentCardResponse> UpdateDefault(UpdateDefaultPaymentCardRequest request)
+        {
+            return await UpdateDefault(Api, request, Path, AdminKey);
+        }
 
+        public async static Task<UpdateDefaultPaymentCardResponse> UpdateDefault(GetAddesssApi api, UpdateDefaultPaymentCardRequest request, string path, AdminKey adminKey)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (path == null) throw new ArgumentNullException(nameof(path));
+
+            api.SetAuthorizationKey(adminKey);
+
+            var fullPath = path + request.Id;
+
+            var response = await api.Put(fullPath);
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            Func<int, string, string, UpdateDefaultPaymentCardResponse> success = (statusCode, phrase, json) =>
+            {
+                return new UpdateDefaultPaymentCardResponse.Success(statusCode, phrase, json, string.Empty);
+            };
+
+            Func<string, string, UpdateDefaultPaymentCardResponse> tokenExpired = (rp, b) => { return new UpdateDefaultPaymentCardResponse.TokenExpired(rp, b); };
+            Func<string, string, double, UpdateDefaultPaymentCardResponse> limitReached = (rp, b, r) => { return new UpdateDefaultPaymentCardResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, UpdateDefaultPaymentCardResponse> failed = (sc, rp, b) => { return new UpdateDefaultPaymentCardResponse.Failed(sc, rp, b); };
+            Func<string, string, UpdateDefaultPaymentCardResponse> forbidden = (rp, b) => { return new UpdateDefaultPaymentCardResponse.Forbidden(rp, b); };
+
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed,
+                forbidden);
+        }
     }
 }
