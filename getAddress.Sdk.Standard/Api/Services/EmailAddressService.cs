@@ -31,9 +31,23 @@ namespace getAddress.Sdk.Api
             return await api.EmailAddress.Update(request);
         }
 
+        public async Task<EmailAddressResponse> Update(UpdateEmailAddressRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+
+            return await api.EmailAddress.Update(request);
+        }
+
         public async Task<EmailAddressResponse> Get(AdminKey adminKey = null, HttpClient httpClient = null)
         {
             var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.EmailAddress.Get();
+        }
+
+        public async Task<EmailAddressResponse> Get(AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
 
             return await api.EmailAddress.Get();
         }

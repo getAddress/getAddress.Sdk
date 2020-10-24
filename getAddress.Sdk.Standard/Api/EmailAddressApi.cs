@@ -79,7 +79,7 @@ namespace getAddress.Sdk.Api
             Func<string, string, double, EmailAddressResponse> limitReached = (rp, b, r) => { return new EmailAddressResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, EmailAddressResponse> failed = (sc, rp, b) => { return new EmailAddressResponse.Failed(sc, rp, b); };
             Func<string, string, EmailAddressResponse> forbidden = (rp, b) => { return new EmailAddressResponse.Forbidden(rp, b); };
-
+            Func< string, string, EmailAddressResponse> conflict = ( rp, b) => { return new EmailAddressResponse.FailedAccountAlreadyExists( rp, b); };
 
 
             return response.GetResponse(body,
@@ -87,7 +87,8 @@ namespace getAddress.Sdk.Api
                 tokenExpired,
                 limitReached,
                 failed,
-                forbidden
+                forbidden,
+                confict:conflict
                 );
 
         }

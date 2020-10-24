@@ -19,7 +19,8 @@ namespace getAddress.Sdk.Api
             Func<string, string, R> notFound = null,
             Func<string, string, R> invalidPostcode = null,
             Func<string, string, R> accountExpired = null,
-            Func<string, string, R> limitReached = null
+            Func<string, string, R> limitReached = null,
+            Func<string, string, R> confict = null
             )
         {
 
@@ -54,6 +55,10 @@ namespace getAddress.Sdk.Api
             if (limitReached != null && response.IsLimitReached())
             {
                 return limitReached(response.ReasonPhrase, body);
+            }
+            if (confict != null && response.IsConflict())
+            {
+                return confict(response.ReasonPhrase, body);
             }
 
             return failed((int)response.StatusCode, response.ReasonPhrase, body);
@@ -94,6 +99,11 @@ namespace getAddress.Sdk.Api
         public static bool IsLimitReached(this HttpResponseMessage httpResponseMessage)
         {
             return httpResponseMessage.Headers.Contains("Limit-Reached") && (int)httpResponseMessage.StatusCode == 429;
+        }
+
+        public static bool IsConflict(this HttpResponseMessage httpResponseMessage)
+        {
+            return httpResponseMessage.StatusCode == System.Net.HttpStatusCode.Conflict;
         }
 
         public static bool IsRateLimitReached(this HttpResponseMessage httpResponseMessage, out double retryAfter)

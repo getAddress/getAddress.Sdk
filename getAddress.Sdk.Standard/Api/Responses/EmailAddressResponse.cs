@@ -46,6 +46,16 @@
                 Message = message;
             }
         }
+
+        public class FailedAccountAlreadyExists : Failed
+        {
+
+            public FailedAccountAlreadyExists(string reasonPhrase, string raw) : base(409, reasonPhrase, raw)
+            {
+               
+            }
+        }
+
         public class TokenExpired : Failed
         {
             public TokenExpired(string reasonPhrase, string raw) : base(401, reasonPhrase, raw)
