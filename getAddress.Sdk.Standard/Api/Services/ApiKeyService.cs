@@ -29,10 +29,22 @@ namespace getAddress.Sdk.Api
 
             return await api.ApiKeyApi.Update();
         }
+        public async Task<ApiKeyResponse> Update(AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+
+            return await api.ApiKeyApi.Update();
+        }
 
         public async Task<ApiKeyResponse> Get(AdminKey adminKey = null, HttpClient httpClient = null)
         {
             var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.ApiKeyApi.Get();
+        }
+        public async Task<ApiKeyResponse> Get(AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
 
             return await api.ApiKeyApi.Get();
         }
