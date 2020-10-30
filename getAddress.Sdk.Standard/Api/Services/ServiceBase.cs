@@ -8,12 +8,17 @@ namespace getAddress.Sdk.Api
         {
             HttpClient = httpClient;
         }
+        
 
         protected ServiceBase(AccessToken accessToken, HttpClient httpClient = null) : this(httpClient)
         {
             AccessToken = accessToken ?? throw new System.ArgumentNullException(nameof(accessToken));
         }
 
+        protected GetAddesssApi GetAddesssApi(HttpClient httpClient = null)
+        {
+              return new GetAddesssApi(HttpClient ?? httpClient);
+        }
 
         protected GetAddesssApi GetAddesssApi(AdminKey adminKey = null, HttpClient httpClient = null)
         {

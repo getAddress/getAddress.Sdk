@@ -30,6 +30,10 @@ namespace getAddress.Sdk
         public Uri _baseAddress = new Uri("https://api.getaddress.io");
         private readonly HttpClient _client;
 
+        public GetAddesssApi(HttpClient httpClient = null) : this(new ApiKey(string.Empty), new AdminKey(string.Empty), httpClient)
+        {
+        }
+
         public GetAddesssApi(ApiKey apiKey, HttpClient httpClient = null) : this(apiKey, new AdminKey(string.Empty), httpClient)
         {
         }
@@ -112,6 +116,8 @@ namespace getAddress.Sdk
             suggestLimitReachedWebhook = new Lazy<SuggestLimitReachedWebhookApi>(() => new SuggestLimitReachedWebhookApi(adminKey, this));
 
             paymentCard = new Lazy<PaymentCardApi>(() => new PaymentCardApi(adminKey, this));
+
+            plans = new Lazy<PlansApi>(() => new PlansApi(this));
         }
 
         private Lazy<AutocompleteApi> autocomplete;
@@ -140,6 +146,7 @@ namespace getAddress.Sdk
         private Lazy<GetApi> get;
         private Lazy<SuggestLimitReachedWebhookApi> suggestLimitReachedWebhook;
         private Lazy<PaymentCardApi> paymentCard;
+        private Lazy<PlansApi> plans;
 
         public HttpClient HttpClient { get { return _client; } }
         public Uri BaseAddress
@@ -159,6 +166,10 @@ namespace getAddress.Sdk
             }
         }
 
+        public PlansApi Plans
+        {
+            get { return plans.Value; }
+        }
 
         public PaymentCardApi PaymentCard
         {
