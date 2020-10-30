@@ -1,21 +1,22 @@
 ﻿
 namespace getAddress.Sdk.Api.Responses
 {
-    public abstract class SubscriptionUpdatedResponse : ResponseBase<
-        SubscriptionUpdatedResponse.Success,
-        SubscriptionUpdatedResponse.Failed,
-        SubscriptionUpdatedResponse.TokenExpired,
-        SubscriptionUpdatedResponse.RateLimitedReached,
-        SubscriptionUpdatedResponse.Forbidden>
+
+    public abstract class SubscriptionCreatedResponse : ResponseBase<
+        SubscriptionCreatedResponse.Success,
+        SubscriptionCreatedResponse.Failed,
+        SubscriptionCreatedResponse.TokenExpired,
+        SubscriptionCreatedResponse.RateLimitedReached,
+        SubscriptionCreatedResponse.Forbidden>
     {
-        protected SubscriptionUpdatedResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
+        protected SubscriptionCreatedResponse(int statusCode, string reasonPhrase, string raw, bool isSuccess) : base(statusCode, reasonPhrase, raw, isSuccess)
         {
 
         }
 
-        public class Success : SubscriptionUpdatedResponse
+        public class Success : SubscriptionCreatedResponse
         {
-            public string ResponseId { get; set; }
+            public string Message { get; set; }
 
             public Success(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, true)
             {
@@ -23,7 +24,7 @@ namespace getAddress.Sdk.Api.Responses
             }
         }
 
-        public class Failed : SubscriptionUpdatedResponse
+        public class Failed : SubscriptionCreatedResponse
         {
             public Failed(int statusCode, string reasonPhrase, string raw) : base(statusCode, reasonPhrase, raw, false)
             {

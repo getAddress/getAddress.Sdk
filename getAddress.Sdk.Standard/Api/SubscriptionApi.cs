@@ -113,6 +113,46 @@ namespace getAddress.Sdk.Api
 
         }
 
+
+        public async Task<SubscriptionCreatedResponse> Create(CreateSubscriptionRequest request)
+        {
+            return await Create(Api, request, Path, AdminKey);
+        }
+
+        public async static Task<SubscriptionCreatedResponse> Create(GetAddesssApi api, CreateSubscriptionRequest request, string path, AdminKey adminKey)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+
+            api.SetAuthorizationKey(adminKey);
+
+            var fullPath = path;
+
+            var response = await api.Post(fullPath, request);
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            Func<int, string, string, SubscriptionCreatedResponse> success = (statusCode, phrase, json) =>
+            {
+                var successResult = new SubscriptionCreatedResponse.Success(statusCode, phrase, json);
+                var message = GetMessage(body);
+                successResult.Message = message;
+                return successResult;
+            };
+
+            Func<string, string, SubscriptionCreatedResponse> tokenExpired = (rp, b) => { return new SubscriptionCreatedResponse.TokenExpired(rp, b); };
+            Func<string, string, double, SubscriptionCreatedResponse> limitReached = (rp, b, r) => { return new SubscriptionCreatedResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, SubscriptionCreatedResponse> failed = (sc, rp, b) => { return new SubscriptionCreatedResponse.Failed(sc, rp, b); };
+            Func<string, string, SubscriptionCreatedResponse> forbidden = (rp, b) => { return new SubscriptionCreatedResponse.Forbidden(rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed,
+                forbidden);
+
+        }
+
         public async Task<SubscriptionResponse> Get()
         {
             return await Get(Api, Path, AdminKey);

@@ -55,6 +55,19 @@ namespace getAddress.Sdk.Api
 
             return await api.Subscription.Update(request);
         }
+        public async Task<SubscriptionCreatedResponse> Create(CreateSubscriptionRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
+        {
+            var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.Subscription.Create(request);
+        }
+
+        public async Task<SubscriptionCreatedResponse> Create(CreateSubscriptionRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+
+            return await api.Subscription.Create(request);
+        }
 
         public async Task<SubscriptionResponse> Subscription(AdminKey adminKey = null, HttpClient httpClient = null)
         {
