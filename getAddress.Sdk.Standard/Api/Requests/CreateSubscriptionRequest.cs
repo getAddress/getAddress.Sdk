@@ -11,5 +11,10 @@ namespace getAddress.Sdk.Api.Requests
             get; set;
         }
 
+        [JsonProperty("card_id")]
+        public string CardId
+        {
+            get; set;
+        }
     }
 }
