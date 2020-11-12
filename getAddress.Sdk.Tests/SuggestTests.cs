@@ -58,6 +58,33 @@ namespace getAddress.Sdk.Tests
         }
 
         [TestMethod]
+        public async Task Given_all_is_true_and_Top_Equals_2_Get_Returns_all_Suggestions()
+        {
+            var apiKey = KeyHelper.GetApiKey();
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey), httpClient))
+            {
+                const int top = 2;
+
+                var result = await api.Suggest.Get(new SuggestRequest { Term = "nn1 3er" });
+
+                Assert.IsTrue(result.IsSuccess);
+
+                Assert.IsTrue(result.SuccessfulResult.Suggestions.Count() > top);
+
+                var result2 = await api.Suggest.Get(new SuggestRequest { Term = "nn1 3er", Top = top, All=true });
+
+                Assert.IsTrue(result2.IsSuccess);
+
+                Assert.IsTrue(result2.SuccessfulResult.Suggestions.Count() > top);
+            }
+        }
+
+        [TestMethod]
         public async Task Given_Northamptonshire_County_Filter_Get_Returns_Only_Suggestions_From_Northampton()
         {
             var apiKey = KeyHelper.GetApiKey();

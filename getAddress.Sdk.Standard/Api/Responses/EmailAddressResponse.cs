@@ -11,6 +11,8 @@
         {
         }
 
+        public bool IsFailedAccountAlreayExists { get; private set; }
+
         public class Success : EmailAddressResponse
         {
             public string EmailAddress { get; }
@@ -21,8 +23,6 @@
                 SuccessfulResult = this;
             }
         }
-
-      
 
         public class Failed : EmailAddressResponse
         {
@@ -47,14 +47,29 @@
             }
         }
 
+        public FailedAccountAlreadyExists FailedAccountAlreadyResult { get; protected set; }
+
         public class FailedAccountAlreadyExists : Failed
         {
-
             public FailedAccountAlreadyExists(string reasonPhrase, string raw) : base(409, reasonPhrase, raw)
             {
-               
+                FailedAccountAlreadyResult = this;
+                IsFailedAccountAlreayExists = true;
             }
         }
+
+        public bool TryGetFailedAccountAlreadyExists(out FailedAccountAlreadyExists failedAccountAlreadyExists)
+        {
+            if (IsFailedAccountAlreayExists)
+            {
+                failedAccountAlreadyExists = FailedAccountAlreadyResult;
+                return true;
+            }
+
+            failedAccountAlreadyExists = default;
+            return false;
+        }
+
 
         public class TokenExpired : Failed
         {

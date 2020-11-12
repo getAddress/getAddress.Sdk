@@ -38,9 +38,23 @@ namespace getAddress.Sdk.Api
             return await api.Invoices.List();
         }
 
+        public async Task<ListInvoicesResponse> List(AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+
+            return await api.Invoices.List();
+        }
+
         public async Task<ListInvoicesResponse> List(ListInvoicesRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
             var api = GetAddesssApi(adminKey, httpClient);
+
+            return await api.Invoices.List(request);
+        }
+
+        public async Task<ListInvoicesResponse> List(ListInvoicesRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
 
             return await api.Invoices.List(request);
         }

@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using System.Net.Http;
+using getAddress.Sdk.Api;
 
 namespace getAddress.Sdk.Tests
 {
@@ -98,6 +99,20 @@ namespace getAddress.Sdk.Tests
                 Assert.IsTrue(result.IsSuccess);
             }
 
+        }
+
+        [TestMethod]
+        public async Task List_Invoices()
+        {
+            var accessToken = await TokenHelper.GetAccessToken();
+
+            var httpClient = HttpClientHelper.ForStagingServer();
+
+            var service = new InvoiceService(httpClient);
+
+            var response = await service.List(accessToken);
+
+            Assert.IsTrue(response.IsSuccess);
         }
     }
 }

@@ -11,6 +11,9 @@ namespace getAddress.Sdk.Api.Requests
         [JsonProperty("top")]
         public  int Top { get; set; }
 
+        [JsonProperty("all")]
+        public bool All { get; set; }
+
         [JsonProperty("filter")]
         public SuggestFilter Filter { get; set; } = new SuggestFilter();
     }
