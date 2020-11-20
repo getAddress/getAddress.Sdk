@@ -9,8 +9,10 @@ namespace getAddress.Sdk.Api.Responses
     {
         [JsonProperty("name")]
         public string Name { get; set; }
+
         [JsonProperty("amount")]
-        public string Amount { get; set; }
+        public decimal Amount { get; set; }
+
         [JsonProperty("description")]
         public string Description  { get; set; }
 
