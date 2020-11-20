@@ -16,6 +16,9 @@ namespace getAddress.Sdk.Api.Responses
 
         [JsonProperty("period")]
         public string Period{ get; set; }
+
+        [JsonProperty("daily_limit")]
+        public int DailyLimit { get; set; }
     }
 
     public abstract class PlansResponse : ResponseBase<

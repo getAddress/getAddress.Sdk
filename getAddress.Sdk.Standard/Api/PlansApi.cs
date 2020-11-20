@@ -65,12 +65,13 @@ namespace getAddress.Sdk.Api
 
             foreach(var plan in json.plans)
             {
-                var planDetail = new PlanDetail 
-                { 
+                var planDetail = new PlanDetail
+                {
                     Description = plan.description,
                     Amount = plan.amount,
                     Name = plan.name,
-                    Period = plan.period
+                    Period = plan.period,
+                    DailyLimit = plan.daily_limit
                 };
 
                 list.Add(planDetail);
