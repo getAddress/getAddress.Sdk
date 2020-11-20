@@ -117,7 +117,7 @@ namespace getAddress.Sdk
 
             paymentCard = new Lazy<PaymentCardApi>(() => new PaymentCardApi(adminKey, this));
 
-            plans = new Lazy<PlansApi>(() => new PlansApi(this));
+            plans = new Lazy<PlansApi>(() => new PlansApi(adminKey,this));
         }
 
         private Lazy<AutocompleteApi> autocomplete;

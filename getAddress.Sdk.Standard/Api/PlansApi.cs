@@ -6,23 +6,24 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-    public class PlansApi: ApiBase
+    public class PlansApi: AdminApiBase
     {
         public const string Path = "plans/";
 
-        internal PlansApi(GetAddesssApi api) : base(api)
+        internal PlansApi(AdminKey adminKey, GetAddesssApi api) : base(adminKey,api)
         {
 
         }
         public async Task<PlansResponse> Get()
         {
-            return await Get(Api, Path);
+            return await Get(Api, Path, AdminKey);
         }
-        public async static Task<PlansResponse> Get(GetAddesssApi api, string path)
+        public async static Task<PlansResponse> Get(GetAddesssApi api, string path, AdminKey adminKey)
         {
             if (api == null) throw new ArgumentNullException(nameof(api));
 
-         
+            api.SetAuthorizationKey(adminKey);
+
             var fullPath = path;
 
             var response = await api.HttpGet(fullPath);

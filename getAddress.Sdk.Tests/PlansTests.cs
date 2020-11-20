@@ -18,7 +18,9 @@ namespace getAddress.Sdk.Tests
 
             var service = new PlansService(httpClient);
 
-            var result = await service.Get();
+            var accessToken = await TokenHelper.GetAccessToken();
+
+            var result = await service.Get(accessToken,httpClient);
 
             Assert.IsTrue(result.IsSuccess);
         }
