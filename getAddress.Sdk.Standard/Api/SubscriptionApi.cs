@@ -113,7 +113,7 @@ namespace getAddress.Sdk.Api
 
         }
 
-
+        
         public async Task<SubscriptionCreatedResponse> Create(CreateSubscriptionRequest request)
         {
             return await Create(Api, request, Path, AdminKey);
@@ -143,6 +143,45 @@ namespace getAddress.Sdk.Api
             Func<string, string, double, SubscriptionCreatedResponse> limitReached = (rp, b, r) => { return new SubscriptionCreatedResponse.RateLimitedReached(rp, b, r); };
             Func<int, string, string, SubscriptionCreatedResponse> failed = (sc, rp, b) => { return new SubscriptionCreatedResponse.Failed(sc, rp, b); };
             Func<string, string, SubscriptionCreatedResponse> forbidden = (rp, b) => { return new SubscriptionCreatedResponse.Forbidden(rp, b); };
+
+            return response.GetResponse(body,
+                success,
+                tokenExpired,
+                limitReached,
+                failed,
+                forbidden);
+
+        }
+
+        public async Task<SubscriptionChangePlanResponse> ChangePlan(ChangePlanSubscriptionRequest request)
+        {
+            return await ChangePlan(Api, request, Path, AdminKey);
+        }
+
+        public async static Task<SubscriptionChangePlanResponse> ChangePlan(GetAddesssApi api, ChangePlanSubscriptionRequest request, string path, AdminKey adminKey)
+        {
+            if (api == null) throw new ArgumentNullException(nameof(api));
+
+            api.SetAuthorizationKey(adminKey);
+
+            var fullPath = path;
+
+            var response = await api.Put(fullPath, request);
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            Func<int, string, string, SubscriptionChangePlanResponse> success = (statusCode, phrase, json) =>
+            {
+                var successResult = new SubscriptionChangePlanResponse.Success(statusCode, phrase, json);
+                var message = GetMessage(body);
+                successResult.Message = message;
+                return successResult;
+            };
+
+            Func<string, string, SubscriptionChangePlanResponse> tokenExpired = (rp, b) => { return new SubscriptionChangePlanResponse.TokenExpired(rp, b); };
+            Func<string, string, double, SubscriptionChangePlanResponse> limitReached = (rp, b, r) => { return new SubscriptionChangePlanResponse.RateLimitedReached(rp, b, r); };
+            Func<int, string, string, SubscriptionChangePlanResponse> failed = (sc, rp, b) => { return new SubscriptionChangePlanResponse.Failed(sc, rp, b); };
+            Func<string, string, SubscriptionChangePlanResponse> forbidden = (rp, b) => { return new SubscriptionChangePlanResponse.Forbidden(rp, b); };
 
             return response.GetResponse(body,
                 success,

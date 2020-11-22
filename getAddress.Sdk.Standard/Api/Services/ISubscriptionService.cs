@@ -22,5 +22,10 @@ namespace getAddress.Sdk.Api
         Task<SubscriptionCreatedResponse> Create(CreateSubscriptionRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
 
         Task<SubscriptionCreatedResponse> Create(CreateSubscriptionRequest request, AccessToken accessToken, HttpClient httpClient = null);
+
+        Task<SubscriptionChangePlanResponse> ChangePlan(ChangePlanSubscriptionRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
+
+        Task<SubscriptionChangePlanResponse> ChangePlan(ChangePlanSubscriptionRequest request, AccessToken accessToken, HttpClient httpClient = null);
+
     }
 }
