@@ -125,7 +125,7 @@ namespace getAddress.Sdk.Api
 
             api.SetAuthorizationKey(adminKey);
 
-            var fullPath = path;
+            var fullPath = path + "change-plan/";
 
             var response = await api.Post(fullPath, request);
 
