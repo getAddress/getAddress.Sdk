@@ -24,7 +24,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<PlansResponse> Get(AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.Plans.Get();
         }

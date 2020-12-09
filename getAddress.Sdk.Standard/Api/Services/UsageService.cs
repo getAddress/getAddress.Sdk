@@ -29,7 +29,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<GetUsageV3Response> GetV3(AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api =  new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api =  new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.Usage.GetV3();
         }
@@ -74,14 +74,14 @@ namespace getAddress.Sdk.Api
 
         public async Task<ListUsageResponse> List(AccessToken accessToken, ListUsageRequest request, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.Usage.List(request);
         }
 
         public async Task<ListUsageResponseV3> ListV3(AccessToken accessToken, ListUsageRequest request, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.Usage.ListV3(request);
         }

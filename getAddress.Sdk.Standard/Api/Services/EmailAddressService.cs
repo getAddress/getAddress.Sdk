@@ -33,7 +33,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<EmailAddressResponse> Update(UpdateEmailAddressRequest request, AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.EmailAddress.Update(request);
         }
@@ -47,7 +47,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<EmailAddressResponse> Get(AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.EmailAddress.Get();
         }

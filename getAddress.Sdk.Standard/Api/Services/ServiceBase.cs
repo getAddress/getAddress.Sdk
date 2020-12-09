@@ -17,18 +17,18 @@ namespace getAddress.Sdk.Api
 
         protected GetAddesssApi GetAddesssApi(HttpClient httpClient = null)
         {
-              return new GetAddesssApi(HttpClient ?? httpClient);
+              return new GetAddesssApi(httpClient ?? HttpClient);
         }
 
         protected GetAddesssApi GetAddesssApi(AdminKey adminKey = null, HttpClient httpClient = null)
         {
             if (AccessToken != null && adminKey == null)
             {
-                return new GetAddesssApi(AccessToken, HttpClient ?? httpClient);
+                return new GetAddesssApi(AccessToken, httpClient ?? HttpClient);
             }
             else
             {
-                return new GetAddesssApi(adminKey ?? AdminKey, HttpClient ?? httpClient);
+                return new GetAddesssApi(adminKey ?? AdminKey, httpClient ?? HttpClient);
             }
         }
 
@@ -36,11 +36,11 @@ namespace getAddress.Sdk.Api
         {
             if (AccessToken != null && apiKey == null)
             {
-                return new GetAddesssApi(AccessToken, HttpClient ?? httpClient);
+                return new GetAddesssApi(AccessToken, httpClient ?? HttpClient);
             }
             else
             {
-                return new GetAddesssApi(apiKey ?? ApiKey, HttpClient ?? httpClient);
+                return new GetAddesssApi(apiKey ?? ApiKey, httpClient ?? HttpClient);
             }
         }
 

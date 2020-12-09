@@ -40,7 +40,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<ListInvoicesResponse> List(AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.Invoices.List();
         }
@@ -54,7 +54,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<ListInvoicesResponse> List(ListInvoicesRequest request, AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.Invoices.List(request);
         }

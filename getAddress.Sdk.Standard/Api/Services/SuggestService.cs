@@ -31,7 +31,7 @@ namespace getAddress.Sdk.Api.Services
 
         public async Task<SuggestResponse> Get(AccessToken accessToken, SuggestRequest request, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.Suggest.Get(request);
         }

@@ -41,14 +41,14 @@ namespace getAddress.Sdk.Api
 
         public async Task<BillingAddressResponse> Get(AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.BillingAddress.Get();
         }
 
         public async Task<BillingAddressUpdatedResponse> Update(BillingAddressRequest request, AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.BillingAddress.Update(request);
         }

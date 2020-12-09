@@ -31,7 +31,7 @@ namespace getAddress.Sdk.Api
         }
         public async Task<ApiKeyResponse> Update(AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.ApiKeyApi.Update();
         }
@@ -44,7 +44,7 @@ namespace getAddress.Sdk.Api
         }
         public async Task<ApiKeyResponse> Get(AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.ApiKeyApi.Get();
         }

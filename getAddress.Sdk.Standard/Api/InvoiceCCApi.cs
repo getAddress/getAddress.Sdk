@@ -215,8 +215,5 @@ namespace getAddress.Sdk.Api
             return JsonConvert.DeserializeObject<InvoiceCC>(body);
         }
 
-        
-
-
     }
 }

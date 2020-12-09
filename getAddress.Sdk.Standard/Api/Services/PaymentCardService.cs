@@ -29,7 +29,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<PaymentCardResponse> List(AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.PaymentCard.List();
         }
@@ -50,7 +50,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<AddPaymentCardResponse> Add(AddPaymentCardRequest request, AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.PaymentCard.Add(request);
         }
@@ -63,7 +63,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<RemovePaymentCardResponse> Remove(RemovePaymentCardRequest request, AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.PaymentCard.Remove(request);
         }
@@ -77,7 +77,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<UpdateDefaultPaymentCardResponse> UpdateDefault(UpdateDefaultPaymentCardRequest request, AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.PaymentCard.UpdateDefault(request);
         }

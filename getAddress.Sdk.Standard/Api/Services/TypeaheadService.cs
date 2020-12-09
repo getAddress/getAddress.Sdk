@@ -28,7 +28,7 @@ namespace getAddress.Sdk.Api.Services
 
         public async Task<TypeaheadResponse> List(AccessToken accessToken, string term, TypeaheadOptions options = null, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.TypeaheadApi.List(term, options);
         }

@@ -37,14 +37,14 @@ namespace getAddress.Sdk.Api
 
         public async Task<UnsubscribeResponse> Unsubscribe(AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.Subscription.Unsubscribe();
         }
 
         public async Task<SubscriptionUpdatedResponse> Update(UpdateSubscriptionRequest request, AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.Subscription.Update(request);
         }
@@ -64,7 +64,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<SubscriptionCreatedResponse> Create(CreateSubscriptionRequest request, AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.Subscription.Create(request);
         }
@@ -78,7 +78,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<SubscriptionChangePlanResponse> ChangePlan(ChangePlanSubscriptionRequest request, AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.Subscription.ChangePlan(request);
         }
@@ -92,7 +92,7 @@ namespace getAddress.Sdk.Api
 
         public async Task<SubscriptionV2Response> Get(AccessToken accessToken, HttpClient httpClient = null)
         {
-            var api = new GetAddesssApi(accessToken, HttpClient ?? httpClient);
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
             return await api.Subscription.GetV2();
         }
