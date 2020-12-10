@@ -47,7 +47,7 @@ namespace getAddress.Sdk.Api.Responses
             {
                 var cc = token.ToObject<ExpiredCC>();
 
-                if (cc.Id != 0) list.Add(cc);
+                list.Add(cc);
             }
 
             return list;
