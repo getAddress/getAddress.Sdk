@@ -30,6 +30,13 @@ namespace getAddress.Sdk.Api
 
             return await api.DomainWhitelist.Add(request);
         }
+        public async Task<AddDomainWhitelistResponse> Add(AddDomainWhitelistRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
+
+            return await api.DomainWhitelist.Add(request);
+        }
+        
 
         public async Task<RemoveDomainWhitelistResponse> Remove(RemoveDomainWhitelistRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
@@ -37,6 +44,14 @@ namespace getAddress.Sdk.Api
 
             return await api.DomainWhitelist.Remove(request);
         }
+        public async Task<RemoveDomainWhitelistResponse> Remove(RemoveDomainWhitelistRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
+
+            return await api.DomainWhitelist.Remove(request);
+        }
+
+
 
         public async Task<ListDomainWhitelistResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
         {
@@ -44,6 +59,13 @@ namespace getAddress.Sdk.Api
 
             return await api.DomainWhitelist.List();
         }
+        public async Task<ListDomainWhitelistResponse> List(AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
+
+            return await api.DomainWhitelist.List();
+        }
+
 
         public async Task<GetDomainWhitelistResponse> Get(GetDomainWhitelistRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
@@ -52,6 +74,12 @@ namespace getAddress.Sdk.Api
             return await api.DomainWhitelist.Get(request);
         }
 
-        
+        public async Task<GetDomainWhitelistResponse> Get(GetDomainWhitelistRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
+
+            return await api.DomainWhitelist.Get(request);
+        }
+
     }
 }

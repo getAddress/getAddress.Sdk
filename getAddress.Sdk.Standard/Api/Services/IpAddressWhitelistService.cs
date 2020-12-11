@@ -30,6 +30,12 @@ namespace getAddress.Sdk.Api
 
             return await api.IpAddressWhitelist.Add(request);
         }
+        public async Task<AddIpAddressWhitelistResponse> Add(AddIpAddressWhitelistRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
+
+            return await api.IpAddressWhitelist.Add(request);
+        }
 
         public async Task<RemoveIpAddressWhitelistResponse> Remove(RemoveIpAddressWhitelistRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
@@ -37,6 +43,13 @@ namespace getAddress.Sdk.Api
 
             return await api.IpAddressWhitelist.Remove(request);
         }
+        public async Task<RemoveIpAddressWhitelistResponse> Remove(RemoveIpAddressWhitelistRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
+
+            return await api.IpAddressWhitelist.Remove(request);
+        }
+
 
         public async Task<ListIpAddressWhitelistResponse> List(AdminKey adminKey = null, HttpClient httpClient = null)
         {
@@ -44,6 +57,13 @@ namespace getAddress.Sdk.Api
 
             return await api.IpAddressWhitelist.List();
         }
+        public async Task<ListIpAddressWhitelistResponse> List(AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
+
+            return await api.IpAddressWhitelist.List();
+        }
+
 
         public async Task<GetIpAddressWhitelistResponse> Get(GetIpAddressWhitelistRequest request, AdminKey adminKey = null, HttpClient httpClient = null)
         {
@@ -51,7 +71,12 @@ namespace getAddress.Sdk.Api
 
             return await api.IpAddressWhitelist.Get(request);
         }
+        public async Task<GetIpAddressWhitelistResponse> Get(GetIpAddressWhitelistRequest request, AccessToken accessToken, HttpClient httpClient = null)
+        {
+            var api = new GetAddesssApi(accessToken, httpClient ?? HttpClient);
 
-       
+            return await api.IpAddressWhitelist.Get(request);
+        }
+        
     }
 }

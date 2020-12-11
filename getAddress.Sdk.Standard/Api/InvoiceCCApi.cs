@@ -202,7 +202,7 @@ namespace getAddress.Sdk.Api
             {
                 var invoice = token.ToObject<InvoiceCC>(); 
 
-                if (invoice.Id != 0) list.Add(invoice);
+                list.Add(invoice);
             }
 
             return list;

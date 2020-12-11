@@ -8,8 +8,13 @@ namespace getAddress.Sdk.Api
     public interface IDomainWhitelistService
     {
         Task<AddDomainWhitelistResponse> Add(AddDomainWhitelistRequest request, AdminKey adminKey = null,HttpClient httpClient = null);
+        Task<AddDomainWhitelistResponse> Add(AddDomainWhitelistRequest request, AccessToken accessToken, HttpClient httpClient = null);
         Task<GetDomainWhitelistResponse> Get(GetDomainWhitelistRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
+        Task<GetDomainWhitelistResponse> Get(GetDomainWhitelistRequest request, AccessToken accessToken, HttpClient httpClient = null);
+
         Task<ListDomainWhitelistResponse> List(AdminKey adminKey = null, HttpClient httpClient = null);
+        Task<ListDomainWhitelistResponse> List(AccessToken accessToken, HttpClient httpClient = null);
         Task<RemoveDomainWhitelistResponse> Remove(RemoveDomainWhitelistRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
+        Task<RemoveDomainWhitelistResponse> Remove(RemoveDomainWhitelistRequest request, AccessToken accessToken, HttpClient httpClient = null);
     }
 }
