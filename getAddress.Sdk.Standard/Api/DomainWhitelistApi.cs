@@ -44,7 +44,9 @@ namespace getAddress.Sdk.Api
 
             Func<string, string, AddDomainWhitelistResponse> tokenExpired = (rp, b) => { return new AddDomainWhitelistResponse.TokenExpired(rp, b); };
             Func<string, string, double, AddDomainWhitelistResponse> limitReached = (rp, b, r) => { return new AddDomainWhitelistResponse.RateLimitedReached(rp, b, r); };
-            Func<int, string, string, AddDomainWhitelistResponse> failed = (sc, rp, b) => { return new AddDomainWhitelistResponse.Failed(sc, rp, b); };
+            Func<int, string, string, AddDomainWhitelistResponse> failed = (sc, rp, b) => {
+                return new AddDomainWhitelistResponse.Failed(sc, rp, b); 
+            };
             Func<string, string, AddDomainWhitelistResponse> forbidden = (rp, b) => { return new AddDomainWhitelistResponse.Forbidden(rp, b); };
 
 

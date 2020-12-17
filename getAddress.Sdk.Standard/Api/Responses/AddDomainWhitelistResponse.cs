@@ -29,15 +29,12 @@ namespace getAddress.Sdk.Api.Responses
 
         public class Failed : AddDomainWhitelistResponse
         {
+            public string Message { get; set; }
             public Failed(int statusCode, string reasonPhrase, string raw) :base(statusCode, reasonPhrase, raw, false)
             {
                 FailedResult = this;
             }
 
-            internal static Failed NewFailed(int statusCode, string reasonPhrase, string raw)
-            {
-                return new Failed(statusCode, reasonPhrase, raw);
-            }
         }
 
         public class TokenExpired : Failed
