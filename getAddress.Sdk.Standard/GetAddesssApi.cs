@@ -118,6 +118,8 @@ namespace getAddress.Sdk
             paymentCard = new Lazy<PaymentCardApi>(() => new PaymentCardApi(adminKey, this));
 
             plans = new Lazy<PlansApi>(() => new PlansApi(adminKey,this));
+
+            firstLimitReachedEmailNotification = new Lazy<FirstLimitReachedEmailNotificationApi>(() => new FirstLimitReachedEmailNotificationApi(adminKey, this));
         }
 
         private Lazy<AutocompleteApi> autocomplete;
@@ -147,6 +149,7 @@ namespace getAddress.Sdk
         private Lazy<SuggestLimitReachedWebhookApi> suggestLimitReachedWebhook;
         private Lazy<PaymentCardApi> paymentCard;
         private Lazy<PlansApi> plans;
+        private Lazy<FirstLimitReachedEmailNotificationApi> firstLimitReachedEmailNotification;
 
         public HttpClient HttpClient { get { return _client; } }
         public Uri BaseAddress
@@ -164,6 +167,11 @@ namespace getAddress.Sdk
                     _client.BaseAddress = _baseAddress;
                 }
             }
+        }
+
+        public FirstLimitReachedEmailNotificationApi FirstLimitReachedEmailNotification
+        {
+            get { return firstLimitReachedEmailNotification.Value; }
         }
 
         public PlansApi Plans

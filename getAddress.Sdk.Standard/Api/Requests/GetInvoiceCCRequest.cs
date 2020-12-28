@@ -3,6 +3,7 @@
 
 namespace getAddress.Sdk.Api.Requests
 {
+
     public class GetInvoiceCCRequest
     {
         public GetInvoiceCCRequest(long id)

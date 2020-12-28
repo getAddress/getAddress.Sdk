@@ -1,13 +1,10 @@
 ﻿using getAddress.Sdk.Api.Requests;
 using getAddress.Sdk.Api.Responses;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
+
     public class FirstLimitReachedWebhookApi:AdminApiBase
     {
         public const string Path = "webhook/first-limit-reached/";

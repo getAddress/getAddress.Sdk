@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
+
     public class InvoiceEmailCcService :ServiceBase, IInvoiceEmailCcService
     {
         public InvoiceEmailCcService(HttpClient httpClient) : base(httpClient)
