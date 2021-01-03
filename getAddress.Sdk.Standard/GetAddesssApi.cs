@@ -119,6 +119,8 @@ namespace getAddress.Sdk
 
             plans = new Lazy<PlansApi>(() => new PlansApi(adminKey,this));
 
+            secondLimitReachedEmailNotification = new Lazy<SecondLimitReachedEmailNotificationApi>(() => new SecondLimitReachedEmailNotificationApi(adminKey, this));
+
             firstLimitReachedEmailNotification = new Lazy<FirstLimitReachedEmailNotificationApi>(() => new FirstLimitReachedEmailNotificationApi(adminKey, this));
         }
 
@@ -150,6 +152,7 @@ namespace getAddress.Sdk
         private Lazy<PaymentCardApi> paymentCard;
         private Lazy<PlansApi> plans;
         private Lazy<FirstLimitReachedEmailNotificationApi> firstLimitReachedEmailNotification;
+        private Lazy<SecondLimitReachedEmailNotificationApi> secondLimitReachedEmailNotification;
 
         public HttpClient HttpClient { get { return _client; } }
         public Uri BaseAddress
@@ -167,6 +170,11 @@ namespace getAddress.Sdk
                     _client.BaseAddress = _baseAddress;
                 }
             }
+        }
+
+        public SecondLimitReachedEmailNotificationApi SecondLimitReachedEmailNotification
+        {
+            get { return secondLimitReachedEmailNotification.Value; }
         }
 
         public FirstLimitReachedEmailNotificationApi FirstLimitReachedEmailNotification
