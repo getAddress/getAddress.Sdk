@@ -122,6 +122,8 @@ namespace getAddress.Sdk
             secondLimitReachedEmailNotification = new Lazy<SecondLimitReachedEmailNotificationApi>(() => new SecondLimitReachedEmailNotificationApi(adminKey, this));
 
             firstLimitReachedEmailNotification = new Lazy<FirstLimitReachedEmailNotificationApi>(() => new FirstLimitReachedEmailNotificationApi(adminKey, this));
+            
+            accountExpiredEmailNotification = new Lazy<AccountExpiredEmailNotificationApi>(() => new AccountExpiredEmailNotificationApi(adminKey, this));
         }
 
         private Lazy<AutocompleteApi> autocomplete;
@@ -153,6 +155,7 @@ namespace getAddress.Sdk
         private Lazy<PlansApi> plans;
         private Lazy<FirstLimitReachedEmailNotificationApi> firstLimitReachedEmailNotification;
         private Lazy<SecondLimitReachedEmailNotificationApi> secondLimitReachedEmailNotification;
+        private Lazy<AccountExpiredEmailNotificationApi> accountExpiredEmailNotification;
 
         public HttpClient HttpClient { get { return _client; } }
         public Uri BaseAddress
@@ -170,6 +173,11 @@ namespace getAddress.Sdk
                     _client.BaseAddress = _baseAddress;
                 }
             }
+        }
+
+        public AccountExpiredEmailNotificationApi AccountExpiredEmailNotification
+        {
+            get { return  accountExpiredEmailNotification.Value; }
         }
 
         public SecondLimitReachedEmailNotificationApi SecondLimitReachedEmailNotification
