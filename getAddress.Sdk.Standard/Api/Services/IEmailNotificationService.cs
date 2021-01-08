@@ -5,7 +5,19 @@ using System.Threading.Tasks;
 
 namespace getAddress.Sdk.Api
 {
-    public interface IFirstLimitReachedEmailNotificationService
+    public interface IAccountExpiredEmailNotificationService : IEmailNotificationService
+    {
+
+    }
+    public interface IFirstLimitReachedEmailNotificationService: IEmailNotificationService
+    {
+       
+    }
+    public interface IPaymentFailedEmailNotificationService : IEmailNotificationService
+    {
+
+    }
+    public interface IEmailNotificationService
     {
         Task<AddEmailNotificationResponse> Add(AddEmailNotificationRequest request, AdminKey adminKey = null, HttpClient httpClient = null);
         Task<AddEmailNotificationResponse> Add(AddEmailNotificationRequest request, AccessToken accessToken, HttpClient httpClient = null);
