@@ -16,6 +16,18 @@ namespace getAddress.Sdk.Api.Requests
 
         [JsonProperty("filter")]
         public SuggestFilter Filter { get; set; } = new SuggestFilter();
+
+        [JsonProperty("location")]
+        public SuggestLocation Location { get; set; } = new SuggestLocation();
+    }
+
+    public class SuggestLocation
+    {
+        [JsonProperty("latitude")]
+        public double? Latitude { get; set; }
+
+        [JsonProperty("longitude")]
+        public double? Longitude { get; set; }
     }
 
     public class SuggestFilter

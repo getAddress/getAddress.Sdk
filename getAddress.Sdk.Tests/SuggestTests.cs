@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using getAddress.Sdk.Api.Requests;
+using getAddress.Sdk.Api.Responses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace getAddress.Sdk.Tests
@@ -206,6 +207,57 @@ namespace getAddress.Sdk.Tests
                 Assert.IsTrue(result2.IsSuccess);
 
                 Assert.IsTrue(result2.SuccessfulResult.Suggestions.Any());
+
+            }
+        }
+
+
+        [TestMethod]
+        public async Task Given_Location()
+        {
+            var apiKey = KeyHelper.GetApiKey();
+
+            var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = UrlHelper.GetStagingUri();
+
+            using (var api = new GetAddesssApi(new ApiKey(apiKey), httpClient))
+            {
+                var request = new SuggestRequest
+                {
+                    Term = "Homestead Road"
+                };
+
+                request.Location.Latitude = 53.42416763305664;
+                request.Location.Longitude = -1.45220148563385;
+
+                var result = await api.Suggest.Get(request);
+
+                Assert.IsTrue(result.IsSuccess);
+
+                Assert.IsTrue(result.SuccessfulResult.Suggestions.Any());
+
+                if(result.TryGetSuccess(out SuggestResponse.Success success))
+                {
+                    Assert.IsTrue(success.Suggestions.First().Address.Contains("Yorkshire"));
+                }
+
+                var request2 = new SuggestRequest
+                {
+                    Term = "Homestead Road"
+                };
+
+                var result2 = await api.Suggest.Get(request2);
+
+                Assert.IsTrue(result2.IsSuccess);
+
+                Assert.IsTrue(result2.SuccessfulResult.Suggestions.Any());
+
+                if (result2.TryGetSuccess(out SuggestResponse.Success success2))
+                {
+                    Assert.IsTrue(success2.Suggestions.First().Address.Contains("London"));
+                }
+
 
             }
         }
